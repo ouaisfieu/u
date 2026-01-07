@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩺 DIAGNOSTIC DÉMOCRATIQUE — POLiT!KA</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #0c0c14;
+            --bg-card: #14141f;
+            --bg-elevated: #1a1a2a;
+            --text: #e8e8f0;
+            --muted: #6b6b80;
+            --border: rgba(255,255,255,0.08);
+            
+            --critical: #ef4444;
+            --severe: #f97316;
+            --warning: #eab308;
+            --moderate: #22c55e;
+            --info: #3b82f6;
+            
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139,92,246,0.4);
+            
+            --radius: 16px;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* === ANIMATIONS === */
+        @keyframes pulse-critical {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+        
+        /* === LAYOUT === */
+        .app {
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* === HEADER === */
+        .header {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+            background: rgba(12,12,20,0.95);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            animation: heartbeat 2s infinite;
+        }
+        
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        
+        .logo-text span {
+            color: var(--critical);
+        }
+        
+        .alert-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid var(--critical);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--critical);
+            animation: pulse-critical 2s infinite;
+        }
+        
+        .alert-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--critical);
+            border-radius: 50%;
+        }
+        
+        /* === HERO === */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(239,68,68,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--critical);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title .highlight {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(90deg, var(--critical), var(--severe));
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--muted);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px var(--accent-glow);
+        }
+        
+        /* === CRISIS COUNTER === */
+        .crisis-counter {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .counter-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-elevated);
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .counter-item.critical {
+            border: 1px solid var(--critical);
+            box-shadow: 0 0 30px rgba(239,68,68,0.1);
+        }
+        
+        .counter-item.critical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--critical);
+        }
+        
+        .counter-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--critical);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .counter-item:not(.critical) .counter-value {
+            color: var(--warning);
+        }
+        
+        .counter-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .counter-detail {
+            font-size: 0.75rem;
+            color: var(--text);
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+        
+        /* === NAVIGATION TABS === */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-tab:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        
+        .nav-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
+        /* === SECTIONS === */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        /* === DIAGNOSTIC CARDS === */
+        .diagnostic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .diagnostic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .diagnostic-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        .diagnostic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .diagnostic-card.critical::before { background: var(--critical); }
+        .diagnostic-card.severe::before { background: var(--severe); }
+        .diagnostic-card.warning::before { background: var(--warning); }
+        
+        .diagnostic-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .diagnostic-icon {
+            font-size: 2.5rem;
+        }
+        
+        .diagnostic-severity {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .diagnostic-severity.critical {
+            background: rgba(239,68,68,0.2);
+            color: var(--critical);
+        }
+        
+        .diagnostic-severity.severe {
+            background: rgba(249,115,22,0.2);
+            color: var(--severe);
+        }
+        
+        .diagnostic-severity.warning {
+            background: rgba(234,179,8,0.2);
+            color: var(--warning);
+        }
+        
+        .diagnostic-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .diagnostic-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+        
+        .diagnostic-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .diagnostic-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .diagnostic-stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        
+        /* === GAUGE === */
+        .gauge-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .gauge-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .gauges {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gauge {
+            text-align: center;
+        }
+        
+        .gauge-visual {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+        }
+        
+        .gauge-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--critical) 0deg,
+                var(--critical) calc(var(--value) * 3.6deg),
+                var(--bg-elevated) calc(var(--value) * 3.6deg),
+                var(--bg-elevated) 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gauge-circle::before {
+            content: '';
+            position: absolute;
+            inset: 15px;
+            background: var(--bg-card);
+            border-radius: 50%;
+        }
+        
+        .gauge-value {
+            position: relative;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .gauge-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        
+        .gauge-status {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .gauge-status.critical {
+            background: rgba(239,68,68,0.2);
+            color: var(--critical);
+        }
+        
+        /* === TIMELINE === */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--critical), var(--warning), var(--muted));
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 2rem;
+            animation: slideUp 0.5s backwards;
+        }
+        
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 12px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 3px solid var(--critical);
+        }
+        
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        
+        .timeline-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: rgba(239,68,68,0.15);
+            color: var(--critical);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        /* === QUIZ === */
+        .quiz-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-progress {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-progress-dot {
+            flex: 1;
+            height: 4px;
+            background: var(--bg-elevated);
+            border-radius: 2px;
+            transition: background 0.3s;
+        }
+        
+        .quiz-progress-dot.active {
+            background: var(--accent);
+        }
+        
+        .quiz-progress-dot.done {
+            background: var(--moderate);
+        }
+        
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .quiz-option {
+            padding: 1rem 1.25rem;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--accent);
+            background: rgba(139,92,246,0.1);
+        }
+        
+        .quiz-option.correct {
+            border-color: var(--moderate);
+            background: rgba(34,197,94,0.1);
+        }
+        
+        .quiz-option.wrong {
+            border-color: var(--critical);
+            background: rgba(239,68,68,0.1);
+        }
+        
+        .quiz-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+            animation: slideUp 0.3s;
+        }
+        
+        .quiz-feedback.correct {
+            background: rgba(34,197,94,0.1);
+            border: 1px solid var(--moderate);
+        }
+        
+        .quiz-feedback.wrong {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid var(--critical);
+        }
+        
+        .quiz-next {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .quiz-next.show {
+            display: inline-block;
+        }
+        
+        /* === SCORE CARD === */
+        .score-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+        
+        .score-card.show {
+            display: block;
+            animation: slideUp 0.5s;
+        }
+        
+        .score-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .score-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .score-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+        
+        .score-message {
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .score-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+        }
+        
+        /* === ACTION CARDS === */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .action-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--moderate);
+            box-shadow: 0 10px 40px rgba(34,197,94,0.1);
+        }
+        
+        .action-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .action-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+        
+        .action-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--moderate);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* === QUOTE === */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 4px solid var(--critical);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 4rem;
+            color: var(--critical);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+        
+        .quote-text {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+        
+        .quote-author {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-style: normal;
+        }
+        
+        /* === SOURCES === */
+        .sources {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .sources-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sources-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .source-tag {
+            padding: 0.35rem 0.75rem;
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        
+        /* === FOOTER === */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-text {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .counter-value { font-size: 2rem; }
+            .diagnostic-grid { grid-template-columns: 1fr; }
+            .timeline::before { left: 15px; }
+            .timeline-item { padding-left: 50px; }
+            .timeline-dot { left: 7px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scan-line"></div>
+    
+    <div class="app">
+        <header class="header">
+            <div class="container header-inner">
+                <div class="logo">
+                    <span class="logo-icon">🩺</span>
+                    <span class="logo-text">DIAGNOSTIC <span>DÉMOCRATIQUE</span></span>
+                </div>
+                <div class="alert-badge">
+                    ALERTE NIVEAU CRITIQUE
+                </div>
+            </div>
+        </header>
+        
+        <section class="hero">
+            <div class="container">
+                <div class="hero-eyebrow">/// Rapport citoyen — Janvier 2026</div>
+                <h1 class="hero-title">
+                    La Belgique est-elle encore<br>
+                    <span class="highlight">une démocratie fonctionnelle ?</span>
+                </h1>
+                <p class="hero-subtitle">
+                    542 jours sans gouvernement à Bruxelles. Budget fédéral non voté. 
+                    140 000 manifestants ignorés. Et si on regardait les chiffres en face ?
+                </p>
+                <button class="hero-cta" onclick="startDiagnostic()">
+                    🔬 LANCER LE DIAGNOSTIC
+                </button>
+            </div>
+        </section>
+        
+        <main class="container">
+            <!-- CRISIS COUNTERS -->
+            <div class="crisis-counter" id="counters">
+                <div class="counter-item critical">
+                    <div class="counter-value" data-target="542">0</div>
+                    <div class="counter-label">Jours sans gouvernement</div>
+                    <div class="counter-detail">Région de Bruxelles-Capitale</div>
+                </div>
+                <div class="counter-item critical">
+                    <div class="counter-value" data-target="140000">0</div>
+                    <div class="counter-label">Manifestants ignorés</div>
+                    <div class="counter-detail">14 octobre 2025</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" data-target="19">0</div>
+                    <div class="counter-label">% de confiance</div>
+                    <div class="counter-detail">Envers les politiques (Wallonie)</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" data-target="78">0</div>
+                    <div class="counter-label">% estiment</div>
+                    <div class="counter-detail">"Les élus parlent trop, agissent peu"</div>
+                </div>
+            </div>
+            
+            <!-- NAVIGATION -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-section="diagnostic" onclick="showSection('diagnostic')">
+                    🔍 Diagnostic
+                </button>
+                <button class="nav-tab" data-section="timeline" onclick="showSection('timeline')">
+                    📅 Chronologie
+                </button>
+                <button class="nav-tab" data-section="quiz" onclick="showSection('quiz')">
+                    🧠 Testez-vous
+                </button>
+                <button class="nav-tab" data-section="action" onclick="showSection('action')">
+                    ✊ Agir
+                </button>
+            </nav>
+            
+            <!-- SECTION: DIAGNOSTIC -->
+            <section class="section active" id="section-diagnostic">
+                <h2 class="section-title">🔍 État des lieux</h2>
+                
+                <div class="quote-block">
+                    <p class="quote-text">Ce blocage prolongé est indécent, puéril, et profondément inquiétant.</p>
+                    <p class="quote-author">— Éditorial de La Libre Belgique, décembre 2025</p>
+                </div>
+                
+                <div class="diagnostic-grid">
+                    <div class="diagnostic-card critical">
+                        <div class="diagnostic-header">
+                            <span class="diagnostic-icon">🏛️</span>
+                            <span class="diagnostic-severity critical">CRITIQUE</span>
+                        </div>
+                        <h3 class="diagnostic-title">Paralysie institutionnelle</h3>
+                        <p class="diagnostic-desc">Bruxelles a battu le record mondial de durée sans gouvernement. 89 députés, 14 partis, et toujours aucun accord.</p>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">542+</span>
+                            <span class="diagnostic-stat-label">jours de blocage</span>
+                        </div>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">7</span>
+                            <span class="diagnostic-stat-label">tentatives de formation échouées</span>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-card critical">
+                        <div class="diagnostic-header">
+                            <span class="diagnostic-icon">💰</span>
+                            <span class="diagnostic-severity critical">CRITIQUE</span>
+                        </div>
+                        <h3 class="diagnostic-title">Budget en dérive</h3>
+                        <p class="diagnostic-desc">Le gouvernement Arizona n'a pas réussi à voter son budget. La Belgique entre en 2026 en régime de douzièmes provisoires.</p>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">23,3 Mds€</span>
+                            <span class="diagnostic-stat-label">d'économies prévues d'ici 2029</span>
+                        </div>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">0</span>
+                            <span class="diagnostic-stat-label">réformes structurelles adoptées</span>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-card severe">
+                        <div class="diagnostic-header">
+                            <span class="diagnostic-icon">📉</span>
+                            <span class="diagnostic-severity severe">SÉVÈRE</span>
+                        </div>
+                        <h3 class="diagnostic-title">Confiance effondrée</h3>
+                        <p class="diagnostic-desc">En 10 ans, la confiance dans les institutions a chuté de moitié. Les politiques n'inspirent plus que 19% de confiance.</p>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">-52%</span>
+                            <span class="diagnostic-stat-label">de confiance en 10 ans</span>
+                        </div>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">69,5%</span>
+                            <span class="diagnostic-stat-label">trouvent le système "trop opaque"</span>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-card severe">
+                        <div class="diagnostic-header">
+                            <span class="diagnostic-icon">✊</span>
+                            <span class="diagnostic-severity severe">SÉVÈRE</span>
+                        </div>
+                        <h3 class="diagnostic-title">Contestation ignorée</h3>
+                        <p class="diagnostic-desc">Manifestations historiques, grèves générales répétées. Réponse du pouvoir ? Silence radio.</p>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">140 000</span>
+                            <span class="diagnostic-stat-label">manifestants le 14 octobre</span>
+                        </div>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">3 jours</span>
+                            <span class="diagnostic-stat-label">de grève générale en novembre</span>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-card warning">
+                        <div class="diagnostic-header">
+                            <span class="diagnostic-icon">🕵️</span>
+                            <span class="diagnostic-severity warning">ALERTE</span>
+                        </div>
+                        <h3 class="diagnostic-title">Opacité persistante</h3>
+                        <p class="diagnostic-desc">Pas de vrai registre des lobbies. Nominations politiques opaques. La Commission européenne réclame des réformes.</p>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">175</span>
+                            <span class="diagnostic-stat-label">lobbies enregistrés (données inutiles)</span>
+                        </div>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">0</span>
+                            <span class="diagnostic-stat-label">sanction possible pour opacité</span>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnostic-card warning">
+                        <div class="diagnostic-header">
+                            <span class="diagnostic-icon">👔</span>
+                            <span class="diagnostic-severity warning">ALERTE</span>
+                        </div>
+                        <h3 class="diagnostic-title">Représentation biaisée</h3>
+                        <p class="diagnostic-desc">Kern 100% masculin. 1,4 million d'abstentionnistes. Les citoyens précaires sous-représentés.</p>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">0</span>
+                            <span class="diagnostic-stat-label">femme parmi les 6 vice-PMs</span>
+                        </div>
+                        <div class="diagnostic-stat">
+                            <span class="diagnostic-stat-value">17%</span>
+                            <span class="diagnostic-stat-label">d'abstention/votes blancs (2019)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GAUGES -->
+                <div class="gauge-container">
+                    <h3 class="gauge-title">📊 Indicateurs de santé démocratique</h3>
+                    <div class="gauges">
+                        <div class="gauge">
+                            <div class="gauge-visual">
+                                <div class="gauge-circle" style="--value: 19">
+                                    <span class="gauge-value">19%</span>
+                                </div>
+                            </div>
+                            <div class="gauge-label">Confiance dans les politiques</div>
+                            <span class="gauge-status critical">CRITIQUE</span>
+                        </div>
+                        <div class="gauge">
+                            <div class="gauge-visual">
+                                <div class="gauge-circle" style="--value: 35">
+                                    <span class="gauge-value">35%</span>
+                                </div>
+                            </div>
+                            <div class="gauge-label">Confiance dans l'État</div>
+                            <span class="gauge-status critical">SÉVÈRE</span>
+                        </div>
+                        <div class="gauge">
+                            <div class="gauge-visual">
+                                <div class="gauge-circle" style="--value: 22">
+                                    <span class="gauge-value">22%</span>
+                                </div>
+                            </div>
+                            <div class="gauge-label">Confiance dans les partis</div>
+                            <span class="gauge-status critical">CRITIQUE</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sources">
+                    <h4 class="sources-title">📚 Sources vérifiées</h4>
+                    <div class="sources-list">
+                        <span class="source-tag">IWEPS 2023</span>
+                        <span class="source-tag">OCDE 2024</span>
+                        <span class="source-tag">Commission UE 2025</span>
+                        <span class="source-tag">CRISP</span>
+                        <span class="source-tag">La Libre</span>
+                        <span class="source-tag">RTBF</span>
+                        <span class="source-tag">L'Avenir</span>
+                        <span class="source-tag">Moustique</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION: TIMELINE -->
+            <section class="section" id="section-timeline">
+                <h2 class="section-title">📅 Chronologie de la crise</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">9 juin 2024</div>
+                        <h3 class="timeline-title">Élections fédérales et régionales</h3>
+                        <p class="timeline-desc">Triple scrutin. Montée des extrêmes. Début des négociations marathons.</p>
+                        <span class="timeline-tag">Jour 0</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">3 février 2025</div>
+                        <h3 class="timeline-title">Gouvernement Arizona formé</h3>
+                        <p class="timeline-desc">239 jours de négociations. Coalition N-VA, MR, Les Engagés, Vooruit, CD&V. Kern 100% masculin.</p>
+                        <span class="timeline-tag">239 jours pour le fédéral</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">13 février 2025</div>
+                        <h3 class="timeline-title">Manifestation historique</h3>
+                        <p class="timeline-desc">100 000 personnes dans les rues contre l'accord Arizona. La contestation commence.</p>
+                        <span class="timeline-tag">100K manifestants</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">31 mars 2025</div>
+                        <h3 class="timeline-title">Grève générale</h3>
+                        <p class="timeline-desc">La Belgique paralysée. Aéroports fermés, trains à l'arrêt. Front commun syndical.</p>
+                        <span class="timeline-tag">Pays à l'arrêt</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">14 octobre 2025</div>
+                        <h3 class="timeline-title">Record de mobilisation</h3>
+                        <p class="timeline-desc">140 000 manifestants selon les syndicats. Le gouvernement reste silencieux.</p>
+                        <span class="timeline-tag">140K manifestants</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Novembre 2025</div>
+                        <h3 class="timeline-title">Crise budgétaire</h3>
+                        <p class="timeline-desc">De Wever annonce au Roi l'absence d'accord. Douzièmes provisoires pour 2026.</p>
+                        <span class="timeline-tag">Pas de budget</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">24-26 novembre 2025</div>
+                        <h3 class="timeline-title">3 jours de grève générale</h3>
+                        <p class="timeline-desc">Grèves tournantes : transports, fonction publique, secteur privé. Escalade sociale.</p>
+                        <span class="timeline-tag">Grève historique</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2 décembre 2025</div>
+                        <h3 class="timeline-title">Record battu à Bruxelles</h3>
+                        <p class="timeline-desc">541 jours dépassés. La région bruxelloise bat le record fédéral de 2010-2011.</p>
+                        <span class="timeline-tag">Record mondial</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION: QUIZ -->
+            <section class="section" id="section-quiz">
+                <h2 class="section-title">🧠 Testez vos connaissances</h2>
+                <p style="color: var(--muted); margin-bottom: 2rem;">Êtes-vous plus informé que la moyenne ? 10 questions pour évaluer votre vigilance citoyenne.</p>
+                
+                <div class="quiz-container" id="quizContainer">
+                    <div class="quiz-progress" id="quizProgress"></div>
+                    <div id="quizContent"></div>
+                </div>
+                
+                <div class="score-card" id="scoreCard">
+                    <div class="score-icon" id="scoreIcon">🏆</div>
+                    <h3 class="score-title" id="scoreTitle">Résultat</h3>
+                    <div class="score-value" id="scoreValue">0/10</div>
+                    <p class="score-message" id="scoreMessage"></p>
+                    <div class="score-badge" id="scoreBadge"></div>
+                </div>
+            </section>
+            
+            <!-- SECTION: ACTION -->
+            <section class="section" id="section-action">
+                <h2 class="section-title">✊ Passer à l'action</h2>
+                
+                <div class="quote-block">
+                    <p class="quote-text">La démocratie est à chérir, à protéger et à renforcer.</p>
+                    <p class="quote-author">— Assemblée parlementaire de la Francophonie</p>
+                </div>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-icon">📚</div>
+                        <h3 class="action-title">S'informer</h3>
+                        <p class="action-desc">Suivre les sources vérifiées, croiser l'information, comprendre les enjeux au-delà des titres.</p>
+                        <span class="action-cta">Voir nos ressources →</span>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">🗣️</div>
+                        <h3 class="action-title">En parler</h3>
+                        <p class="action-desc">Briser le silence. Discuter avec son entourage. Partager les chiffres qui comptent.</p>
+                        <span class="action-cta">Partager ce diagnostic →</span>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">✍️</div>
+                        <h3 class="action-title">Interpeller</h3>
+                        <p class="action-desc">Écrire à ses élus. Poser des questions aux conseils communaux. Exiger des réponses.</p>
+                        <span class="action-cta">Modèles de courriers →</span>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">🤝</div>
+                        <h3 class="action-title">Rejoindre</h3>
+                        <p class="action-desc">S'engager dans une association. Rejoindre un mouvement citoyen. Agir collectivement.</p>
+                        <span class="action-cta">Trouver un collectif →</span>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">🗳️</div>
+                        <h3 class="action-title">Voter</h3>
+                        <p class="action-desc">Utiliser son vote comme un outil. Sanctionner l'inaction. Soutenir les alternatives.</p>
+                        <span class="action-cta">Prochaines élections : 2029 →</span>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-icon">🎓</div>
+                        <h3 class="action-title">Se former</h3>
+                        <p class="action-desc">Suivre les modules POLiT!KA. Comprendre les institutions. Devenir acteur du changement.</p>
+                        <span class="action-cta">Voir les formations →</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <div class="container">
+                <p class="footer-text">
+                    Ce diagnostic est basé sur des sources vérifiées et vérifiables.<br>
+                    La démocratie ne meurt pas dans le silence — elle meurt dans l'indifférence.
+                </p>
+                <a href="#" class="footer-cta">
+                    🚀 Rejoindre POLiT!KA
+                </a>
+            </div>
+        </footer>
+    </div>
+
+<script>
+// === QUIZ DATA ===
+const quizQuestions = [
+    {
+        question: "Depuis combien de jours Bruxelles est-elle sans gouvernement ?",
+        options: ["300 jours", "450 jours", "Plus de 540 jours", "180 jours"],
+        correct: 2,
+        explanation: "La Région bruxelloise a dépassé les 542 jours sans gouvernement en décembre 2025, battant le record fédéral de 2010-2011."
+    },
+    {
+        question: "Quel pourcentage de Wallons fait confiance aux hommes politiques ?",
+        options: ["45%", "32%", "19%", "8%"],
+        correct: 2,
+        explanation: "Selon le Baromètre social de Wallonie (IWEPS), seuls 19% des Wallons font confiance aux hommes politiques — le plus bas niveau jamais enregistré."
+    },
+    {
+        question: "Combien de manifestants étaient à Bruxelles le 14 octobre 2025 ?",
+        options: ["50 000", "80 000", "140 000", "200 000"],
+        correct: 2,
+        explanation: "Entre 80 000 (police) et 140 000 (syndicats) personnes ont manifesté contre les mesures du gouvernement Arizona — un record récent."
+    },
+    {
+        question: "Combien de femmes siègent au Kern (conseil des ministres restreint) ?",
+        options: ["3", "2", "1", "0"],
+        correct: 3,
+        explanation: "Le Kern du gouvernement De Wever est 100% masculin. La ministre de la Justice elle-même a regretté cette situation."
+    },
+    {
+        question: "Combien de jours a-t-il fallu pour former le gouvernement Arizona ?",
+        options: ["120 jours", "180 jours", "239 jours", "300 jours"],
+        correct: 2,
+        explanation: "Le gouvernement De Wever a été formé après 239 jours de négociations, le 3 février 2025."
+    },
+    {
+        question: "Quel est le nom de la coalition au pouvoir au fédéral ?",
+        options: ["Vivaldi", "Arizona", "Suédoise", "Arc-en-ciel"],
+        correct: 1,
+        explanation: "La coalition Arizona (du nom du drapeau américain) réunit N-VA, MR, Les Engagés, Vooruit et CD&V."
+    },
+    {
+        question: "Quel pourcentage de Wallons trouve le système démocratique 'trop opaque' ?",
+        options: ["35%", "52%", "69,5%", "81%"],
+        correct: 2,
+        explanation: "69,5% des Wallons jugent le processus démocratique 'trop complexe, trop obscur et trop lent'."
+    },
+    {
+        question: "La Belgique a-t-elle un registre contraignant des lobbies ?",
+        options: ["Oui, très complet", "Oui, mais incomplet", "Non, juste une liste", "Non, rien du tout"],
+        correct: 2,
+        explanation: "Le registre existe mais offre 'peu de données utiles' selon la RTBF. La Commission européenne demande une réforme."
+    },
+    {
+        question: "Combien de Belges se sont abstenus ou ont voté blanc/nul en 2019 ?",
+        options: ["500 000", "900 000", "1,4 million", "2 millions"],
+        correct: 2,
+        explanation: "Près de 1,4 million d'électeurs se sont abstenus ou ont voté blanc/nul — un record depuis 60 ans."
+    },
+    {
+        question: "Quelle est la réponse du Premier ministre aux 140 000 manifestants ?",
+        options: ["Dialogue ouvert", "Négociations", "Silence total", "Démission"],
+        correct: 2,
+        explanation: "Selon la FGTB : 'En retour ? Silence total de la part du Premier ministre De Wever. Un mépris qui ne passe pas.'"
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+// === COUNTER ANIMATION ===
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter-value');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+        
+        function update(currentTime) {
+            const elapsed = currentTime - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(target * easeOut);
+            
+            if (target >= 1000) {
+                counter.textContent = current.toLocaleString('fr-BE');
+            } else {
+                counter.textContent = current;
+            }
+            
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        
+        requestAnimationFrame(update);
+    });
+}
+
+// === SECTION NAVIGATION ===
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    
+    document.getElementById(`section-${sectionId}`).classList.add('active');
+    document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+    
+    if (sectionId === 'quiz' && currentQuestion === 0 && !answered) {
+        initQuiz();
+    }
+}
+
+// === QUIZ ===
+function initQuiz() {
+    renderProgress();
+    renderQuestion();
+}
+
+function renderProgress() {
+    const container = document.getElementById('quizProgress');
+    container.innerHTML = quizQuestions.map((_, i) => 
+        `<div class="quiz-progress-dot ${i < currentQuestion ? 'done' : ''} ${i === currentQuestion ? 'active' : ''}"></div>`
+    ).join('');
+}
+
+function renderQuestion() {
+    const q = quizQuestions[currentQuestion];
+    const container = document.getElementById('quizContent');
+    
+    container.innerHTML = `
+        <div class="quiz-question">${currentQuestion + 1}. ${q.question}</div>
+        <div class="quiz-options">
+            ${q.options.map((opt, i) => 
+                `<button class="quiz-option" onclick="selectAnswer(${i})">${opt}</button>`
+            ).join('')}
+        </div>
+        <div class="quiz-feedback" id="feedback"></div>
+        <button class="quiz-next" id="nextBtn" onclick="nextQuestion()">
+            ${currentQuestion < quizQuestions.length - 1 ? 'Question suivante →' : 'Voir mon score →'}
+        </button>
+    `;
+    
+    answered = false;
+}
+
+function selectAnswer(index) {
+    if (answered) return;
+    answered = true;
+    
+    const q = quizQuestions[currentQuestion];
+    const options = document.querySelectorAll('.quiz-option');
+    const feedback = document.getElementById('feedback');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    options.forEach((opt, i) => {
+        opt.disabled = true;
+        if (i === q.correct) opt.classList.add('correct');
+        if (i === index && i !== q.correct) opt.classList.add('wrong');
+    });
+    
+    if (index === q.correct) {
+        score++;
+        feedback.className = 'quiz-feedback show correct';
+        feedback.innerHTML = `<strong>✓ Correct !</strong><br>${q.explanation}`;
+    } else {
+        feedback.className = 'quiz-feedback show wrong';
+        feedback.innerHTML = `<strong>✗ Incorrect</strong><br>${q.explanation}`;
+    }
+    
+    nextBtn.classList.add('show');
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    
+    if (currentQuestion >= quizQuestions.length) {
+        showScore();
+    } else {
+        renderProgress();
+        renderQuestion();
+    }
+}
+
+function showScore() {
+    document.getElementById('quizContainer').style.display = 'none';
+    const card = document.getElementById('scoreCard');
+    card.classList.add('show');
+    
+    const percentage = (score / quizQuestions.length) * 100;
+    
+    document.getElementById('scoreValue').textContent = `${score}/${quizQuestions.length}`;
+    
+    if (percentage >= 80) {
+        document.getElementById('scoreIcon').textContent = '🏆';
+        document.getElementById('scoreTitle').textContent = 'Expert en vigilance citoyenne !';
+        document.getElementById('scoreMessage').textContent = 'Vous connaissez bien la situation politique belge. Maintenant, partagez ces connaissances autour de vous !';
+        document.getElementById('scoreBadge').textContent = '🎖️ Badge : Sentinelle Démocratique';
+    } else if (percentage >= 50) {
+        document.getElementById('scoreIcon').textContent = '📊';
+        document.getElementById('scoreTitle').textContent = 'Citoyen informé';
+        document.getElementById('scoreMessage').textContent = 'Vous avez une bonne base. Continuez à vous informer pour devenir un acteur du changement.';
+        document.getElementById('scoreBadge').textContent = '📖 Badge : Citoyen Éveillé';
+    } else {
+        document.getElementById('scoreIcon').textContent = '🔍';
+        document.getElementById('scoreTitle').textContent = 'À approfondir';
+        document.getElementById('scoreMessage').textContent = "Ces chiffres peuvent surprendre — c'est normal si on ne suit pas l'actualité de près. L'important, c'est de commencer à s'informer.";
+        document.getElementById('scoreBadge').textContent = '🌱 Badge : En route vers la vigilance';
+    }
+}
+
+// === DIAGNOSTIC START ===
+function startDiagnostic() {
+    document.getElementById('counters').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(animateCounters, 500);
+}
+
+// === INIT ===
+document.addEventListener('DOMContentLoaded', () => {
+    // Animate counters on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    observer.observe(document.getElementById('counters'));
+});
+</script>
+</body>
+</html>
