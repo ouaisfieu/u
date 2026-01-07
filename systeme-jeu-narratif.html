@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTÈME — POLiT!KA</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --bg-dark: #05050a;
+            --bg-medium: #0a0a12;
+            --bg-light: #12121c;
+            --bg-card: #16161f;
+            --text: #f0f0f5;
+            --text-dim: #8888a0;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --danger: #ef4444;
+            --danger-dim: rgba(239,68,68,0.2);
+            --warning: #f59e0b;
+            --success: #10b981;
+            --info: #3b82f6;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* === ANIMATIONS === */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.02); }
+        }
+        
+        @keyframes glitch {
+            0%, 100% { clip-path: inset(0 0 0 0); }
+            10% { clip-path: inset(10% 0 60% 0); }
+            20% { clip-path: inset(40% 0 20% 0); }
+            30% { clip-path: inset(80% 0 5% 0); }
+            40% { clip-path: inset(20% 0 50% 0); }
+            50% { clip-path: inset(0 0 0 0); }
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        @keyframes countUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .animate-in { animation: slideUp 0.6s ease-out forwards; }
+        .animate-fade { animation: fadeIn 0.5s ease-out forwards; }
+        
+        /* === GLOBAL === */
+        .hidden { display: none !important; }
+        
+        .screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        /* === INTRO SCREEN === */
+        #intro {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0510 100%);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #intro::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(124,58,237,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(239,68,68,0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        
+        .intro-container {
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .intro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid var(--danger);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--danger);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .intro-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .intro-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .intro-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 3rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+        
+        .intro-cta:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .intro-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(124,58,237,0.4);
+        }
+        
+        .intro-note {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        
+        /* === GAME SCREEN === */
+        #game {
+            background: var(--bg-dark);
+        }
+        
+        .game-header {
+            padding: 1rem 1.5rem;
+            background: rgba(10,10,18,0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+        
+        .game-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            letter-spacing: 2px;
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .stat-icon {
+            font-size: 1.1rem;
+        }
+        
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+        
+        .game-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* === CHAPTER TRANSITION === */
+        .chapter-transition {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-dark);
+            position: relative;
+        }
+        
+        .chapter-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeIn 0.5s 0.2s forwards;
+        }
+        
+        .chapter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 0.6s 0.4s forwards;
+        }
+        
+        .chapter-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeIn 0.5s 0.8s forwards;
+        }
+        
+        .chapter-continue {
+            margin-top: 3rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent-light);
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeIn 0.5s 1.2s forwards;
+        }
+        
+        .chapter-continue:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* === NARRATIVE SCENE === */
+        .narrative-scene {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        
+        .scene-visual {
+            height: 45vh;
+            min-height: 300px;
+            background: var(--bg-medium);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scene-visual::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(transparent, var(--bg-dark));
+            pointer-events: none;
+        }
+        
+        .visual-content {
+            font-size: 8rem;
+            opacity: 0.8;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .visual-stat {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--danger);
+            text-shadow: 0 0 60px rgba(239,68,68,0.5);
+        }
+        
+        .visual-overlay {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.1) 2px,
+                rgba(0,0,0,0.1) 4px
+            );
+            pointer-events: none;
+        }
+        
+        .scene-content {
+            flex: 1;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .scene-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .scene-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .scene-text .highlight {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        .scene-text .accent {
+            color: var(--accent-light);
+        }
+        
+        .scene-source {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 0.75rem 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        .scene-source::before {
+            content: '📰 ';
+        }
+        
+        /* === CHOICES === */
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .choice-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .choice-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+        
+        .choice-btn:hover {
+            border-color: var(--accent);
+            background: rgba(124,58,237,0.1);
+            transform: translateX(5px);
+        }
+        
+        .choice-btn:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .choice-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .choice-content {
+            flex: 1;
+        }
+        
+        .choice-label {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .choice-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        
+        /* === DATA REVEAL === */
+        .data-reveal {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .data-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-medium);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .data-item.critical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--danger);
+        }
+        
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 0.5rem;
+        }
+        
+        .data-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        
+        /* === QUIZ SECTION === */
+        .quiz-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .quiz-option {
+            padding: 1rem 1.25rem;
+            background: var(--bg-medium);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        
+        .quiz-option:hover:not(:disabled) {
+            border-color: var(--accent);
+        }
+        
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(16,185,129,0.1);
+        }
+        
+        .quiz-option.wrong {
+            border-color: var(--danger);
+            background: rgba(239,68,68,0.1);
+        }
+        
+        .quiz-option:disabled {
+            cursor: default;
+        }
+        
+        .quiz-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+            animation: slideUp 0.3s;
+        }
+        
+        .quiz-feedback.correct {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid var(--success);
+        }
+        
+        .quiz-feedback.wrong {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid var(--danger);
+        }
+        
+        /* === REVELATION MOMENT === */
+        .revelation {
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .revelation-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .revelation-stat {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 60px rgba(239,68,68,0.3);
+        }
+        
+        .revelation-label {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+        
+        .revelation-quote {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-left: 3px solid var(--danger);
+            border-radius: 0 12px 12px 0;
+            text-align: left;
+        }
+        
+        .revelation-quote p {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .revelation-quote cite {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-style: normal;
+        }
+        
+        /* === PROGRESS BAR === */
+        .progress-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--bg-medium);
+            z-index: 200;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--danger));
+            transition: width 0.5s ease-out;
+        }
+        
+        /* === ENDING === */
+        #ending {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0510 100%);
+        }
+        
+        .ending-container {
+            max-width: 700px;
+        }
+        
+        .ending-score {
+            margin-bottom: 2rem;
+        }
+        
+        .ending-score-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ending-score-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+        
+        .ending-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .ending-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ending-message {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        
+        .ending-insight {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .ending-insight h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+        
+        .ending-insight ul {
+            list-style: none;
+        }
+        
+        .ending-insight li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .ending-insight li:last-child {
+            border-bottom: none;
+        }
+        
+        .ending-insight li::before {
+            content: '→';
+            color: var(--accent);
+        }
+        
+        .ending-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .ending-btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .ending-btn.primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+        }
+        
+        .ending-btn.primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(124,58,237,0.4);
+        }
+        
+        .ending-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--text-dim);
+            color: var(--text);
+        }
+        
+        .ending-btn.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent-light);
+        }
+        
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .game-stats { gap: 0.75rem; }
+            .stat-item span:not(.stat-icon) { display: none; }
+            .scene-visual { height: 35vh; }
+            .visual-stat { font-size: 4rem; }
+            .data-grid { grid-template-columns: 1fr 1fr; }
+            .data-value { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div class="screen" id="intro">
+    <div class="intro-container">
+        <div class="intro-badge">
+            <span>⚠️</span>
+            <span>Expérience interactive</span>
+        </div>
+        <h1 class="intro-title">SYSTÈME</h1>
+        <p class="intro-subtitle">
+            Une plongée dans les coulisses d'une démocratie qui vacille.<br>
+            Particratie, blocages, extrêmes, défiance : 7 chapitres pour comprendre.<br>
+            Basé sur des faits réels. Janvier 2026.
+        </p>
+        <button class="intro-cta" onclick="startGame()">
+            <span>Commencer l'expérience</span>
+            <span>→</span>
+        </button>
+        <p class="intro-note">
+            ⏱️ Durée : 12-18 minutes · 📊 Sources vérifiées (Ipsos, IWEPS, Commission UE, Revue Politique)
+        </p>
+    </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div class="screen hidden" id="game">
+    <header class="game-header">
+        <div class="game-logo">SYSTÈME</div>
+        <div class="game-stats">
+            <div class="stat-item">
+                <span class="stat-icon">🧠</span>
+                <span>Lucidité:</span>
+                <span class="stat-value" id="lucidityScore">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">📍</span>
+                <span class="stat-value" id="chapterIndicator">1/7</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="game-body" id="gameBody">
+        <!-- Dynamic content -->
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+</div>
+
+<!-- ENDING SCREEN -->
+<div class="screen hidden" id="ending">
+    <div class="ending-container" id="endingContent">
+        <!-- Dynamic content -->
+    </div>
+</div>
+
+<script>
+// === GAME STATE ===
+const state = {
+    currentChapter: 0,
+    currentScene: 0,
+    lucidity: 0,
+    choices: [],
+    quizCorrect: 0
+};
+
+// === CHAPTERS DATA ===
+const chapters = [
+    {
+        title: "La Façade",
+        subtitle: "Bienvenue dans la particratie",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Quelque part en Belgique · 2025",
+                visual: "🎭",
+                text: `Vous êtes citoyen belge. Vous votez. Vous payez vos impôts. Vous respectez les règles.
+
+Mais avez-vous déjà eu l'impression que <span class="highlight">votre voix ne compte pas vraiment</span> ?
+
+Que les décisions se prennent ailleurs ? Dans des couloirs ? Des palais ? Des réunions secrètes entre présidents de partis ?
+
+Ce n'est pas une impression.`,
+                choices: [
+                    {
+                        icon: "👁️",
+                        label: "Montrez-moi",
+                        desc: "Découvrir le système",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "narrative",
+                location: "Définition",
+                visual: "📖",
+                text: `En Belgique, on appelle ça la <span class="accent">PARTICRATIE</span>.
+
+Un système où le vrai pouvoir appartient aux partis politiques — pas aux institutions, pas aux citoyens.
+
+Les présidents de partis négocient en coulisses. Les accords se font à huis clos. Le citoyen vote, puis... attend.
+
+<span class="highlight">"La Belgique est aujourd'hui plus que jamais une particratie, une démocratie de façade."</span>`,
+                source: "Revue Politique, analyse institutionnelle",
+                choices: [
+                    {
+                        icon: "📜",
+                        label: "Depuis quand ?",
+                        desc: "Remonter aux origines",
+                        next: 2
+                    }
+                ]
+            },
+            {
+                type: "revelation",
+                icon: "⚖️",
+                stat: "1831",
+                label: "La Constitution belge interdit tout référendum national",
+                quote: {
+                    text: "La Constitution de 1831 a explicitement exclu toute consultation populaire directe, instituant un principe de représentation exclusive. Cette tradition de méfiance élitiste envers le suffrage universel perdure de nos jours.",
+                    author: "Analyse constitutionnelle"
+                },
+                continueText: "Passons au présent"
+            }
+        ]
+    },
+    {
+        title: "Le Blocage",
+        subtitle: "Bruxelles, capitale d'un vide",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Bruxelles-Capitale · Décembre 2025",
+                visual: "🏛️",
+                visualStat: "542",
+                text: `Vous ouvrez les yeux sur une ville qui fonctionne. Les trams circulent, les cafés servent, les bureaux s'allument.
+
+Mais <span class="highlight">depuis 542 jours</span>, la Région de Bruxelles-Capitale n'a pas de gouvernement. 
+
+Un record. Le plus long blocage politique jamais enregistré pour une entité fédérée en Belgique. Plus long même que les <span class="accent">541 jours</span> de crise fédérale de 2010-2011.`,
+                source: "RTS, 3 décembre 2025",
+                choices: [
+                    {
+                        icon: "🤔",
+                        label: "Comment est-ce possible ?",
+                        desc: "Explorer les causes du blocage",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "data",
+                location: "Parlement bruxellois",
+                title: "L'équation impossible",
+                text: "89 députés. 14 partis. Et une règle qui bloque tout : la <span class='highlight'>double majorité linguistique</span>. Il faut une majorité chez les francophones ET chez les néerlandophones.",
+                data: [
+                    { value: "89", label: "députés élus", critical: false },
+                    { value: "14", label: "partis représentés", critical: false },
+                    { value: "7", label: "tentatives échouées", critical: true },
+                    { value: "0", label: "accord trouvé", critical: true }
+                ],
+                source: "RTBF, décembre 2025",
+                continueText: "Et ce n'est pas nouveau..."
+            },
+            {
+                type: "quiz",
+                question: "Combien de jours a duré la formation du gouvernement fédéral en 2010-2011 ? (Record mondial)",
+                options: ["328 jours", "412 jours", "493 jours", "541 jours"],
+                correct: 3,
+                explanation: "541 jours sans gouvernement fédéral ! Un record mondial. Depuis, la Belgique détient ce titre peu enviable. Et en 2024, la formation a encore pris près de 8 mois.",
+                source: "Wikipedia, formations gouvernementales belges"
+            },
+            {
+                type: "revelation",
+                icon: "💀",
+                stat: "1,2M",
+                label: "d'habitants sans représentation régionale",
+                quote: {
+                    text: "Ce blocage prolongé est indécent, puéril, et profondément inquiétant.",
+                    author: "Éditorial de La Libre Belgique"
+                },
+                continueText: "Passons au niveau fédéral"
+            }
+        ]
+    },
+    {
+        title: "Les Extrêmes",
+        subtitle: "35% d'exclus du pouvoir",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Résultats électoraux · Juin 2024",
+                visual: "📊",
+                text: `Les élections de juin 2024 ont confirmé une tendance de fond.
+
+En Flandre, le <span class="highlight">Vlaams Belang</span> (extrême droite) est devenu le deuxième parti, avec près de 20% des voix.
+
+En Wallonie et à Bruxelles, le <span class="highlight">PTB</span> (extrême gauche) a consolidé sa présence avec 15 sièges fédéraux.
+
+Ces partis captent le vote des déçus du système. Ils incarnent un refus du "système" en bloc.`,
+                source: "Résultats électoraux 2024",
+                choices: [
+                    {
+                        icon: "🚫",
+                        label: "Sont-ils au pouvoir ?",
+                        desc: "Découvrir le cordon sanitaire",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "narrative",
+                location: "Le cordon sanitaire",
+                visual: "🧱",
+                text: `Non. Aucun de ces partis n'a accès au pouvoir.
+
+Le <span class="accent">cordon sanitaire</span> — un accord tacite entre partis traditionnels — exclut le Vlaams Belang de toute coalition.
+
+Le PTB est également isolé par les autres partis.
+
+<span class="highlight">Résultat : environ 35% de l'électorat</span> (20% VB en Flandre + 15% PTB en Wallonie) se retrouve sans représentation gouvernementale.`,
+                source: "Analyse politique, 2024",
+                choices: [
+                    {
+                        icon: "🤔",
+                        label: "Est-ce démocratique ?",
+                        desc: "Peser le pour et le contre",
+                        next: 2
+                    }
+                ]
+            },
+            {
+                type: "quiz",
+                question: "Quelle fraction de l'électorat belge vote pour des partis exclus du pouvoir (VB + PTB) ?",
+                options: ["Environ 10%", "Environ 20%", "Environ 35%", "Environ 50%"],
+                correct: 2,
+                explanation: "Environ 35% des électeurs votent pour des partis qui n'ont aucune chance d'accéder au pouvoir (Vlaams Belang ~20% en Flandre, PTB ~15% en Wallonie). Ces électeurs peuvent ressentir un sentiment d'exclusion renforcé.",
+                source: "Résultats électoraux 2024"
+            },
+            {
+                type: "narrative",
+                location: "Le cercle vicieux",
+                visual: "🔄",
+                text: `C'est un paradoxe démocratique.
+
+D'un côté : le cordon sanitaire protège contre l'extrême droite au pouvoir.
+
+De l'autre : <span class="highlight">il renforce le sentiment d'exclusion</span> des électeurs de ces partis — et peut alimenter leur radicalisation.
+
+Certains élus traditionnels s'interrogent même sur l'extension du cordon sanitaire à l'extrême gauche, ce qui accentuerait encore la polarisation.`,
+                source: "Analyse politique",
+                choices: [
+                    {
+                        icon: "🔀",
+                        label: "Et les coalitions ?",
+                        desc: "Voir les alliances improbables",
+                        next: 3
+                    }
+                ]
+            },
+            {
+                type: "revelation",
+                icon: "🤝",
+                stat: "N-VA + PS",
+                label: "Nationalistes flamands et socialistes gouvernent ensemble... en Flandre",
+                quote: {
+                    text: "Pour maintenir l'extrême droite hors du pouvoir, la N-VA s'est alliée aux socialistes de Vooruit. C'est la première fois qu'un parti nationaliste de droite gouverne avec la gauche social-démocrate en Flandre. Cette alliance contre-nature a failli échouer à plusieurs reprises.",
+                    author: "Analyse des coalitions régionales"
+                },
+                continueText: "Passons au niveau fédéral"
+            }
+        ]
+    },
+    {
+        title: "Arizona",
+        subtitle: "La politique pré-cuite",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Rue de la Loi · Février 2025",
+                visual: "🏢",
+                text: `Après <span class="highlight">239 jours</span> de négociations, le gouvernement "Arizona" voit enfin le jour. 
+
+Une coalition inédite : N-VA, MR, Les Engagés, Vooruit, CD&V.
+
+Bart De Wever devient le <span class="accent">premier Premier ministre ouvertement nationaliste flamand</span> du pays.
+
+Mais dès le premier jour, un détail saute aux yeux...`,
+                choices: [
+                    {
+                        icon: "👀",
+                        label: "Quel détail ?",
+                        desc: "Découvrir ce qui cloche",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "quiz",
+                question: "Combien de femmes siègent au Kern (le conseil des ministres restreint) ?",
+                options: ["3 femmes", "2 femmes", "1 femme", "0 femme"],
+                correct: 3,
+                explanation: "Le Kern du gouvernement De Wever est 100% masculin. La ministre de la Justice elle-même a déclaré : \"Ce n'est pas l'image qu'on doit donner en 2025.\"",
+                source: "La Libre, février 2025"
+            },
+            {
+                type: "narrative",
+                location: "L'art du compromis",
+                visual: "⚖️",
+                text: `L'accord Arizona est un <span class="highlight">donnant-donnant</span> où chaque parti a dû « raboter certaines ambitions ».
+
+<span class="accent">Pour le MR libéral :</span> une taxe de 10% sur les plus-values financières — un revers idéologique.
+
+<span class="accent">Pour les socialistes de Vooruit :</span> la limitation de la durée des allocations chômage — un coup dur.
+
+Le résultat ? Un accord <span class="highlight">si verrouillé</span> qu'il donne l'impression d'une « politique pré-cuite », peu adaptable aux imprévus.`,
+                source: "Fondation Hanns Seidel, analyse 2025",
+                choices: [
+                    {
+                        icon: "💰",
+                        label: "Et le budget ?",
+                        desc: "Voir la situation financière",
+                        next: 3
+                    }
+                ]
+            },
+            {
+                type: "narrative",
+                location: "Novembre 2025",
+                visual: "💰",
+                visualStat: "0€",
+                text: `Neuf mois plus tard, le gouvernement n'a toujours pas réussi à voter son budget.
+
+Le Premier ministre se rend au Palais Royal. Son message au Roi : <span class="highlight">"Aucun accord n'a pu être trouvé."</span>
+
+La Belgique entre en 2026 sous le régime des <span class="accent">douzièmes provisoires</span>.
+
+Pendant ce temps, les syndicats avertissent : les mesures d'austérité risquent de déclencher des grèves massives.`,
+                source: "L'Avenir, 7 novembre 2025",
+                choices: [
+                    {
+                        icon: "📉",
+                        label: "L'austérité",
+                        desc: "Voir les chiffres",
+                        next: 4
+                    }
+                ]
+            },
+            {
+                type: "data",
+                title: "Le plan d'austérité Arizona",
+                text: "Les décisions prises « tombent d'en haut, sous contrainte extérieure » — beaucoup de citoyens ont le sentiment que ces mesures n'émanent pas d'un débat démocratique :",
+                data: [
+                    { value: "23,3 Mds€", label: "d'économies d'ici 2029", critical: true },
+                    { value: "-44%", label: "aide alimentaire (27→15M€)", critical: true },
+                    { value: "3e", label: "gouvernement à échouer la réforme fiscale", critical: false },
+                    { value: "0", label: "majorité aux 2/3 pour réformer l'État", critical: true }
+                ],
+                source: "Accord de coalition Arizona / SGI Network",
+                continueText: "Et la rue réagit..."
+            }
+        ]
+    },
+    {
+        title: "La Rue",
+        subtitle: "140 000 voix ignorées",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Bruxelles · 14 octobre 2025",
+                visual: "✊",
+                text: `Un fleuve humain déferle de la Gare du Nord à la Gare du Midi.
+
+<span class="highlight">140 000 personnes</span> selon les syndicats. 80 000 selon la police.
+
+Dans tous les cas : la plus grande manifestation depuis des années.
+
+Profs, infirmiers, ouvriers, artistes. Tous unis contre les mesures Arizona.`,
+                source: "FGTB / RTBF, octobre 2025",
+                choices: [
+                    {
+                        icon: "📢",
+                        label: "Que réclament-ils ?",
+                        desc: "Écouter leurs revendications",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "data",
+                title: "Les revendications",
+                text: "La colère porte sur des mesures concrètes :",
+                data: [
+                    { value: "Chômage", label: "Limitation dans le temps", critical: true },
+                    { value: "Pensions", label: "Réforme défavorable aux femmes", critical: true },
+                    { value: "Santé", label: "Pression sur les malades", critical: false },
+                    { value: "Salaires", label: "Blocage malgré l'inflation", critical: false }
+                ],
+                continueText: "Quelle a été la réponse du gouvernement ?"
+            },
+            {
+                type: "quiz",
+                question: "Comment le Premier ministre a-t-il répondu aux 140 000 manifestants ?",
+                options: [
+                    "Il a proposé un dialogue",
+                    "Il a modifié certaines mesures",
+                    "Silence total",
+                    "Il a démissionné"
+                ],
+                correct: 2,
+                explanation: "Selon la FGTB : \"En retour ? Silence total de la part du Premier ministre De Wever. Un mépris et un manque de respect qui ne passent pas.\"",
+                source: "FGTB, novembre 2025"
+            },
+            {
+                type: "narrative",
+                location: "24-26 novembre 2025",
+                visual: "🛑",
+                text: `Face au silence, les syndicats durcissent le ton.
+
+<span class="highlight">Trois jours de grève générale.</span>
+
+Lundi : transports paralysés.
+Mardi : fonction publique à l'arrêt.
+Mercredi : le privé rejoint le mouvement.
+
+Aéroports fermés. Trains annulés. Écoles en grève.
+
+Le pays est à l'arrêt. Mais le gouvernement... tient.`,
+                source: "Rapports de Force, 28 novembre 2025",
+                choices: [
+                    {
+                        icon: "🤷",
+                        label: "Pourquoi ça ne change rien ?",
+                        desc: "Comprendre le blocage",
+                        next: "chapter"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        title: "La Confiance",
+        subtitle: "71% de défiance",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Sondage Ipsos · Octobre 2025",
+                visual: "📊",
+                text: `L'institut Ipsos interroge les Belges sur leur confiance dans la classe politique.
+
+Les résultats tombent.
+
+<span class="highlight">71% des personnes interrogées déclarent ne pas avoir confiance dans la classe politique.</span>
+
+Plus d'un Belge sur quatre n'a même <span class="accent">"pas du tout confiance"</span> dans ses élus.`,
+                source: "RTL Info / Ipsos, octobre 2025",
+                choices: [
+                    {
+                        icon: "🎤",
+                        label: "Que disent les citoyens ?",
+                        desc: "Écouter leurs témoignages",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "narrative",
+                location: "Micro-trottoir · Belgique",
+                visual: "💬",
+                text: `<span class="accent">"Les politiciens ne sont pas dans la réalité du terrain."</span>
+
+<span class="accent">"On a l'impression de ne pas être écouté."</span>
+
+<span class="accent">"Ce qu'on dit entre par une oreille et ressort par l'autre."</span>
+
+<span class="accent">"Il y a trop d'infos… Je ne suis pas forcément en confiance avec tout ce monde-là."</span>
+
+Ce ne sont pas des militants. Ce sont des citoyens ordinaires. Et ils décrivent tous la même chose : <span class="highlight">un système devenu illisible, inaccessible, sourd.</span>`,
+                source: "Témoignages recueillis par RTL Info, 2025",
+                choices: [
+                    {
+                        icon: "📈",
+                        label: "Et aux urnes ?",
+                        desc: "Voir l'impact électoral",
+                        next: 2
+                    }
+                ]
+            },
+            {
+                type: "quiz",
+                question: "Aux élections du 9 juin 2024, combien de Belges ne se sont PAS rendus aux urnes (malgré le vote obligatoire) ?",
+                options: ["250 000", "500 000", "Plus d'un million", "2 millions"],
+                correct: 2,
+                explanation: "Plus d'un million d'électeurs belges ne se sont pas rendus aux urnes — du jamais vu. Qu'un électeur sur huit boude le scrutin alors qu'il est obligatoire illustre l'ampleur du désengagement civique.",
+                source: "Analyse électorale, juin 2024"
+            },
+            {
+                type: "data",
+                title: "Le désengagement en chiffres",
+                text: "Le Baromètre social confirme l'effondrement de la confiance :",
+                data: [
+                    { value: "71%", label: "n'ont pas confiance dans les politiques", critical: true },
+                    { value: "19%", label: "confiance dans les hommes politiques (Wallonie)", critical: true },
+                    { value: "78%", label: "\"Les élus parlent trop, agissent peu\"", critical: false },
+                    { value: "1M+", label: "abstentionnistes en juin 2024", critical: true }
+                ],
+                source: "IWEPS / Ipsos 2023-2025",
+                continueText: "Mais le plus troublant est ailleurs..."
+            },
+            {
+                type: "revelation",
+                icon: "⚡",
+                stat: "7/10",
+                label: "Belges veulent un pouvoir plus centralisé",
+                quote: {
+                    text: "Ce désir d'autorité n'est pas un rejet de la démocratie. C'est l'expression d'une frustration : les personnes interrogées veulent être mieux consultées, mieux écoutées. Le système leur paraît diffus et insaisissable.",
+                    author: "Fondation Ceci n'est pas une crise"
+                },
+                continueText: "Comprendre ce paradoxe"
+            },
+            {
+                type: "narrative",
+                location: "Le paradoxe démocratique",
+                visual: "🔄",
+                text: `C'est le résultat le plus troublant de l'étude.
+
+Les citoyens ne veulent pas la fin de la démocratie. Ils veulent une démocratie <span class="highlight">qui fonctionne</span>.
+
+<span class="accent">"Nous voulons être entendus, pris en considération. Et s'il faut passer par quelqu'un qui a un pouvoir plus direct et rapide, faisons-le."</span>
+
+Fatigués par l'opacité, l'inaction, les compromis illisibles — certains en viennent à souhaiter un "homme fort". Non par goût de l'autoritarisme, mais par <span class="highlight">désespoir d'efficacité</span>.
+
+C'est un signal d'alarme.`,
+                source: "Vincent de Coorebyter, politologue",
+                choices: [
+                    {
+                        icon: "🔍",
+                        label: "Voir les rouages",
+                        desc: "Comprendre pourquoi ça bloque",
+                        next: "chapter"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        title: "L'Ombre",
+        subtitle: "Les rouages invisibles",
+        scenes: [
+            {
+                type: "narrative",
+                location: "Palais Royal · Bruxelles",
+                visual: "👑",
+                text: `En Belgique, quand aucun gouvernement ne peut se former, c'est le <span class="highlight">Roi</span> qui intervient.
+
+Il nomme des "informateurs", des "formateurs". Il reçoit les présidents de partis en audience. Il pèse — en coulisses — sur les combinaisons possibles.
+
+En 2024-2025, le Roi Philippe a reconduit Bart De Wever <span class="accent">à plusieurs reprises</span> dans sa mission de formateur, faute d'alternative viable.
+
+C'est lui qui, in fine, a orienté vers la seule coalition possible : l'Arizona.`,
+                source: "Analyse institutionnelle, La Libre 2025",
+                choices: [
+                    {
+                        icon: "🤔",
+                        label: "C'est démocratique ?",
+                        desc: "Questionner le système",
+                        next: 1
+                    }
+                ]
+            },
+            {
+                type: "narrative",
+                location: "Le processus opaque",
+                visual: "🚪",
+                text: `Les discussions décisives se tiennent entre quelques acteurs seulement : le Roi et une poignée de négociateurs.
+
+<span class="highlight">Pas de compte rendu public.</span>
+<span class="highlight">Pas de débat parlementaire.</span>
+<span class="highlight">Pas de consultation citoyenne.</span>
+
+Jusqu'au dévoilement final d'un accord de gouvernement souvent très volumineux — que personne n'a lu à part les négociateurs.
+
+<span class="accent">Le citoyen belge n'a jamais son mot à dire entre les élections.</span>`,
+                source: "Revue Politique, analyse constitutionnelle",
+                choices: [
+                    {
+                        icon: "🏛️",
+                        label: "Et les institutions ?",
+                        desc: "Voir la complexité",
+                        next: 2
+                    }
+                ]
+            },
+            {
+                type: "quiz",
+                question: "Pour certaines décisions (santé, climat, mobilité), combien de ministres différents doivent donner leur accord ?",
+                options: ["2-3 ministres", "4-5 ministres", "8-9 ministres", "Aucun, c'est automatique"],
+                correct: 2,
+                explanation: "La structure fédérale belge est si complexe que certaines politiques requièrent l'accord de 8 ou 9 ministres différents ! Cela conduit souvent à des mesures non coordonnées, voire contradictoires selon les régions.",
+                source: "Rapport SGI Network 2024"
+            },
+            {
+                type: "data",
+                title: "Le mille-feuille institutionnel",
+                text: "La Belgique est engluée dans ce qu'un rapport d'experts appelle une \"adaptation lente et laborieuse par le compromis\" :",
+                data: [
+                    { value: "6", label: "gouvernements différents", critical: false },
+                    { value: "8-9", label: "ministres par décision complexe", critical: true },
+                    { value: "0", label: "réforme de l'État avant 2029", critical: true },
+                    { value: "∞", label: "compromis à trouver", critical: false }
+                ],
+                source: "SGI Network / Commission européenne",
+                continueText: "Et le lobbying ?"
+            },
+            {
+                type: "narrative",
+                location: "Commission européenne · Rapport 2025",
+                visual: "🕵️",
+                text: `Chaque année, la Commission européenne publie un rapport sur l'État de droit.
+
+Pour la Belgique, les recommandations sont claires — et <span class="highlight">répétées depuis des années</span> :
+
+• Achever la réforme législative sur le lobbying
+• Établir un registre de transparence contraignant
+• Adopter des règles sur le "rétro-pantouflage"
+• Mettre fin au népotisme et aux dynasties politiques
+
+Des observateurs proposent de nouvelles règles pour <span class="accent">"mettre fin à la reproduction héréditaire du pouvoir"</span>.`,
+                source: "Commission européenne + Revue Politique",
+                choices: [
+                    {
+                        icon: "🎯",
+                        label: "Bilan final",
+                        desc: "Voir le diagnostic complet",
+                        next: "ending"
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+// === RENDER FUNCTIONS ===
+function renderChapterTransition(chapter) {
+    return `
+        <div class="chapter-transition">
+            <div class="chapter-number">CHAPITRE ${state.currentChapter + 1}</div>
+            <h1 class="chapter-title">${chapter.title}</h1>
+            <p class="chapter-subtitle">${chapter.subtitle}</p>
+            <button class="chapter-continue" onclick="nextScene()">Continuer →</button>
+        </div>
+    `;
+}
+
+function renderNarrativeScene(scene) {
+    const choicesHtml = scene.choices ? scene.choices.map((choice, i) => `
+        <button class="choice-btn" onclick="makeChoice(${i}, '${choice.next}')">
+            <span class="choice-icon">${choice.icon}</span>
+            <div class="choice-content">
+                <div class="choice-label">${choice.label}</div>
+                <div class="choice-desc">${choice.desc}</div>
+            </div>
+        </button>
+    `).join('') : `
+        <button class="choice-btn" onclick="nextScene()">
+            <span class="choice-icon">→</span>
+            <div class="choice-content">
+                <div class="choice-label">Continuer</div>
+            </div>
+        </button>
+    `;
+    
+    return `
+        <div class="narrative-scene animate-fade">
+            <div class="scene-visual">
+                ${scene.visualStat ? 
+                    `<div class="visual-stat">${scene.visualStat}</div>` :
+                    `<div class="visual-content">${scene.visual}</div>`
+                }
+                <div class="visual-overlay"></div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-location">📍 ${scene.location}</div>
+                <div class="scene-text">${scene.text}</div>
+                ${scene.source ? `<div class="scene-source">${scene.source}</div>` : ''}
+                <div class="choices-container">
+                    ${choicesHtml}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderDataScene(scene) {
+    return `
+        <div class="narrative-scene animate-fade">
+            <div class="scene-content" style="padding-top: 3rem;">
+                ${scene.location ? `<div class="scene-location">📍 ${scene.location}</div>` : ''}
+                ${scene.title ? `<h2 style="font-size: 1.8rem; margin-bottom: 1rem;">${scene.title}</h2>` : ''}
+                ${scene.text ? `<div class="scene-text">${scene.text}</div>` : ''}
+                
+                <div class="data-reveal">
+                    <div class="data-grid">
+                        ${scene.data.map(d => `
+                            <div class="data-item ${d.critical ? 'critical' : ''}">
+                                <div class="data-value">${d.value}</div>
+                                <div class="data-label">${d.label}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                ${scene.source ? `<div class="scene-source">${scene.source}</div>` : ''}
+                
+                <button class="choice-btn" onclick="nextScene()">
+                    <span class="choice-icon">→</span>
+                    <div class="choice-content">
+                        <div class="choice-label">${scene.continueText || 'Continuer'}</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function renderRevelationScene(scene) {
+    return `
+        <div class="narrative-scene animate-fade">
+            <div class="revelation">
+                <div class="revelation-icon">${scene.icon}</div>
+                <div class="revelation-stat">${scene.stat}</div>
+                <div class="revelation-label">${scene.label}</div>
+                ${scene.quote ? `
+                    <div class="revelation-quote">
+                        <p>"${scene.quote.text}"</p>
+                        <cite>— ${scene.quote.author}</cite>
+                    </div>
+                ` : ''}
+            </div>
+            <div class="scene-content">
+                <button class="choice-btn" onclick="nextScene()">
+                    <span class="choice-icon">→</span>
+                    <div class="choice-content">
+                        <div class="choice-label">${scene.continueText || 'Continuer'}</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function renderQuizScene(scene) {
+    return `
+        <div class="narrative-scene animate-fade">
+            <div class="scene-content" style="padding-top: 3rem;">
+                <div class="quiz-section">
+                    <div class="quiz-question">${scene.question}</div>
+                    <div class="quiz-options">
+                        ${scene.options.map((opt, i) => `
+                            <button class="quiz-option" onclick="answerQuiz(${i}, ${scene.correct})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-feedback" id="quizFeedback">
+                        <strong id="feedbackTitle"></strong>
+                        <p id="feedbackText"></p>
+                        ${scene.source ? `<small style="color: var(--text-dim);">Source: ${scene.source}</small>` : ''}
+                    </div>
+                </div>
+                <button class="choice-btn hidden" id="quizContinue" onclick="nextScene()">
+                    <span class="choice-icon">→</span>
+                    <div class="choice-content">
+                        <div class="choice-label">Continuer</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// === GAME LOGIC ===
+function startGame() {
+    document.getElementById('intro').classList.add('hidden');
+    document.getElementById('game').classList.remove('hidden');
+    showChapterTransition();
+}
+
+function showChapterTransition() {
+    const chapter = chapters[state.currentChapter];
+    document.getElementById('gameBody').innerHTML = renderChapterTransition(chapter);
+    updateProgress();
+}
+
+function nextScene() {
+    state.currentScene++;
+    const chapter = chapters[state.currentChapter];
+    
+    if (state.currentScene >= chapter.scenes.length) {
+        // Next chapter
+        state.currentChapter++;
+        state.currentScene = 0;
+        
+        if (state.currentChapter >= chapters.length) {
+            showEnding();
+            return;
+        }
+        
+        showChapterTransition();
+    } else {
+        renderCurrentScene();
+    }
+    
+    updateProgress();
+}
+
+function renderCurrentScene() {
+    const chapter = chapters[state.currentChapter];
+    const scene = chapter.scenes[state.currentScene];
+    
+    let html = '';
+    switch (scene.type) {
+        case 'narrative':
+            html = renderNarrativeScene(scene);
+            break;
+        case 'data':
+            html = renderDataScene(scene);
+            break;
+        case 'revelation':
+            html = renderRevelationScene(scene);
+            break;
+        case 'quiz':
+            html = renderQuizScene(scene);
+            break;
+    }
+    
+    document.getElementById('gameBody').innerHTML = html;
+    document.getElementById('chapterIndicator').textContent = `${state.currentChapter + 1}/${chapters.length}`;
+}
+
+function makeChoice(index, next) {
+    state.choices.push(index);
+    state.lucidity += 10;
+    updateLucidity();
+    
+    if (next === 'chapter') {
+        state.currentChapter++;
+        state.currentScene = 0;
+        if (state.currentChapter >= chapters.length) {
+            showEnding();
+        } else {
+            showChapterTransition();
+        }
+    } else if (next === 'ending') {
+        showEnding();
+    } else {
+        state.currentScene = next;
+        renderCurrentScene();
+    }
+    
+    updateProgress();
+}
+
+function answerQuiz(selected, correct) {
+    const options = document.querySelectorAll('.quiz-option');
+    const feedback = document.getElementById('quizFeedback');
+    const feedbackTitle = document.getElementById('feedbackTitle');
+    const feedbackText = document.getElementById('feedbackText');
+    const continueBtn = document.getElementById('quizContinue');
+    
+    options.forEach((opt, i) => {
+        opt.disabled = true;
+        if (i === correct) opt.classList.add('correct');
+        if (i === selected && i !== correct) opt.classList.add('wrong');
+    });
+    
+    const scene = chapters[state.currentChapter].scenes[state.currentScene];
+    
+    if (selected === correct) {
+        state.quizCorrect++;
+        state.lucidity += 20;
+        feedback.className = 'quiz-feedback show correct';
+        feedbackTitle.textContent = '✓ Correct !';
+    } else {
+        state.lucidity += 5;
+        feedback.className = 'quiz-feedback show wrong';
+        feedbackTitle.textContent = '✗ Pas tout à fait...';
+    }
+    
+    feedbackText.textContent = scene.explanation;
+    continueBtn.classList.remove('hidden');
+    updateLucidity();
+}
+
+function updateLucidity() {
+    document.getElementById('lucidityScore').textContent = state.lucidity;
+}
+
+function updateProgress() {
+    const totalScenes = chapters.reduce((sum, ch) => sum + ch.scenes.length + 1, 0);
+    const currentProgress = chapters.slice(0, state.currentChapter).reduce((sum, ch) => sum + ch.scenes.length + 1, 0) + state.currentScene + 1;
+    const percentage = (currentProgress / totalScenes) * 100;
+    document.getElementById('progressBar').style.width = `${percentage}%`;
+}
+
+function showEnding() {
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('ending').classList.remove('hidden');
+    
+    const maxLucidity = 200 + (chapters.reduce((sum, ch) => sum + ch.scenes.filter(s => s.type === 'quiz').length, 0) * 20);
+    const percentage = Math.round((state.lucidity / maxLucidity) * 100);
+    
+    let badge, title, message;
+    if (percentage >= 60) {
+        badge = "🏆 Sentinelle Démocratique";
+        title = "Vous avez percé la façade";
+        message = "Vous avez vu ce que beaucoup refusent de voir : un système qui fait illusion. Pas une dictature, mais pas non plus une démocratie pleinement fonctionnelle. Un entre-deux dangereux.";
+    } else if (percentage >= 35) {
+        badge = "📊 Citoyen Éveillé";
+        title = "Vous commencez à voir clair";
+        message = "Les rouages du système vous sont désormais plus visibles. Vous comprenez pourquoi tant de citoyens se sentent déconnectés du pouvoir.";
+    } else {
+        badge = "🌱 En éveil";
+        title = "Un premier pas important";
+        message = "Ces informations étaient peut-être nouvelles pour vous. C'est normal — le système est conçu pour rester opaque. L'important, c'est d'avoir commencé à regarder.";
+    }
+    
+    document.getElementById('endingContent').innerHTML = `
+        <div class="ending-score">
+            <div class="ending-score-label">Score de lucidité</div>
+            <div class="ending-score-value">${state.lucidity}</div>
+        </div>
+        <div class="ending-badge">${badge}</div>
+        <h1 class="ending-title">${title}</h1>
+        <p class="ending-message">${message}</p>
+        
+        <div class="ending-insight">
+            <h3>📌 Les 7 révélations de votre parcours :</h3>
+            <ul>
+                <li><strong>La particratie</strong> : le vrai pouvoir appartient aux partis, pas aux citoyens. Aucun référendum possible depuis 1831.</li>
+                <li><strong>542+ jours</strong> sans gouvernement à Bruxelles — record mondial pour une entité fédérée.</li>
+                <li><strong>71% des Belges</strong> n'ont pas confiance dans la classe politique (Ipsos 2025).</li>
+                <li><strong>35% des électeurs</strong> votent pour des partis exclus du pouvoir (Vlaams Belang + PTB).</li>
+                <li><strong>1 million+</strong> d'abstentionnistes aux élections de juin 2024 — malgré le vote obligatoire.</li>
+                <li><strong>Le paradoxe</strong> : 7 Belges sur 10 veulent un pouvoir centralisé — non par autoritarisme, mais par désespoir d'efficacité.</li>
+                <li><strong>La "politique pré-cuite"</strong> : des accords si verrouillés qu'ils échappent au débat démocratique.</li>
+            </ul>
+        </div>
+        
+        <div class="ending-insight" style="border-color: var(--warning); margin-top: 1.5rem;">
+            <h3 style="color: var(--warning);">🌊 Les "fleuves souterrains" du malaise</h3>
+            <p style="font-size: 0.95rem; margin-bottom: 1rem;">
+                Les Gilets jaunes en 2018-2019. Les flambées complotistes pendant la pandémie. 
+                Les grèves générales de 2025. Ce sont tous des <strong>symptômes d'une même crise de confiance</strong>.
+            </p>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">
+                L'impression que la démocratie belge, dans sa forme actuelle, n'apporte plus de réponses claires aux préoccupations populaires.
+            </p>
+        </div>
+        
+        <div class="ending-insight" style="border-color: var(--danger); margin-top: 1.5rem;">
+            <h3 style="color: var(--danger);">⚠️ Le diagnostic final</h3>
+            <p style="font-style: italic; margin-bottom: 1rem;">
+                "La Belgique est aujourd'hui plus que jamais une particratie, une démocratie de façade, où le citoyen n'a qu'un pouvoir formel."
+            </p>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+                Le tableau dressé est celui d'un <strong>système en tension</strong> : élections régulières mais représentation contestée, 
+                institutions formelles mais pouvoir réel opaque, libertés garanties mais parole citoyenne ignorée.
+            </p>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">
+                Faut-il conclure à une "façade démocratique" définitive ? Certains le pensent. D'autres estiment que la Belgique, pays du compromis, 
+                a en elle les ressources pour se réinventer.
+            </p>
+        </div>
+        
+        <p class="ending-message" style="margin-top: 2rem;">
+            <em>"La vigilance citoyenne demeure le meilleur rempart contre une crise profonde du système belge : 
+            c'est en continuant à questionner la transparence, la représentativité et la responsabilité de leurs institutions 
+            que les Belges pourront rétablir la confiance et revivifier leur démocratie."</em>
+            <br><br>
+            Prochaines élections : <strong>2029</strong>.<br>
+            Le sursaut est-il possible ? La réponse vous appartient.
+        </p>
+        
+        <div class="ending-actions">
+            <button class="ending-btn primary" onclick="location.reload()">
+                🔄 Recommencer
+            </button>
+            <button class="ending-btn secondary" onclick="shareResults()">
+                📤 Partager
+            </button>
+        </div>
+    `;
+}
+
+function shareResults() {
+    const text = `🇧🇪 J'ai joué à SYSTÈME — le diagnostic interactif sur la crise démocratique belge.
+
+7 chapitres pour comprendre :
+• 542 jours sans gouvernement à Bruxelles
+• 71% des Belges ne font pas confiance aux politiques
+• 35% votent pour des partis exclus du pouvoir
+• 1 million d'abstentionnistes malgré le vote obligatoire
+• 0 référendum possible depuis 1831
+
+"La Belgique est aujourd'hui plus que jamais une particratie, une démocratie de façade."
+
+Et toi, tu savais ?
+
+🔗 #Belgique #Démocratie #POLiTiKA`;
+    
+    if (navigator.share) {
+        navigator.share({ text });
+    } else {
+        navigator.clipboard.writeText(text);
+        alert('Texte copié dans le presse-papier !');
+    }
+}
+</script>
+</body>
+</html>
