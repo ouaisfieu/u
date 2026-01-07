@@ -1,0 +1,834 @@
+{
+  "version": 2,
+  "updated": "2026-01-07",
+  "meta": {
+    "platform": "KERN / POLiT!KA",
+    "source": "Données officielles Belgium.be, Parlement.be, gouvernements régionaux",
+    "verified": true,
+    "author": "Collectif POLiT!KA"
+  },
+  
+  "partis": [
+    {
+      "id": "nva",
+      "name": "Nieuw-Vlaamse Alliantie",
+      "acronym": "N-VA",
+      "color": "#ffcc00",
+      "ideology": ["nationalisme flamand", "conservatisme", "libéralisme économique"],
+      "region": "Flandre",
+      "president": "Bart De Wever",
+      "founded": 2001,
+      "website": "https://www.n-va.be",
+      "seats_chambre_2024": 24,
+      "coalition_federal_2025": true
+    },
+    {
+      "id": "mr",
+      "name": "Mouvement Réformateur",
+      "acronym": "MR",
+      "color": "#0047ab",
+      "ideology": ["libéralisme", "centre-droit"],
+      "region": "Wallonie-Bruxelles",
+      "president": "Georges-Louis Bouchez",
+      "founded": 2002,
+      "website": "https://www.mr.be",
+      "seats_chambre_2024": 20,
+      "coalition_federal_2025": true
+    },
+    {
+      "id": "vooruit",
+      "name": "Vooruit",
+      "acronym": "Vooruit",
+      "color": "#ff0000",
+      "ideology": ["social-démocratie", "centre-gauche"],
+      "region": "Flandre",
+      "president": "Melissa Depraetere",
+      "founded": 2021,
+      "website": "https://www.vooruit.org",
+      "seats_chambre_2024": 13,
+      "coalition_federal_2025": true
+    },
+    {
+      "id": "engages",
+      "name": "Les Engagés",
+      "acronym": "LE",
+      "color": "#ff6600",
+      "ideology": ["humanisme", "centrisme", "social-libéralisme"],
+      "region": "Wallonie-Bruxelles",
+      "president": "Maxime Prévot",
+      "founded": 2022,
+      "website": "https://www.lesengages.be",
+      "seats_chambre_2024": 14,
+      "coalition_federal_2025": true
+    },
+    {
+      "id": "cdv",
+      "name": "Christen-Democratisch en Vlaams",
+      "acronym": "CD&V",
+      "color": "#ff6600",
+      "ideology": ["démocratie chrétienne", "centre"],
+      "region": "Flandre",
+      "president": "Sammy Mahdi",
+      "founded": 1968,
+      "website": "https://www.cdenv.be",
+      "seats_chambre_2024": 11,
+      "coalition_federal_2025": true
+    },
+    {
+      "id": "ps",
+      "name": "Parti Socialiste",
+      "acronym": "PS",
+      "color": "#e30613",
+      "ideology": ["social-démocratie", "gauche"],
+      "region": "Wallonie-Bruxelles",
+      "president": "Paul Magnette",
+      "founded": 1978,
+      "website": "https://www.ps.be",
+      "seats_chambre_2024": 16,
+      "coalition_federal_2025": false
+    },
+    {
+      "id": "vb",
+      "name": "Vlaams Belang",
+      "acronym": "VB",
+      "color": "#ffe500",
+      "ideology": ["nationalisme flamand", "droite radicale"],
+      "region": "Flandre",
+      "president": "Tom Van Grieken",
+      "founded": 2004,
+      "website": "https://www.vlaamsbelang.org",
+      "seats_chambre_2024": 20,
+      "coalition_federal_2025": false
+    },
+    {
+      "id": "ptb",
+      "name": "Parti du Travail de Belgique",
+      "acronym": "PTB-PVDA",
+      "color": "#d40000",
+      "ideology": ["marxisme", "gauche radicale"],
+      "region": "National",
+      "president": "Raoul Hedebouw",
+      "founded": 1979,
+      "website": "https://www.ptb.be",
+      "seats_chambre_2024": 15,
+      "coalition_federal_2025": false
+    },
+    {
+      "id": "ecolo",
+      "name": "Ecolo",
+      "acronym": "Ecolo",
+      "color": "#00a651",
+      "ideology": ["écologie politique", "centre-gauche"],
+      "region": "Wallonie-Bruxelles",
+      "president": "Samuel Cogolati",
+      "founded": 1980,
+      "website": "https://www.ecolo.be",
+      "seats_chambre_2024": 3,
+      "coalition_federal_2025": false
+    },
+    {
+      "id": "groen",
+      "name": "Groen",
+      "acronym": "Groen",
+      "color": "#83b81a",
+      "ideology": ["écologie politique", "centre-gauche"],
+      "region": "Flandre",
+      "president": "Nadia Naji",
+      "founded": 1982,
+      "website": "https://www.groen.be",
+      "seats_chambre_2024": 6,
+      "coalition_federal_2025": false
+    },
+    {
+      "id": "ovld",
+      "name": "Open Vlaamse Liberalen en Democraten",
+      "acronym": "Open VLD",
+      "color": "#003d6d",
+      "ideology": ["libéralisme", "centre-droit"],
+      "region": "Flandre",
+      "president": "Tom Ongena",
+      "founded": 1992,
+      "website": "https://www.openvld.be",
+      "seats_chambre_2024": 7,
+      "coalition_federal_2025": false
+    },
+    {
+      "id": "defi",
+      "name": "Démocrate Fédéraliste Indépendant",
+      "acronym": "DéFI",
+      "color": "#dc007a",
+      "ideology": ["fédéralisme", "centrisme", "défense francophone"],
+      "region": "Bruxelles",
+      "president": "Sophie Rohonyi",
+      "founded": 2015,
+      "website": "https://www.defi.eu",
+      "seats_chambre_2024": 1,
+      "coalition_federal_2025": false
+    }
+  ],
+  
+  "gouvernements": {
+    "federal": {
+      "name": "Gouvernement De Wever (Arizona)",
+      "formation_date": "2025-02-03",
+      "coalition": ["N-VA", "MR", "Les Engagés", "Vooruit", "CD&V"],
+      "legislature": "56e",
+      "ministres": [
+        {
+          "id": "bart_de_wever",
+          "nom": "De Wever",
+          "prenom": "Bart",
+          "fonction": "Premier Ministre",
+          "parti": "N-VA",
+          "photo": "https://www.premier.be/sites/default/files/styles/minister_large/public/minister/bart_de_wever.jpg",
+          "competences": ["Coordination gouvernementale", "Réformes institutionnelles"]
+        },
+        {
+          "id": "david_clarinval",
+          "nom": "Clarinval",
+          "prenom": "David",
+          "fonction": "Vice-Premier Ministre",
+          "parti": "MR",
+          "competences": ["Emploi", "Économie", "Agriculture"]
+        },
+        {
+          "id": "maxime_prevot",
+          "nom": "Prévot",
+          "prenom": "Maxime",
+          "fonction": "Vice-Premier Ministre",
+          "parti": "Les Engagés",
+          "competences": ["Affaires étrangères", "Affaires européennes", "Coopération au développement"]
+        },
+        {
+          "id": "frank_vandenbroucke",
+          "nom": "Vandenbroucke",
+          "prenom": "Frank",
+          "fonction": "Vice-Premier Ministre",
+          "parti": "Vooruit",
+          "competences": ["Affaires sociales", "Santé publique", "Lutte contre la pauvreté"]
+        },
+        {
+          "id": "vincent_van_peteghem",
+          "nom": "Van Peteghem",
+          "prenom": "Vincent",
+          "fonction": "Vice-Premier Ministre",
+          "parti": "CD&V",
+          "competences": ["Budget", "Simplification administrative"]
+        },
+        {
+          "id": "jan_jambon",
+          "nom": "Jambon",
+          "prenom": "Jan",
+          "fonction": "Vice-Premier Ministre",
+          "parti": "N-VA",
+          "competences": ["Finances", "Pensions", "Loterie nationale", "Institutions culturelles fédérales"]
+        },
+        {
+          "id": "annelies_verlinden",
+          "nom": "Verlinden",
+          "prenom": "Annelies",
+          "fonction": "Ministre",
+          "parti": "CD&V",
+          "competences": ["Justice", "Mer du Nord"]
+        },
+        {
+          "id": "bernard_quintin",
+          "nom": "Quintin",
+          "prenom": "Bernard",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Sécurité", "Intérieur", "Beliris"]
+        },
+        {
+          "id": "theo_francken",
+          "nom": "Francken",
+          "prenom": "Theo",
+          "fonction": "Ministre",
+          "parti": "N-VA",
+          "competences": ["Défense", "Commerce extérieur"]
+        },
+        {
+          "id": "anneleen_van_bossuyt",
+          "nom": "Van Bossuyt",
+          "prenom": "Anneleen",
+          "fonction": "Ministre",
+          "parti": "N-VA",
+          "competences": ["Asile", "Migration", "Intégration sociale", "Grandes villes"]
+        },
+        {
+          "id": "rob_beenders",
+          "nom": "Beenders",
+          "prenom": "Rob",
+          "fonction": "Ministre",
+          "parti": "Vooruit",
+          "competences": ["Protection des consommateurs", "Lutte contre la fraude sociale", "Égalité des chances"]
+        },
+        {
+          "id": "eleonore_simonet",
+          "nom": "Simonet",
+          "prenom": "Eléonore",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Classes moyennes", "Indépendants", "PME"]
+        },
+        {
+          "id": "mathieu_bihet",
+          "nom": "Bihet",
+          "prenom": "Mathieu",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Énergie"]
+        },
+        {
+          "id": "jean_luc_crucke",
+          "nom": "Crucke",
+          "prenom": "Jean-Luc",
+          "fonction": "Ministre",
+          "parti": "Les Engagés",
+          "competences": ["Mobilité", "Climat", "Transition écologique"]
+        },
+        {
+          "id": "vanessa_matz",
+          "nom": "Matz",
+          "prenom": "Vanessa",
+          "fonction": "Ministre",
+          "parti": "Les Engagés",
+          "competences": ["Action publique", "Modernisation", "Entreprises publiques", "Fonction publique", "Numérique"]
+        }
+      ]
+    },
+    
+    "wallon": {
+      "name": "Gouvernement Dolimont (Azur)",
+      "formation_date": "2024-07-15",
+      "coalition": ["MR", "Les Engagés"],
+      "legislature": "2024-2029",
+      "ministres": [
+        {
+          "id": "adrien_dolimont",
+          "nom": "Dolimont",
+          "prenom": "Adrien",
+          "fonction": "Ministre-Président",
+          "parti": "MR",
+          "competences": ["Budget", "Finances", "Recherche", "Bien-être animal"]
+        },
+        {
+          "id": "francois_desquesnes",
+          "nom": "Desquesnes",
+          "prenom": "François",
+          "fonction": "Vice-Président",
+          "parti": "Les Engagés",
+          "competences": ["Aménagement du Territoire", "Travaux publics", "Mobilité", "Pouvoirs locaux"]
+        },
+        {
+          "id": "pierre_yves_jeholet",
+          "nom": "Jeholet",
+          "prenom": "Pierre-Yves",
+          "fonction": "Vice-Président",
+          "parti": "MR",
+          "competences": ["Économie", "Emploi", "Industrie", "Formation"]
+        },
+        {
+          "id": "yves_coppieters",
+          "nom": "Coppieters",
+          "prenom": "Yves",
+          "fonction": "Ministre",
+          "parti": "Les Engagés",
+          "competences": ["Santé", "Environnement", "Économie sociale", "Action sociale", "Handicap"]
+        },
+        {
+          "id": "jacqueline_galant",
+          "nom": "Galant",
+          "prenom": "Jacqueline",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Fonction publique", "Infrastructures sportives", "Simplification administrative"]
+        },
+        {
+          "id": "valerie_lescrenier",
+          "nom": "Lescrenier",
+          "prenom": "Valérie",
+          "fonction": "Ministre",
+          "parti": "Les Engagés",
+          "competences": ["Tourisme", "Patrimoine", "Petite enfance"]
+        },
+        {
+          "id": "cecile_neven",
+          "nom": "Neven",
+          "prenom": "Cécile",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Énergie", "Plan Air-Climat", "Logement", "Aéroports"]
+        },
+        {
+          "id": "anne_catherine_dalcq",
+          "nom": "Dalcq",
+          "prenom": "Anne-Catherine",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Agriculture", "Ruralité"]
+        }
+      ]
+    },
+    
+    "fwb": {
+      "name": "Gouvernement Degryse",
+      "formation_date": "2024-07-16",
+      "coalition": ["MR", "Les Engagés"],
+      "legislature": "2024-2029",
+      "ministres": [
+        {
+          "id": "elisabeth_degryse",
+          "nom": "Degryse",
+          "prenom": "Elisabeth",
+          "fonction": "Ministre-Présidente",
+          "parti": "Les Engagés",
+          "competences": ["Budget", "Enseignement supérieur", "Culture", "Relations internationales"]
+        },
+        {
+          "id": "valerie_glatigny",
+          "nom": "Glatigny",
+          "prenom": "Valérie",
+          "fonction": "Vice-Présidente",
+          "parti": "MR",
+          "competences": ["Enseignement obligatoire"]
+        },
+        {
+          "id": "valerie_lescrenier_fwb",
+          "nom": "Lescrenier",
+          "prenom": "Valérie",
+          "fonction": "Ministre",
+          "parti": "Les Engagés",
+          "competences": ["Petite enfance", "Jeunesse", "Aide à la jeunesse", "Maisons de justice"]
+        },
+        {
+          "id": "jacqueline_galant_fwb",
+          "nom": "Galant",
+          "prenom": "Jacqueline",
+          "fonction": "Ministre",
+          "parti": "MR",
+          "competences": ["Sports", "Médias", "WBE", "Fonction publique"]
+        }
+      ]
+    }
+  },
+  
+  "institutions": {
+    "federal": {
+      "parlement": {
+        "name": "Chambre des Représentants",
+        "sieges": 150,
+        "adresse": "Place de la Nation 2, 1008 Bruxelles",
+        "president": "Peter De Roover",
+        "parti_president": "N-VA"
+      },
+      "senat": {
+        "name": "Sénat",
+        "sieges": 60,
+        "adresse": "Place de la Nation 1, 1009 Bruxelles",
+        "president": "Stephanie D'Hose",
+        "parti_president": "Open VLD"
+      }
+    },
+    "regional": {
+      "wallon": {
+        "name": "Parlement wallon",
+        "sieges": 75,
+        "adresse": "Rue Notre-Dame 1, 5000 Namur",
+        "president": "Willy Borsus",
+        "parti_president": "MR"
+      },
+      "fwb": {
+        "name": "Parlement de la Fédération Wallonie-Bruxelles",
+        "sieges": 94,
+        "adresse": "Rue Ducale 59, 1000 Bruxelles",
+        "president": "Benoît Dispa",
+        "parti_president": "Les Engagés"
+      },
+      "flamand": {
+        "name": "Vlaams Parlement",
+        "sieges": 124,
+        "adresse": "Leuvenseweg 86, 1000 Brussel",
+        "president": "Liesbeth Homans",
+        "parti_president": "N-VA"
+      },
+      "bruxelles": {
+        "name": "Parlement bruxellois",
+        "sieges": 89,
+        "adresse": "Rue du Lombard 69, 1000 Bruxelles",
+        "president": "Rachid Madrane",
+        "parti_president": "PS"
+      }
+    }
+  },
+  
+  "elections": {
+    "prochaines": [
+      {
+        "id": "europeennes_2029",
+        "type": "Européennes",
+        "date": "2029-06-10",
+        "niveau": "european",
+        "sieges_belgique": 22,
+        "description": "Élection des députés européens belges"
+      },
+      {
+        "id": "federales_2029",
+        "type": "Fédérales",
+        "date": "2029-06-10",
+        "niveau": "federal",
+        "sieges": 150,
+        "description": "Élection de la Chambre des Représentants"
+      },
+      {
+        "id": "regionales_2029",
+        "type": "Régionales",
+        "date": "2029-06-10",
+        "niveau": "regional",
+        "description": "Parlements régionaux et communautaires"
+      },
+      {
+        "id": "communales_2030",
+        "type": "Communales",
+        "date": "2030-10-11",
+        "niveau": "communal",
+        "communes": 581,
+        "description": "Conseils communaux et CPAS"
+      }
+    ],
+    "historique": [
+      {
+        "date": "2024-06-09",
+        "type": "Triple scrutin",
+        "resultats": {
+          "chambre": {
+            "N-VA": 24, "VB": 20, "MR": 20, "PS": 16, "PTB": 15,
+            "Les Engagés": 14, "Vooruit": 13, "CD&V": 11, "Open VLD": 7,
+            "Groen": 6, "Ecolo": 3, "DéFI": 1
+          }
+        }
+      },
+      {
+        "date": "2024-10-13",
+        "type": "Communales et provinciales",
+        "participation": "86%"
+      }
+    ]
+  },
+  
+  "associations_education_permanente": [
+    {
+      "id": "pac",
+      "name": "Présence et Action Culturelles",
+      "acronym": "PAC",
+      "pilier": "socialiste",
+      "description": "Mouvement d'éducation permanente du pilier socialiste",
+      "website": "https://www.pac-g.be",
+      "membres": 15000,
+      "implantations": ["Wallonie", "Bruxelles"]
+    },
+    {
+      "id": "moc",
+      "name": "Mouvement Ouvrier Chrétien",
+      "acronym": "MOC",
+      "pilier": "chrétien",
+      "description": "Mouvement social d'inspiration chrétienne",
+      "website": "https://www.moc.be",
+      "membres": 200000,
+      "organisations_membres": ["Vie Féminine", "Énéo", "JOC", "ACW"]
+    },
+    {
+      "id": "csc",
+      "name": "Confédération des Syndicats Chrétiens",
+      "acronym": "CSC",
+      "pilier": "chrétien",
+      "description": "Syndicat d'inspiration chrétienne",
+      "website": "https://www.lacsc.be",
+      "membres": 1500000,
+      "type": "syndicat"
+    },
+    {
+      "id": "fgtb",
+      "name": "Fédération Générale du Travail de Belgique",
+      "acronym": "FGTB",
+      "pilier": "socialiste",
+      "description": "Syndicat socialiste",
+      "website": "https://www.fgtb.be",
+      "membres": 1500000,
+      "type": "syndicat"
+    },
+    {
+      "id": "cgslb",
+      "name": "Centrale Générale des Syndicats Libéraux de Belgique",
+      "acronym": "CGSLB",
+      "pilier": "libéral",
+      "description": "Syndicat libéral",
+      "website": "https://www.cgslb.be",
+      "membres": 300000,
+      "type": "syndicat"
+    },
+    {
+      "id": "mc",
+      "name": "Mutualité Chrétienne",
+      "acronym": "MC",
+      "pilier": "chrétien",
+      "description": "Mutuelle d'inspiration chrétienne",
+      "website": "https://www.mc.be",
+      "membres": 4500000,
+      "type": "mutualité"
+    },
+    {
+      "id": "solidaris",
+      "name": "Solidaris",
+      "pilier": "socialiste",
+      "description": "Mutuelle socialiste",
+      "website": "https://www.solidaris.be",
+      "membres": 3000000,
+      "type": "mutualité"
+    },
+    {
+      "id": "ligue_familles",
+      "name": "Ligue des Familles",
+      "pilier": "laïque",
+      "description": "Mouvement familial pluraliste",
+      "website": "https://www.liguedesfamilles.be",
+      "membres": 250000
+    },
+    {
+      "id": "vie_feminine",
+      "name": "Vie Féminine",
+      "pilier": "chrétien",
+      "description": "Mouvement féministe chrétien",
+      "website": "https://www.viefeminine.be",
+      "membres": 50000
+    },
+    {
+      "id": "fef",
+      "name": "Fédération des Étudiants Francophones",
+      "acronym": "FEF",
+      "pilier": "laïque",
+      "description": "Organisation étudiante représentative",
+      "website": "https://www.fef.be"
+    },
+    {
+      "id": "rwlp",
+      "name": "Réseau Wallon de Lutte contre la Pauvreté",
+      "acronym": "RWLP",
+      "pilier": "pluraliste",
+      "description": "Coordination d'associations de lutte contre la pauvreté",
+      "website": "https://www.rwlp.be"
+    },
+    {
+      "id": "cal",
+      "name": "Centre d'Action Laïque",
+      "acronym": "CAL",
+      "pilier": "laïque",
+      "description": "Coordination du mouvement laïque",
+      "website": "https://www.laicite.be"
+    }
+  ],
+  
+  "decks_flashcards": [
+    {
+      "id": "institutions_belges",
+      "title": "Institutions belges",
+      "description": "Comprendre le système politique belge",
+      "difficulty": "débutant",
+      "cards": [
+        {
+          "question": "Combien de niveaux de pouvoir existe-t-il en Belgique ?",
+          "answer": "4 niveaux : Fédéral, Régional, Communautaire, Local (communes et provinces)",
+          "category": "structure"
+        },
+        {
+          "question": "Quelles sont les 3 Régions en Belgique ?",
+          "answer": "La Région wallonne, la Région flamande (Flandre) et la Région de Bruxelles-Capitale",
+          "category": "régions"
+        },
+        {
+          "question": "Quelles sont les 3 Communautés en Belgique ?",
+          "answer": "La Communauté française (Fédération Wallonie-Bruxelles), la Communauté flamande et la Communauté germanophone",
+          "category": "communautés"
+        },
+        {
+          "question": "Qui est le Premier Ministre belge en 2025 ?",
+          "answer": "Bart De Wever (N-VA), depuis le 3 février 2025",
+          "category": "gouvernement"
+        },
+        {
+          "question": "Qu'est-ce que la coalition 'Arizona' ?",
+          "answer": "La coalition gouvernementale fédérale formée en 2025 par la N-VA, le MR, Les Engagés, Vooruit et le CD&V",
+          "category": "gouvernement"
+        },
+        {
+          "question": "Combien de députés siègent à la Chambre des Représentants ?",
+          "answer": "150 députés, élus pour 5 ans",
+          "category": "parlement"
+        },
+        {
+          "question": "Quel est le rôle du Sénat belge ?",
+          "answer": "Depuis 2014, c'est une chambre de réflexion pour les matières institutionnelles et communautaires. Il n'est plus directement élu.",
+          "category": "parlement"
+        },
+        {
+          "question": "Qu'est-ce que le 'kern' ?",
+          "answer": "Le conseil des ministres restreint composé du Premier Ministre et des Vice-Premiers Ministres",
+          "category": "gouvernement"
+        },
+        {
+          "question": "Combien y a-t-il de communes en Belgique ?",
+          "answer": "581 communes (262 en Wallonie, 300 en Flandre, 19 à Bruxelles)",
+          "category": "local"
+        },
+        {
+          "question": "Quand auront lieu les prochaines élections communales ?",
+          "answer": "Le 11 octobre 2030",
+          "category": "élections"
+        }
+      ]
+    },
+    {
+      "id": "partis_politiques",
+      "title": "Partis politiques belges",
+      "description": "Connaître les principaux partis",
+      "difficulty": "débutant",
+      "cards": [
+        {
+          "question": "Quel parti politique préside actuellement le gouvernement fédéral ?",
+          "answer": "La N-VA (Nieuw-Vlaamse Alliantie), avec Bart De Wever comme Premier Ministre",
+          "category": "partis"
+        },
+        {
+          "question": "Qui est le président du MR ?",
+          "answer": "Georges-Louis Bouchez",
+          "category": "partis"
+        },
+        {
+          "question": "Comment s'appelait le parti 'Les Engagés' avant 2022 ?",
+          "answer": "Le cdH (Centre démocrate Humaniste)",
+          "category": "partis"
+        },
+        {
+          "question": "Quel est le parti vert francophone ?",
+          "answer": "Ecolo",
+          "category": "partis"
+        },
+        {
+          "question": "Quel est le parti vert flamand ?",
+          "answer": "Groen",
+          "category": "partis"
+        },
+        {
+          "question": "Quel parti a obtenu le plus de sièges à la Chambre aux élections 2024 ?",
+          "answer": "La N-VA et le Vlaams Belang sont à égalité avec 20 sièges, suivis du MR avec 20 sièges également",
+          "category": "élections"
+        }
+      ]
+    },
+    {
+      "id": "citoyennete_active",
+      "title": "Citoyenneté active",
+      "description": "S'engager politiquement",
+      "difficulty": "intermédiaire",
+      "cards": [
+        {
+          "question": "À partir de quel âge peut-on voter en Belgique ?",
+          "answer": "18 ans pour la plupart des élections, mais 16 ans pour les élections européennes depuis 2024",
+          "category": "droits"
+        },
+        {
+          "question": "Le vote est-il obligatoire en Belgique ?",
+          "answer": "Oui, le vote est obligatoire en Belgique depuis 1893. Ne pas voter peut entraîner une amende.",
+          "category": "droits"
+        },
+        {
+          "question": "Qu'est-ce qu'une initiative citoyenne ?",
+          "answer": "Une proposition de loi ou de décret portée par des citoyens. En Belgique, diverses formes existent selon les niveaux de pouvoir.",
+          "category": "participation"
+        },
+        {
+          "question": "Comment peut-on se présenter aux élections communales ?",
+          "answer": "Il faut être belge ou citoyen UE, avoir 18 ans, être domicilié dans la commune, et figurer sur une liste électorale déposée.",
+          "category": "candidature"
+        },
+        {
+          "question": "Qu'est-ce que le seuil électoral ?",
+          "answer": "Le nombre minimum de voix (généralement 5% dans certaines élections) qu'un parti doit obtenir pour être représenté.",
+          "category": "élections"
+        }
+      ]
+    }
+  ],
+  
+  "projets_demo": [
+    {
+      "id": "projet_jardins_partages",
+      "title": "Jardins partagés de Namur",
+      "description": "Création de potagers collectifs dans les quartiers populaires",
+      "porteur": "Collectif Namur Vert",
+      "statut": "en_cours",
+      "budget": 15000,
+      "participants": 45,
+      "commune": "Namur",
+      "tags": ["écologie", "solidarité", "alimentation"]
+    },
+    {
+      "id": "projet_cours_francais",
+      "title": "Français pour tous à Liège",
+      "description": "Cours de français langue étrangère pour primo-arrivants",
+      "porteur": "Association Liège Accueil",
+      "statut": "actif",
+      "beneficiaires": 120,
+      "commune": "Liège",
+      "tags": ["intégration", "éducation", "solidarité"]
+    },
+    {
+      "id": "projet_repair_cafe",
+      "title": "Repair Café Charleroi",
+      "description": "Ateliers mensuels de réparation d'objets du quotidien",
+      "porteur": "Éco-Quartier Charleroi",
+      "statut": "actif",
+      "frequence": "mensuel",
+      "commune": "Charleroi",
+      "tags": ["écologie", "économie_circulaire", "lien_social"]
+    }
+  ],
+  
+  "profils_demo": [
+    {
+      "id": "marie_dupont",
+      "prenom": "Marie",
+      "nom": "Dupont",
+      "commune": "Namur",
+      "niveau_engagement": "militant",
+      "interets": ["environnement", "logement", "jeunesse"],
+      "competences": ["communication", "organisation", "rédaction"],
+      "disponibilite": "weekends",
+      "xp": 450,
+      "level": 4
+    },
+    {
+      "id": "ahmed_benali",
+      "prenom": "Ahmed",
+      "nom": "Benali",
+      "commune": "Bruxelles",
+      "niveau_engagement": "candidat",
+      "interets": ["diversité", "emploi", "mobilité"],
+      "competences": ["médiation", "multilingue", "terrain"],
+      "parti": null,
+      "xp": 1250,
+      "level": 6
+    },
+    {
+      "id": "sophie_martin",
+      "prenom": "Sophie",
+      "nom": "Martin",
+      "commune": "Liège",
+      "niveau_engagement": "observateur",
+      "interets": ["éducation", "culture", "droits"],
+      "competences": ["enseignement", "recherche"],
+      "xp": 120,
+      "level": 2
+    }
+  ]
+}
