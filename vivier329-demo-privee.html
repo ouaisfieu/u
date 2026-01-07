@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIVIER 329 — Réserve sectorielle de compétences</title>
+  <meta name="description" content="Dispositif pilote de réserve sectorielle pour la sous-commission paritaire 329.02 — Secteur socioculturel francophone">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #faf9f7;
+      --bg-secondary: #f0ede8;
+      --bg-dark: #1a1a1a;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-muted: #6b6b6b;
+      --accent-primary: #2d5a4a;
+      --accent-secondary: #8b4513;
+      --accent-warm: #c4a35a;
+      --border-light: #e0ddd6;
+      --shadow-soft: 0 2px 20px rgba(0,0,0,0.06);
+      --shadow-medium: 0 4px 30px rgba(0,0,0,0.1);
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+    }
+    
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.5rem; }
+    h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+    p { margin-bottom: 1rem; }
+    
+    a { color: var(--accent-primary); text-decoration: none; transition: all 0.2s; }
+    a:hover { color: var(--accent-secondary); }
+    
+    /* LAYOUT */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+    
+    section { padding: 6rem 0; }
+    
+    /* NAVIGATION */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(250, 249, 247, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 1rem 0;
+    }
+    
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+    
+    .logo span { color: var(--accent-secondary); }
+    
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--accent-primary); }
+    
+    .badge-demo {
+      background: var(--accent-secondary);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(45, 90, 74, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-warm);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .hero h1 { margin-bottom: 1.5rem; color: var(--text-primary); }
+    .hero h1 em { font-style: italic; color: var(--accent-primary); }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-light);
+    }
+    
+    .stat { text-align: left; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
+    
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .visual-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-medium);
+      transform: rotate(-2deg);
+      max-width: 380px;
+    }
+    
+    .visual-card h4 {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    
+    .visual-list { list-style: none; }
+    .visual-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.95rem;
+    }
+    .visual-list li:last-child { border-bottom: none; }
+    .visual-list .icon {
+      width: 32px;
+      height: 32px;
+      background: var(--bg-secondary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    
+    /* SECTIONS */
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+    
+    .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-secondary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    /* PROBLÈME */
+    .problem { background: var(--bg-secondary); }
+    
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .problem-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+    }
+    
+    .problem-card .number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    
+    .problem-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .problem-card p { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
+    
+    /* SOLUTION */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    
+    .solution-content h3 { color: var(--accent-primary); margin-top: 2rem; }
+    .solution-content h3:first-child { margin-top: 0; }
+    
+    .solution-list {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    
+    .solution-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+    }
+    
+    .solution-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-warm);
+    }
+    
+    .solution-visual {
+      background: var(--bg-dark);
+      color: white;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+    }
+    
+    .solution-visual h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-warm);
+      margin-bottom: 1.5rem;
+    }
+    
+    .flow-step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: flex-start;
+    }
+    
+    .flow-step .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    
+    .flow-step h5 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .flow-step p { font-size: 0.9rem; color: #999; margin: 0; }
+    
+    /* PLAN STRATÉGIQUE */
+    .strategy { background: var(--bg-secondary); }
+    
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border-light);
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      transform: translateX(-5px);
+    }
+    
+    .timeline-item.future::before {
+      background: var(--border-light);
+      border: 2px solid var(--accent-primary);
+    }
+    
+    .timeline-date {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-item h4 { margin-bottom: 0.5rem; }
+    .timeline-item p { color: var(--text-muted); margin: 0; }
+    
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    
+    .timeline-tags span {
+      background: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    /* GOUVERNANCE */
+    .governance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    
+    .governance-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      text-align: center;
+    }
+    
+    .governance-card .circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    
+    .governance-card.primary .circle { background: rgba(45, 90, 74, 0.1); }
+    .governance-card.secondary .circle { background: rgba(139, 69, 19, 0.1); }
+    .governance-card.tertiary .circle { background: rgba(196, 163, 90, 0.1); }
+    
+    .governance-card h4 { margin-bottom: 0.5rem; }
+    .governance-card .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+    
+    .governance-card.primary .tag { background: rgba(45, 90, 74, 0.1); color: var(--accent-primary); }
+    .governance-card.secondary .tag { background: rgba(139, 69, 19, 0.1); color: var(--accent-secondary); }
+    .governance-card.tertiary .tag { background: rgba(196, 163, 90, 0.2); color: #8b7424; }
+    
+    .governance-card p { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
+    
+    /* AUTOCRITIQUE */
+    .critique { background: var(--bg-dark); color: white; }
+    .critique h2 { color: white; }
+    .critique .section-label { color: var(--accent-warm); }
+    
+    .critique-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    
+    .critique-column h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .critique-column.limits h3 { color: #e57373; }
+    .critique-column.commits h3 { color: #81c784; }
+    
+    .critique-item {
+      background: rgba(255,255,255,0.05);
+      padding: 1.25rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+      border-left: 3px solid;
+    }
+    
+    .critique-column.limits .critique-item { border-color: #e57373; }
+    .critique-column.commits .critique-item { border-color: #81c784; }
+    
+    .critique-item h4 { font-size: 1rem; margin-bottom: 0.5rem; color: white; }
+    .critique-item p { font-size: 0.9rem; color: #aaa; margin: 0; }
+    
+    /* RISQUES */
+    .risks-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 3rem;
+    }
+    
+    .risks-table th, .risks-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .risks-table th {
+      background: rgba(255,255,255,0.05);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-warm);
+    }
+    
+    .risks-table td { font-size: 0.95rem; color: #ccc; }
+    .risks-table tr:last-child td { border-bottom: none; }
+    
+    .risk-level {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .risk-level.low { background: rgba(129, 199, 132, 0.2); color: #81c784; }
+    .risk-level.medium { background: rgba(255, 183, 77, 0.2); color: #ffb74d; }
+    .risk-level.high { background: rgba(229, 115, 115, 0.2); color: #e57373; }
+    
+    /* INTÉGRATION POLITIKA */
+    .politika {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white;
+    }
+    
+    .politika h2 { color: white; }
+    .politika .section-label { color: #a78bfa; }
+    
+    .politika-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .politika-features { display: flex; flex-direction: column; gap: 1.5rem; }
+    
+    .politika-feature {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    
+    .politika-feature .icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(167, 139, 250, 0.2);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .politika-feature h4 { margin-bottom: 0.25rem; color: white; }
+    .politika-feature p { font-size: 0.9rem; color: #aaa; margin: 0; }
+    
+    .politika-visual {
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .politika-visual h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #a78bfa;
+      margin-bottom: 1.5rem;
+    }
+    
+    .module-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .module-item:last-child { border-bottom: none; }
+    .module-item .name { font-weight: 500; }
+    .module-item .status {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+    
+    .module-item .status.ready { background: rgba(129, 199, 132, 0.2); color: #81c784; }
+    .module-item .status.soon { background: rgba(255, 183, 77, 0.2); color: #ffb74d; }
+    
+    /* CONTACT */
+    .contact { text-align: center; }
+    
+    .contact-card {
+      background: white;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 3rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .contact-card h3 { margin-bottom: 0.5rem; }
+    .contact-card p { color: var(--text-muted); margin-bottom: 2rem; }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: var(--accent-primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #1e4035;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .contact-note {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    /* FOOTER */
+    footer {
+      background: var(--bg-dark);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    
+    .footer-brand .logo { color: white; margin-bottom: 1rem; display: inline-block; }
+    .footer-brand p { color: #888; font-size: 0.95rem; }
+    
+    .footer-column h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-warm);
+      margin-bottom: 1rem;
+    }
+    
+    .footer-column ul { list-style: none; }
+    .footer-column ul li { margin-bottom: 0.5rem; }
+    .footer-column ul a { color: #888; font-size: 0.95rem; }
+    .footer-column ul a:hover { color: white; }
+    
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 968px) {
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .nav-links { display: none; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .governance-grid { grid-template-columns: 1fr; }
+      .critique-grid { grid-template-columns: 1fr; }
+      .politika-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 2rem; }
+    }
+    
+    /* SOCIAL MEDIA SECTION */
+    .social-section {
+      background: var(--bg-secondary);
+      padding: 4rem 0;
+    }
+    
+    .social-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      justify-content: center;
+    }
+    
+    .social-tab {
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border-light);
+      background: white;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .social-tab:hover, .social-tab.active {
+      background: var(--accent-primary);
+      color: white;
+      border-color: var(--accent-primary);
+    }
+    
+    .social-content {
+      display: none;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .social-content.active { display: block; }
+    
+    .post-preview {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-primary);
+    }
+    
+    .post-preview h4 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .post-preview .content {
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    
+    .copy-btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent-primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    
+    .copy-btn:hover { background: #1e4035; }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">VIVIER <span>329</span></a>
+      <div class="nav-links">
+        <a href="#probleme">Contexte</a>
+        <a href="#solution">Solution</a>
+        <a href="#strategie">Plan</a>
+        <a href="#gouvernance">Gouvernance</a>
+        <a href="#autocritique">Auto-critique</a>
+        <span class="badge-demo">Démo privée</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="dot"></span>
+            Dispositif pilote — SCP 329.02
+          </div>
+          <h1>Une réserve de <em>compétences</em> pour le secteur socioculturel</h1>
+          <p class="hero-subtitle">
+            Sécuriser les parcours professionnels, anticiper les besoins du secteur, 
+            renforcer l'attractivité des métiers de l'éducation permanente.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-number">417</div>
+              <div class="stat-label">Associations FESEFA</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">7 000</div>
+              <div class="stat-label">ETP représentés</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">30+</div>
+              <div class="stat-label">Nouveaux membres en 2024</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-card">
+            <h4>Le dispositif en bref</h4>
+            <ul class="visual-list">
+              <li><span class="icon">📋</span> Base volontaire de profils qualifiés</li>
+              <li><span class="icon">🎓</span> Formation d'accès au secteur</li>
+              <li><span class="icon">🤝</span> Mise en relation accompagnée</li>
+              <li><span class="icon">⚖️</span> Gouvernance paritaire</li>
+              <li><span class="icon">🔓</span> Infrastructure ouverte</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLÈME -->
+  <section id="probleme" class="problem">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Le contexte</div>
+        <h2>Un secteur sous tension</h2>
+        <p>Le secteur socioculturel francophone fait face à des défis structurels que les solutions existantes ne couvrent pas.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="number">78%</div>
+          <h4>Défiance politique</h4>
+          <p>Des Wallons ne font plus confiance aux politiques (IWEPS 2023) — le besoin d'éducation permanente n'a jamais été aussi crucial</p>
+        </div>
+        <div class="problem-card">
+          <div class="number">∅</div>
+          <h4>Aucune réserve sectorielle</h4>
+          <p>Alterjob = tableau d'affichage. Forem = généraliste. Personne ne fait de recrutement accompagné spécifique EP.</p>
+        </div>
+        <div class="problem-card">
+          <div class="number">⚠️</div>
+          <h4>Asphyxie budgétaire</h4>
+          <p>Le gouvernement Arizona menace le financement. La mutualisation devient une stratégie de survie.</p>
+        </div>
+        <div class="problem-card">
+          <div class="number">↻</div>
+          <h4>Turnover élevé</h4>
+          <p>CDD fréquents, projets subventionnés, rotation importante. Difficulté à fidéliser les talents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">La proposition</div>
+        <h2>Une réserve sectorielle outillée</h2>
+        <p>Pas un vivier imposé. Pas une plateforme de matching. Un dispositif de sécurisation des parcours professionnels.</p>
+      </div>
+      <div class="solution-grid">
+        <div class="solution-content">
+          <h3>Ce que VIVIER 329 propose</h3>
+          <ul class="solution-list">
+            <li>Base volontaire de profils (inscription libre)</li>
+            <li>Descriptions par compétences, expériences, disponibilités</li>
+            <li>Formation d'introduction au secteur EP</li>
+            <li>Mise en relation facilitée (pas automatisée)</li>
+            <li>Accompagnement RH pour petites ASBL</li>
+          </ul>
+          
+          <h3>Ce que VIVIER 329 ne fait PAS</h3>
+          <ul class="solution-list">
+            <li>Pas de sélection centralisée</li>
+            <li>Pas d'algorithme opaque de matching</li>
+            <li>Pas de certification obligatoire</li>
+            <li>Pas de pression à l'embauche</li>
+            <li>L'employeur reste seul décisionnaire</li>
+          </ul>
+        </div>
+        <div class="solution-visual">
+          <h4>Parcours type</h4>
+          <div class="flow-step">
+            <span class="step-num">1</span>
+            <div>
+              <h5>Inscription volontaire</h5>
+              <p>Le candidat s'inscrit librement dans la réserve</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-num">2</span>
+            <div>
+              <h5>Formation d'accès</h5>
+              <p>Module "Fondamentaux EP" + POLiT!KA</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-num">3</span>
+            <div>
+              <h5>Attestation de parcours</h5>
+              <p>Badge non discriminant, valorisant</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-num">4</span>
+            <div>
+              <h5>Mise en relation</h5>
+              <p>Facilitation humaine, pas d'automatisation</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="step-num">5</span>
+            <div>
+              <h5>Décision employeur</h5>
+              <p>L'ASBL reste 100% autonome</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN STRATÉGIQUE -->
+  <section id="strategie" class="strategy">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Plan stratégique</div>
+        <h2>Une montée en puissance progressive</h2>
+        <p>Pas de big bang. Une expérimentation encadrée, évaluée, ajustable.</p>
+      </div>
+      <div class="container-narrow">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Phase 0 — Janvier-Mars 2026</div>
+            <h4>Cadrage & légitimation</h4>
+            <p>Présentation à la FESEFA, note de cadrage, validation du principe, constitution d'un comité de pilotage paritaire.</p>
+            <div class="timeline-tags">
+              <span>Contact FESEFA</span>
+              <span>Note conceptuelle</span>
+              <span>Gouvernance</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Phase 1 — Avril-Juin 2026</div>
+            <h4>Pilote restreint</h4>
+            <p>30-50 candidats volontaires, 10-15 ASBL partenaires, première cohorte de formation, évaluation continue.</p>
+            <div class="timeline-tags">
+              <span>50 candidats</span>
+              <span>15 ASBL</span>
+              <span>Formation pilote</span>
+            </div>
+          </div>
+          <div class="timeline-item future">
+            <div class="timeline-date">Phase 2 — Septembre-Décembre 2026</div>
+            <h4>Évaluation & ajustements</h4>
+            <p>Bilan qualitatif et quantitatif, retours syndicats, ajustements du dispositif, décision de continuation.</p>
+            <div class="timeline-tags">
+              <span>Bilan</span>
+              <span>Concertation syndicale</span>
+              <span>Décision go/no-go</span>
+            </div>
+          </div>
+          <div class="timeline-item future">
+            <div class="timeline-date">Phase 3 — 2027</div>
+            <h4>Déploiement progressif</h4>
+            <p>Si validation : ouverture à l'ensemble des membres FESEFA, conventionnement Fonds 4S, intégration écosystème.</p>
+            <div class="timeline-tags">
+              <span>417 ASBL potentielles</span>
+              <span>Fonds 4S</span>
+              <span>Pérennisation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOUVERNANCE -->
+  <section id="gouvernance">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Gouvernance</div>
+        <h2>Trois cercles distincts</h2>
+        <p>Une séparation claire des rôles pour garantir légitimité et indépendance.</p>
+      </div>
+      <div class="governance-grid">
+        <div class="governance-card primary">
+          <div class="circle">🏛️</div>
+          <span class="tag">Cercle 1</span>
+          <h4>FESEFA / CESSoC</h4>
+          <p>Légitimation institutionnelle, gouvernance paritaire, garantie du cadre éthique. <strong>Pas d'opérationnel, pas de commerce.</strong></p>
+        </div>
+        <div class="governance-card secondary">
+          <div class="circle">📚</div>
+          <span class="tag">Cercle 2</span>
+          <h4>APEF / Fonds 4S</h4>
+          <p>Financement de la formation d'accès au secteur. Groupes à risques, reconversions, demandeurs d'emploi.</p>
+        </div>
+        <div class="governance-card tertiary">
+          <div class="circle">⚙️</div>
+          <span class="tag">Cercle 3</span>
+          <h4>Opérateur technique</h4>
+          <p>Mise en œuvre opérationnelle, services optionnels, outils numériques. Structure autonome, conventionnée.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOCRITIQUE -->
+  <section id="autocritique" class="critique">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Honnêteté intellectuelle</div>
+        <h2>Ce projet a des limites</h2>
+        <p>Nous assumons ce que nous ne faisons pas et ce qui pourrait mal tourner.</p>
+      </div>
+      <div class="critique-grid">
+        <div class="critique-column limits">
+          <h3>❌ Ce que nous ne prétendons PAS faire</h3>
+          <div class="critique-item">
+            <h4>Résoudre la précarité</h4>
+            <p>Une réserve de recrutement ne change pas les conditions structurelles du secteur (CDD, projets courts, sous-financement).</p>
+          </div>
+          <div class="critique-item">
+            <h4>Remplacer les services publics</h4>
+            <p>Le Forem et Actiris ont un rôle que nous ne pouvons ni ne voulons assumer. Nous sommes complémentaires, pas substitutifs.</p>
+          </div>
+          <div class="critique-item">
+            <h4>Imposer des profils</h4>
+            <p>Aucune obligation d'embauche, aucun classement automatique, aucune pression. L'ASBL reste souveraine.</p>
+          </div>
+          <div class="critique-item">
+            <h4>Certifier l'aptitude au secteur</h4>
+            <p>Notre attestation n'est pas un filtre discriminant. C'est une valorisation de parcours, rien de plus.</p>
+          </div>
+        </div>
+        <div class="critique-column commits">
+          <h3>✓ Ce que nous nous engageons à faire</h3>
+          <div class="critique-item">
+            <h4>Transparence totale</h4>
+            <p>Règles publiques, aucune décision automatisée opaque, code source ouvert des outils numériques.</p>
+          </div>
+          <div class="critique-item">
+            <h4>Gouvernance paritaire</h4>
+            <p>Syndicats et employeurs associés au pilotage. Pas de décision unilatérale.</p>
+          </div>
+          <div class="critique-item">
+            <h4>Évaluation honnête</h4>
+            <p>Bilan public après chaque phase. Si ça ne marche pas, on le dira. Possibilité d'arrêt assumée.</p>
+          </div>
+          <div class="critique-item">
+            <h4>Respect des CCT</h4>
+            <p>Aucun contournement des conventions collectives, aucune pression à la flexibilité, aucun dumping social.</p>
+          </div>
+        </div>
+      </div>
+      
+      <table class="risks-table">
+        <thead>
+          <tr>
+            <th>Risque identifié</th>
+            <th>Probabilité</th>
+            <th>Impact</th>
+            <th>Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Blocage syndical</td>
+            <td><span class="risk-level medium">Moyenne</span></td>
+            <td><span class="risk-level high">Élevé</span></td>
+            <td>Gouvernance paritaire dès le départ, pas de vocabulaire "matching"</td>
+          </tr>
+          <tr>
+            <td>Perception "marchandisation RH"</td>
+            <td><span class="risk-level medium">Moyenne</span></td>
+            <td><span class="risk-level medium">Moyen</span></td>
+            <td>Dissociation claire des cercles, pas de modèle économique en premier plan</td>
+          </tr>
+          <tr>
+            <td>Vivier insuffisant</td>
+            <td><span class="risk-level medium">Moyenne</span></td>
+            <td><span class="risk-level medium">Moyen</span></td>
+            <td>Partenariats écoles de travail social, formations EP, reconversions</td>
+          </tr>
+          <tr>
+            <td>Concurrence perçue avec Alterjob</td>
+            <td><span class="risk-level low">Faible</span></td>
+            <td><span class="risk-level low">Faible</span></td>
+            <td>Positionnement complémentaire (accompagnement sectoriel vs. annonces)</td>
+          </tr>
+          <tr>
+            <td>Échec du pilote</td>
+            <td><span class="risk-level medium">Moyenne</span></td>
+            <td><span class="risk-level low">Faible</span></td>
+            <td>Évaluation continue, possibilité d'arrêt assumée, pas d'investissement lourd initial</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- INTÉGRATION POLITIKA -->
+  <section id="politika" class="politika">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Synergie</div>
+        <h2>Intégration POLiT!KA</h2>
+        <p>L'éducation civique gamifiée au service de la formation sectorielle.</p>
+      </div>
+      <div class="politika-grid">
+        <div class="politika-features">
+          <div class="politika-feature">
+            <div class="icon">🎮</div>
+            <div>
+              <h4>Formation ludique</h4>
+              <p>Les candidats découvrent le système politique belge en jouant. Moins barbant qu'un PowerPoint.</p>
+            </div>
+          </div>
+          <div class="politika-feature">
+            <div class="icon">📊</div>
+            <div>
+              <h4>Évaluation non discriminante</h4>
+              <p>Score de progression, pas de classement. On valorise l'apprentissage, pas la performance.</p>
+            </div>
+          </div>
+          <div class="politika-feature">
+            <div class="icon">🏅</div>
+            <div>
+              <h4>Badge "Citoyen informé"</h4>
+              <p>Attestation LinkedIn valorisante, mais jamais obligatoire pour postuler.</p>
+            </div>
+          </div>
+          <div class="politika-feature">
+            <div class="icon">🎯</div>
+            <div>
+              <h4>Alignement mission EP</h4>
+              <p>POLiT!KA EST de l'éducation permanente gamifiée. Le Fonds 4S peut le conventionner.</p>
+            </div>
+          </div>
+        </div>
+        <div class="politika-visual">
+          <h4>Modules disponibles</h4>
+          <div class="module-item">
+            <span class="name">SYSTÈME — 7 chapitres</span>
+            <span class="status ready">Disponible</span>
+          </div>
+          <div class="module-item">
+            <span class="name">Diagnostic Démocratique</span>
+            <span class="status ready">Disponible</span>
+          </div>
+          <div class="module-item">
+            <span class="name">Quiz compétitifs</span>
+            <span class="status soon">En développement</span>
+          </div>
+          <div class="module-item">
+            <span class="name">Guildes territoriales</span>
+            <span class="status soon">En développement</span>
+          </div>
+          <div class="module-item">
+            <span class="name">Module "Ma Commune"</span>
+            <span class="status soon">Planifié</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS RÉSEAUX SOCIAUX -->
+  <section id="social" class="social-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Communication</div>
+        <h2>Kit réseaux sociaux</h2>
+        <p>Posts prêts à publier pour chaque plateforme.</p>
+      </div>
+      
+      <div class="social-tabs">
+        <button class="social-tab active" onclick="showSocial('linkedin')">LinkedIn</button>
+        <button class="social-tab" onclick="showSocial('facebook')">Facebook</button>
+        <button class="social-tab" onclick="showSocial('twitter')">Twitter/X</button>
+        <button class="social-tab" onclick="showSocial('itchio')">itch.io</button>
+        <button class="social-tab" onclick="showSocial('email')">Email</button>
+      </div>
+      
+      <div id="linkedin" class="social-content active">
+        <div class="post-preview">
+          <h4>🔷 Post LinkedIn #1 — Annonce</h4>
+          <div class="content">🏛️ VIVIER 329 — Un projet pour le secteur socioculturel
+
+78% des Wallons ne font plus confiance aux politiques (IWEPS 2023).
+Le secteur de l'éducation permanente — celui qui forme les citoyens critiques — fait face à une pénurie de talents.
+
+Paradoxal, non ?
+
+Nous proposons VIVIER 329 : une réserve sectorielle de compétences pour la sous-commission paritaire 329.02.
+
+✓ Pas un job board de plus
+✓ Pas une plateforme de matching
+✓ Une infrastructure de sécurisation des parcours professionnels
+
+Inscription volontaire. Formation d'accès. Gouvernance paritaire.
+
+Le secteur associatif a besoin de mutualisation, pas de marchandisation.
+
+Ce projet est en phase de cadrage. Nous cherchons des partenaires institutionnels pour le pilote.
+
+#EducationPermanente #SecteurAssociatif #NonMarchand #CP329 #Emploi #Belgique</div>
+          <button class="copy-btn" onclick="copyText(this)">📋 Copier le texte</button>
+        </div>
+        
+        <div class="post-preview">
+          <h4>🔷 Post LinkedIn #2 — Thought Leadership</h4>
+          <div class="content">💡 Le recrutement associatif mérite mieux qu'un tableau d'affichage.
+
+Je travaille depuis plusieurs mois sur un projet de réserve sectorielle pour la CP 329.02.
+
+Pourquoi ?
+
+Parce que :
+→ Les petites ASBL n'ont pas de service RH
+→ Les profils qualifiés EP sont rares
+→ Alterjob et Le Forem ne font pas d'accompagnement sectoriel
+→ Le turnover est structurel (CDD, projets)
+
+La solution n'est pas un algorithme de matching.
+C'est une infrastructure humaine, paritaire, transparente.
+
+VIVIER 329 propose :
+• Une base volontaire de profils
+• Une formation d'introduction au secteur
+• Une mise en relation accompagnée (pas automatisée)
+• Une gouvernance syndicats + employeurs
+
+Ce n'est pas de la tech. C'est de l'organisation collective.
+
+Intéressé·e par le projet ? Commentez ou envoyez-moi un message.
+
+#AssociativeEmployment #SocialEconomy #Belgium #NonProfit</div>
+          <button class="copy-btn" onclick="copyText(this)">📋 Copier le texte</button>
+        </div>
+      </div>
+      
+      <div id="facebook" class="social-content">
+        <div class="post-preview">
+          <h4>📘 Post Facebook — Grand public</h4>
+          <div class="content">🌱 Vous connaissez le secteur de l'éducation permanente ?
+
+C'est celui qui anime les formations citoyennes, les débats publics, l'alphabétisation, les mouvements sociaux.
+
+Plus de 400 associations en Belgique francophone. Plus de 7 000 emplois.
+
+Et pourtant : pénurie de candidats, turnover élevé, recrutement difficile.
+
+Nous lançons VIVIER 329 — un projet pilote pour créer une réserve de compétences sectorielle.
+
+L'idée ? Permettre aux personnes intéressées par le secteur associatif de :
+✓ Se former aux fondamentaux
+✓ S'inscrire dans un vivier volontaire
+✓ Être mis en relation avec des ASBL qui recrutent
+
+Pas d'algorithme. Pas de sélection automatique. Un accompagnement humain.
+
+Le projet est en phase de cadrage. On cherche des retours, des idées, des critiques.
+
+Qu'en pensez-vous ?
+
+👉 Plus d'infos : [lien]</div>
+          <button class="copy-btn" onclick="copyText(this)">📋 Copier le texte</button>
+        </div>
+      </div>
+      
+      <div id="twitter" class="social-content">
+        <div class="post-preview">
+          <h4>🐦 Thread Twitter/X</h4>
+          <div class="content">🧵 THREAD : Pourquoi le secteur socioculturel belge a besoin d'une réserve de recrutement (et pas d'un job board de plus)
+
+1/8 — Le secteur de l'éducation permanente en Belgique francophone = 417 associations membres FESEFA, 7 000 ETP.
+
+Mission : former des citoyens critiques.
+
+Problème : personne ne forme les gens à y travailler.
+
+2/8 — Alterjob = un tableau d'affichage.
+Le Forem = généraliste.
+Fonds 4S = formation, pas recrutement.
+
+Résultat : chaque ASBL galère seule.
+
+3/8 — On propose VIVIER 329.
+
+Pas une plateforme tech.
+Pas un algorithme de matching.
+
+Une réserve sectorielle volontaire avec formation d'accès.
+
+4/8 — Comment ça marche :
+
+→ Inscription libre
+→ Formation "Fondamentaux EP"
+→ Attestation de parcours (non obligatoire)
+→ Mise en relation accompagnée
+→ L'ASBL décide seule
+
+5/8 — Gouvernance :
+
+Cercle 1 : FESEFA/CESSoC (légitimité)
+Cercle 2 : Fonds 4S (financement formation)
+Cercle 3 : Opérateur technique (exécution)
+
+Syndicats + employeurs = paritaire dès le départ.
+
+6/8 — Ce qu'on NE fait PAS :
+
+❌ Sélection centralisée
+❌ Certification obligatoire
+❌ Matching automatique
+❌ Pression à l'embauche
+
+7/8 — C'est un pilote.
+
+Phase 0 : cadrage (maintenant)
+Phase 1 : 50 candidats, 15 ASBL
+Phase 2 : évaluation honnête
+Phase 3 : si ça marche → déploiement
+
+8/8 — Le projet cherche des partenaires.
+
+Si vous bossez dans le secteur EP / socioculturel / non-marchand : vos retours m'intéressent.
+
+#VIVIER329 #EducationPermanente #Belgium</div>
+          <button class="copy-btn" onclick="copyText(this)">📋 Copier le texte</button>
+        </div>
+      </div>
+      
+      <div id="itchio" class="social-content">
+        <div class="post-preview">
+          <h4>🎮 Devlog itch.io — POLiT!KA × VIVIER 329</h4>
+          <div class="content">📢 DEVLOG #2 — POLiT!KA s'intègre dans un projet plus large
+
+Salut à tous,
+
+Quand on a créé POLiT!KA (le jeu narratif sur le système politique belge), on ne pensait pas que ça déboucherait sur un projet de recrutement sectoriel.
+
+Et pourtant.
+
+Le secteur de l'éducation permanente — celui qui forme les citoyens critiques — a un problème : il manque de candidats qualifiés.
+
+On a donc conçu VIVIER 329 : une réserve de compétences pour les associations socioculturelles belges.
+
+🎮 Où intervient POLiT!KA ?
+
+→ Les candidats au vivier passent par nos modules de formation citoyenne
+→ SYSTÈME (7 chapitres) devient un outil d'acculturation sectorielle
+→ Le badge "Citoyen informé" valorise leur parcours
+
+Ce n'est pas un test d'aptitude. C'est une formation gamifiée.
+
+Le projet est en phase pilote. On cherche des retours de la communauté itch.io :
+
+• Est-ce que ça vous parle ?
+• Des idées d'amélioration ?
+• Vous connaissez des gens dans le secteur associatif belge ?
+
+Le jeu SYSTÈME reste gratuit. L'éducation civique ne devrait pas être un luxe.
+
+---
+Tags : serious-game, belgian, democracy, education, narrative, recruitment, social-impact</div>
+          <button class="copy-btn" onclick="copyText(this)">📋 Copier le texte</button>
+        </div>
+      </div>
+      
+      <div id="email" class="social-content">
+        <div class="post-preview">
+          <h4>📧 Email de premier contact — FESEFA</h4>
+          <div class="content">Objet : Proposition de dispositif pilote — Réserve sectorielle SCP 329.02
+
+Madame, Monsieur,
+
+Je me permets de vous contacter suite à la carte blanche de Mme Ismaïli dans Le Soir sur l'avenir du secteur associatif. Son analyse résonne fortement avec un projet que je développe depuis plusieurs mois.
+
+En quelques mots : je propose VIVIER 329, un dispositif pilote de réserve sectorielle pour la sous-commission paritaire 329.02.
+
+L'idée n'est pas de créer un job board de plus, mais une infrastructure de sécurisation des parcours professionnels, avec :
+• Une base volontaire de profils
+• Une formation d'introduction au secteur
+• Une gouvernance paritaire dès le départ
+• Une mise en relation accompagnée (pas automatisée)
+
+Ce projet s'inscrit dans la mission de la FESEFA : défendre les intérêts des associations employeuses et soutenir le développement de l'éducation permanente.
+
+Je suis conscient que ce type de proposition demande un cadrage institutionnel rigoureux. C'est pourquoi je souhaite vous présenter le projet dans une logique exploratoire, pour recueillir vos retours avant toute formalisation.
+
+Serait-il possible de convenir d'un échange de 30 minutes pour en discuter ?
+
+Je reste à votre disposition pour toute question.
+
+Bien cordialement,
+
+[Signature]
+
+---
+P.J. : Note de cadrage VIVIER 329 (4 pages)</div>
+          <button class="copy-btn" onclick="copyText(this)">📋 Copier le texte</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-card">
+        <h3>Intéressé par le projet ?</h3>
+        <p>VIVIER 329 est en phase de cadrage. Nous cherchons des partenaires institutionnels pour le pilote.</p>
+        <a href="mailto:contact@exemple.be" class="btn btn-primary">
+          <span>📧</span> Prendre contact
+        </a>
+        <div class="contact-note">
+          <strong>Cible prioritaire :</strong> FESEFA, CESSoC, Fonds 4S, APEF<br>
+          <strong>Statut :</strong> Démo privée — Phase de cadrage
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">VIVIER <span>329</span></a>
+          <p>Réserve sectorielle de compétences pour la sous-commission paritaire 329.02. Un projet au service de l'éducation permanente et du secteur socioculturel francophone.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#probleme">Contexte</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#strategie">Plan stratégique</a></li>
+            <li><a href="#gouvernance">Gouvernance</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Transparence</h4>
+          <ul>
+            <li><a href="#autocritique">Auto-critique</a></li>
+            <li><a href="#autocritique">Risques identifiés</a></li>
+            <li><a href="#politika">Intégration POLiT!KA</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Écosystème</h4>
+          <ul>
+            <li><a href="https://www.fesefa.be" target="_blank">FESEFA</a></li>
+            <li><a href="https://www.cessoc.be" target="_blank">CESSoC</a></li>
+            <li><a href="https://www.fonds-4s.org" target="_blank">Fonds 4S</a></li>
+            <li><a href="https://apefasbl.org" target="_blank">APEF</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>VIVIER 329 — Démo privée — Janvier 2026</span>
+        <span>Projet en phase de cadrage</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function showSocial(platform) {
+      // Remove active class from all tabs and contents
+      document.querySelectorAll('.social-tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.social-content').forEach(content => content.classList.remove('active'));
+      
+      // Add active class to clicked tab and corresponding content
+      event.target.classList.add('active');
+      document.getElementById(platform).classList.add('active');
+    }
+    
+    function copyText(button) {
+      const content = button.previousElementSibling.innerText;
+      navigator.clipboard.writeText(content).then(() => {
+        const originalText = button.innerText;
+        button.innerText = '✓ Copié !';
+        setTimeout(() => {
+          button.innerText = originalText;
+        }, 2000);
+      });
+    }
+    
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
