@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ GUILDES — POLiT!KA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #8b5cf6;
+            --accent-dark: #7c3aed;
+            --accent-glow: rgba(139,92,246,0.4);
+            --gold: #fbbf24;
+            --silver: #94a3b8;
+            --bronze: #d97706;
+            --bg: #0a0a0f;
+            --bg-gradient: linear-gradient(135deg, #0a0a0f 0%, #1a1025 50%, #0f0a1a 100%);
+            --panel: #12101a;
+            --card: #1a1725;
+            --elevated: #252035;
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --muted: #94a3b8;
+            --border: rgba(139,92,246,0.15);
+            --shadow: 0 10px 40px rgba(0,0,0,0.5);
+            --red: #ef4444;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --yellow: #fbbf24;
+            --purple: #a855f7;
+            --cyan: #06b6d4;
+            --orange: #f97316;
+            --pink: #ec4899;
+            --radius: 16px;
+            --radius-sm: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* === HEADER === */
+        .header {
+            background: linear-gradient(180deg, rgba(139,92,246,0.1) 0%, transparent 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--accent), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .header-stat {
+            text-align: center;
+        }
+
+        .header-stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .header-stat-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--elevated);
+            border-color: var(--accent);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+        .btn-lg { padding: 0.8rem 1.5rem; font-size: 1rem; }
+
+        /* === MAIN LAYOUT === */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .main { grid-template-columns: 1fr; }
+        }
+
+        /* === SIDEBAR LEFT - MY GUILD === */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .my-guild-card {
+            background: linear-gradient(135deg, var(--panel), var(--card));
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .my-guild-card.has-guild {
+            border-color: var(--accent);
+        }
+
+        .my-guild-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: radial-gradient(ellipse at top, var(--accent-glow), transparent);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .guild-banner {
+            position: relative;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .guild-emblem {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 0.75rem;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .guild-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .guild-motto {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .guild-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .guild-stat {
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .guild-stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        .guild-stat-label {
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .guild-xp-bar {
+            background: var(--bg);
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .guild-xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--pink));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .guild-xp-text {
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .guild-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* === NO GUILD STATE === */
+        .no-guild {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .no-guild-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .no-guild-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-guild-text {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* === MEMBERS LIST === */
+        .members-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+        }
+
+        .members-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .members-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: background 0.2s;
+        }
+
+        .member-item:hover {
+            background: var(--card);
+        }
+
+        .member-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .member-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .member-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .member-role {
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .member-xp {
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .role-leader { color: var(--gold); }
+        .role-officer { color: var(--accent); }
+        .role-member { color: var(--muted); }
+
+        /* === MAIN CONTENT === */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* === TABS === */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--panel);
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .tab:hover {
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* === LEADERBOARD === */
+        .leaderboard {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .leaderboard-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .leaderboard-filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 0.8rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--muted);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .leaderboard-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .guild-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 100px 100px 80px;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .guild-row:hover {
+            background: var(--card);
+        }
+
+        .guild-row.top-3 {
+            background: linear-gradient(90deg, rgba(251,191,36,0.1), transparent);
+        }
+
+        .guild-rank {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .rank-1 { color: var(--gold); text-shadow: 0 0 10px rgba(251,191,36,0.5); }
+        .rank-2 { color: var(--silver); }
+        .rank-3 { color: var(--bronze); }
+
+        .guild-info-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .guild-row-emblem {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--border);
+        }
+
+        .guild-row-info h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.1rem;
+        }
+
+        .guild-row-info span {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .guild-members-count, .guild-xp-count {
+            text-align: center;
+        }
+
+        .guild-members-count span, .guild-xp-count span {
+            display: block;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .guild-members-count small, .guild-xp-count small {
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .guild-xp-count span {
+            color: var(--gold);
+        }
+
+        .guild-join-cell {
+            text-align: right;
+        }
+
+        /* === CREATE/JOIN GUILD === */
+        .create-guild-section {
+            background: linear-gradient(135deg, var(--panel), var(--card));
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .create-guild-section:hover {
+            border-color: var(--accent);
+        }
+
+        .create-guild-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .create-guild-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .create-guild-text {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .create-guild-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* === CHALLENGES === */
+        .challenges-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .challenge-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .challenge-card:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .challenge-card.active {
+            border-color: var(--green);
+            background: linear-gradient(90deg, rgba(34,197,94,0.1), transparent);
+        }
+
+        .challenge-card.completed {
+            opacity: 0.6;
+        }
+
+        .challenge-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .challenge-info h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .challenge-info p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .challenge-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--bg);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .challenge-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--green));
+            border-radius: 3px;
+        }
+
+        .challenge-progress-text {
+            font-size: 0.75rem;
+            color: var(--muted);
+            min-width: 50px;
+        }
+
+        .challenge-reward {
+            text-align: center;
+        }
+
+        .challenge-reward-xp {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+
+        .challenge-reward-label {
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .challenge-timer {
+            font-size: 0.75rem;
+            color: var(--orange);
+            margin-top: 0.25rem;
+        }
+
+        /* === SIDEBAR RIGHT - ACTIVITY === */
+        .activity-feed {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-text {
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .activity-text strong {
+            color: var(--accent);
+        }
+
+        .activity-time {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 0.2rem;
+        }
+
+        /* === QUICK STATS === */
+        .quick-stats {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+        }
+
+        .quick-stats-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quick-stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .quick-stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .quick-stat-value {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* === MODALS === */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: var(--card);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .emblem-picker {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 0.5rem;
+        }
+
+        .emblem-option {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--card);
+            border: 2px solid transparent;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .emblem-option:hover {
+            background: var(--elevated);
+        }
+
+        .emblem-option.selected {
+            border-color: var(--accent);
+            background: rgba(139,92,246,0.2);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .color-option:hover, .color-option.selected {
+            transform: scale(1.15);
+            border-color: white;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* === INVITE CODE === */
+        .invite-code-box {
+            background: var(--bg);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .invite-code {
+            font-family: 'Bebas Neue', monospace;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .invite-code-hint {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* === TOAST === */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 2000;
+            box-shadow: var(--shadow);
+        }
+
+        .toast.show {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .header-stats { display: none; }
+            .guild-row { grid-template-columns: 40px 1fr 60px; }
+            .guild-members-count, .guild-join-cell { display: none; }
+            .tabs { flex-wrap: wrap; }
+            .tab { flex: 1 1 45%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">⚔️</span>
+                <span class="logo-text">GUILDES</span>
+            </a>
+            
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-stat-value" id="totalGuilds">0</div>
+                    <div class="header-stat-label">Guildes</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="totalMembers">0</div>
+                    <div class="header-stat-label">Membres</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" id="totalXP">0</div>
+                    <div class="header-stat-label">XP Total</div>
+                </div>
+            </div>
+            
+            <div style="display:flex;gap:0.5rem;">
+                <button class="btn btn-secondary" onclick="openModal('joinModal')">🔗 Rejoindre</button>
+                <button class="btn btn-primary" onclick="openModal('createModal')">✨ Créer une guilde</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- SIDEBAR LEFT -->
+        <aside class="sidebar">
+            <!-- MY GUILD CARD -->
+            <div class="my-guild-card" id="myGuildCard">
+                <!-- Populated by JS -->
+            </div>
+            
+            <!-- MEMBERS -->
+            <div class="members-card" id="membersCard" style="display:none;">
+                <div class="members-header">
+                    <div class="members-title">👥 Membres</div>
+                    <button class="btn btn-ghost btn-sm" onclick="openModal('inviteModal')">+ Inviter</button>
+                </div>
+                <div id="membersList"></div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="content">
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('leaderboard', this)">🏆 Classement</button>
+                <button class="tab" onclick="switchTab('challenges', this)">⚡ Défis</button>
+                <button class="tab" onclick="switchTab('browse', this)">🔍 Explorer</button>
+                <button class="tab" onclick="switchTab('wars', this)">⚔️ Guerres</button>
+            </div>
+
+            <!-- TAB CONTENT -->
+            <div id="tabContent">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- SIDEBAR RIGHT -->
+        <aside class="sidebar">
+            <!-- QUICK STATS -->
+            <div class="quick-stats">
+                <div class="quick-stats-title">📊 Statistiques</div>
+                <div class="quick-stat-row">
+                    <span class="quick-stat-label">Ta guilde</span>
+                    <span class="quick-stat-value" id="myGuildRank">—</span>
+                </div>
+                <div class="quick-stat-row">
+                    <span class="quick-stat-label">Ton rang</span>
+                    <span class="quick-stat-value" id="myRankInGuild">—</span>
+                </div>
+                <div class="quick-stat-row">
+                    <span class="quick-stat-label">Contribution</span>
+                    <span class="quick-stat-value" id="myContribution">0 XP</span>
+                </div>
+                <div class="quick-stat-row">
+                    <span class="quick-stat-label">Défis complétés</span>
+                    <span class="quick-stat-value" id="challengesCompleted">0/5</span>
+                </div>
+            </div>
+            
+            <!-- ACTIVITY FEED -->
+            <div class="activity-feed">
+                <div class="activity-header">
+                    <div class="activity-title">🔔 Activité récente</div>
+                </div>
+                <div id="activityFeed">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- CREATE GUILD MODAL -->
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">✨ Créer une guilde</div>
+                <button class="modal-close" onclick="closeModal('createModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Nom de la guilde *</label>
+                    <input type="text" class="form-input" id="guildName" placeholder="Ex: Les Insurgés de Namur" maxlength="30">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Devise / Slogan</label>
+                    <input type="text" class="form-input" id="guildMotto" placeholder="Ex: Unis pour changer les choses" maxlength="50">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Région / Commune</label>
+                    <select class="form-select" id="guildRegion">
+                        <option value="">— Choisir —</option>
+                        <option value="bruxelles">Bruxelles-Capitale</option>
+                        <option value="wallonie">Wallonie</option>
+                        <option value="flandre">Flandre</option>
+                        <option value="namur">Namur</option>
+                        <option value="liege">Liège</option>
+                        <option value="charleroi">Charleroi</option>
+                        <option value="mons">Mons</option>
+                        <option value="tournai">Tournai</option>
+                        <option value="verviers">Verviers</option>
+                        <option value="arlon">Arlon</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Emblème</label>
+                    <div class="emblem-picker" id="emblemPicker"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Couleur</label>
+                    <div class="color-picker" id="colorPicker"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="guildDescription" placeholder="Décrivez votre guilde en quelques mots..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-select" id="guildType">
+                        <option value="open">🔓 Ouverte (tout le monde peut rejoindre)</option>
+                        <option value="approval">🔒 Sur approbation</option>
+                        <option value="invite">🔐 Sur invitation uniquement</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('createModal')">Annuler</button>
+                <button class="btn btn-primary" onclick="createGuild()">✨ Créer la guilde</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JOIN GUILD MODAL -->
+    <div class="modal-overlay" id="joinModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">🔗 Rejoindre une guilde</div>
+                <button class="modal-close" onclick="closeModal('joinModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Code d'invitation</label>
+                    <input type="text" class="form-input" id="inviteCode" placeholder="Ex: NAMUR2026" style="text-transform:uppercase;text-align:center;font-size:1.2rem;letter-spacing:2px;">
+                </div>
+                <p style="text-align:center;color:var(--muted);font-size:0.85rem;margin:1rem 0;">
+                    Demande le code à un membre de la guilde, ou explore le classement pour trouver une guilde ouverte.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('joinModal')">Annuler</button>
+                <button class="btn btn-primary" onclick="joinGuildByCode()">🚀 Rejoindre</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INVITE MODAL -->
+    <div class="modal-overlay" id="inviteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">📨 Inviter des membres</div>
+                <button class="modal-close" onclick="closeModal('inviteModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">
+                    Partage ce code avec tes amis pour qu'ils rejoignent ta guilde :
+                </p>
+                <div class="invite-code-box">
+                    <div class="invite-code" id="myInviteCode">—</div>
+                    <div class="invite-code-hint">Clique pour copier</div>
+                </div>
+                <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem;">
+                    <button class="btn btn-secondary" onclick="copyInviteCode()">📋 Copier</button>
+                    <button class="btn btn-secondary" onclick="shareInvite('whatsapp')">💬 WhatsApp</button>
+                    <button class="btn btn-secondary" onclick="shareInvite('twitter')">🐦 Twitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GUILD DETAIL MODAL -->
+    <div class="modal-overlay" id="guildDetailModal">
+        <div class="modal" style="max-width:600px;">
+            <div class="modal-header">
+                <div class="modal-title" id="detailGuildTitle">—</div>
+                <button class="modal-close" onclick="closeModal('guildDetailModal')">×</button>
+            </div>
+            <div class="modal-body" id="guildDetailContent">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"><span id="toastIcon"></span><span id="toastMsg"></span></div>
+
+<script>
+// ============================================
+// GUILDES POLiT!KA - SYSTÈME COMMUNAUTAIRE
+// ============================================
+
+const STORAGE_KEY = 'politika_guilds';
+const USER_KEY = 'politika_user';
+
+// === EMBLEMS & COLORS ===
+const EMBLEMS = ['⚔️', '🛡️', '🔥', '⭐', '🦁', '🦅', '🐺', '🐉', '👑', '💎', '🌟', '🎯', '⚡', '🔱', '🏴', '🚩', '🗡️', '🏛️', '✊', '🌹', '🌿', '☀️', '🌙', '💫'];
+const COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#6366f1', '#14b8a6'];
+
+// === DEMO DATA ===
+const DEMO_GUILDS = [
+    { id: 'namur_rebels', name: 'Les Insurgés de Namur', motto: 'Debout citoyens !', region: 'namur', emblem: '✊', color: '#ef4444', type: 'open', xp: 45600, members: [
+        { id: 'u1', name: 'Marie D.', role: 'leader', xp: 12500, avatar: 'MD' },
+        { id: 'u2', name: 'Ahmed B.', role: 'officer', xp: 8900, avatar: 'AB' },
+        { id: 'u3', name: 'Sophie M.', role: 'member', xp: 6200, avatar: 'SM' },
+        { id: 'u4', name: 'Lucas V.', role: 'member', xp: 5100, avatar: 'LV' },
+        { id: 'u5', name: 'Emma L.', role: 'member', xp: 4800, avatar: 'EL' },
+        { id: 'u6', name: 'Thomas R.', role: 'member', xp: 4200, avatar: 'TR' },
+        { id: 'u7', name: 'Julie P.', role: 'member', xp: 3900, avatar: 'JP' }
+    ], code: 'NAMUR26', created: '2025-11-15' },
+    { id: 'liege_united', name: 'Liège Debout', motto: 'La cité ardente résiste', region: 'liege', emblem: '🔥', color: '#f97316', type: 'open', xp: 38200, members: [
+        { id: 'u10', name: 'Marc H.', role: 'leader', xp: 11200, avatar: 'MH' },
+        { id: 'u11', name: 'Céline D.', role: 'officer', xp: 7800, avatar: 'CD' },
+        { id: 'u12', name: 'Kevin M.', role: 'member', xp: 5600, avatar: 'KM' },
+        { id: 'u13', name: 'Laura S.', role: 'member', xp: 4900, avatar: 'LS' },
+        { id: 'u14', name: 'Maxime P.', role: 'member', xp: 4400, avatar: 'MP' },
+        { id: 'u15', name: 'Amélie B.', role: 'member', xp: 4300, avatar: 'AB' }
+    ], code: 'LIEGE26', created: '2025-10-20' },
+    { id: 'bxl_warriors', name: 'Brussels Warriors', motto: 'Capitale en action', region: 'bruxelles', emblem: '🦁', color: '#3b82f6', type: 'approval', xp: 52100, members: [
+        { id: 'u20', name: 'Youssef K.', role: 'leader', xp: 14500, avatar: 'YK' },
+        { id: 'u21', name: 'Charlotte V.', role: 'officer', xp: 9800, avatar: 'CV' },
+        { id: 'u22', name: 'Nathan D.', role: 'officer', xp: 8200, avatar: 'ND' },
+        { id: 'u23', name: 'Léa M.', role: 'member', xp: 6100, avatar: 'LM' },
+        { id: 'u24', name: 'Hugo T.', role: 'member', xp: 5500, avatar: 'HT' },
+        { id: 'u25', name: 'Camille R.', role: 'member', xp: 4200, avatar: 'CR' },
+        { id: 'u26', name: 'Mathis L.', role: 'member', xp: 3800, avatar: 'ML' }
+    ], code: 'BXL2026', created: '2025-09-05' },
+    { id: 'charleroi_phoenix', name: 'Phoenix Carolorégien', motto: 'Renaître de nos cendres', region: 'charleroi', emblem: '🐉', color: '#8b5cf6', type: 'open', xp: 31500, members: [
+        { id: 'u30', name: 'Sarah M.', role: 'leader', xp: 9200, avatar: 'SM' },
+        { id: 'u31', name: 'Julien F.', role: 'officer', xp: 7100, avatar: 'JF' },
+        { id: 'u32', name: 'Noémie D.', role: 'member', xp: 5400, avatar: 'ND' },
+        { id: 'u33', name: 'Antoine L.', role: 'member', xp: 4900, avatar: 'AL' },
+        { id: 'u34', name: 'Clara B.', role: 'member', xp: 4900, avatar: 'CB' }
+    ], code: 'PHEONIX', created: '2025-12-01' },
+    { id: 'mons_citadelle', name: 'Citadelle de Mons', motto: 'Fière et solidaire', region: 'mons', emblem: '🏛️', color: '#22c55e', type: 'open', xp: 28700, members: [
+        { id: 'u40', name: 'Elise V.', role: 'leader', xp: 8500, avatar: 'EV' },
+        { id: 'u41', name: 'Pierre D.', role: 'member', xp: 6200, avatar: 'PD' },
+        { id: 'u42', name: 'Marine L.', role: 'member', xp: 5100, avatar: 'ML' },
+        { id: 'u43', name: 'Romain B.', role: 'member', xp: 4500, avatar: 'RB' },
+        { id: 'u44', name: 'Manon S.', role: 'member', xp: 4400, avatar: 'MS' }
+    ], code: 'MONS26', created: '2025-11-28' }
+];
+
+const CHALLENGES = [
+    { id: 'c1', title: 'Recrutement Éclair', description: 'Recrute 5 nouveaux membres cette semaine', icon: '👥', reward: 500, target: 5, type: 'weekly', category: 'recruitment' },
+    { id: 'c2', title: 'Marathon Quiz', description: 'Complète 100 flashcards collectivement', icon: '🧠', reward: 300, target: 100, type: 'weekly', category: 'learning' },
+    { id: 'c3', title: 'Réseau de Pouvoir', description: 'Ajoute 50 entités au Panopticon', icon: '🔍', reward: 400, target: 50, type: 'weekly', category: 'network' },
+    { id: 'c4', title: 'Mobilisation Terrain', description: 'Crée 10 projets solidaires', icon: '✊', reward: 600, target: 10, type: 'weekly', category: 'action' },
+    { id: 'c5', title: 'Conquête Communale', description: 'Atteins le top 10 du classement régional', icon: '🏆', reward: 1000, target: 1, type: 'monthly', category: 'ranking' }
+];
+
+// === STATE ===
+let data = {
+    guilds: [...DEMO_GUILDS],
+    myGuildId: null,
+    challenges: CHALLENGES.map(c => ({ ...c, progress: Math.floor(Math.random() * c.target * 0.8) }))
+};
+
+let user = {
+    id: 'current_user',
+    name: 'Toi',
+    xp: 1250,
+    avatar: '👤'
+};
+
+let selectedEmblem = '⚔️';
+let selectedColor = '#8b5cf6';
+let currentTab = 'leaderboard';
+let currentFilter = 'all';
+
+// === INIT ===
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    loadUser();
+    renderEmblemPicker();
+    renderColorPicker();
+    updateHeaderStats();
+    renderMyGuild();
+    renderTabContent();
+    renderActivityFeed();
+    updateQuickStats();
+});
+
+// === DATA ===
+function loadData() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            data = { ...data, ...parsed };
+        }
+    } catch(e) {}
+}
+
+function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadUser() {
+    try {
+        const saved = localStorage.getItem(USER_KEY);
+        if (saved) user = { ...user, ...JSON.parse(saved) };
+    } catch(e) {}
+}
+
+function saveUser() {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+// === HEADER STATS ===
+function updateHeaderStats() {
+    const totalGuilds = data.guilds.length;
+    const totalMembers = data.guilds.reduce((acc, g) => acc + g.members.length, 0);
+    const totalXP = data.guilds.reduce((acc, g) => acc + g.xp, 0);
+    
+    document.getElementById('totalGuilds').textContent = totalGuilds;
+    document.getElementById('totalMembers').textContent = totalMembers;
+    document.getElementById('totalXP').textContent = formatXP(totalXP);
+}
+
+function formatXP(xp) {
+    if (xp >= 1000000) return (xp / 1000000).toFixed(1) + 'M';
+    if (xp >= 1000) return (xp / 1000).toFixed(1) + 'K';
+    return xp;
+}
+
+// === MY GUILD ===
+function renderMyGuild() {
+    const container = document.getElementById('myGuildCard');
+    const membersCard = document.getElementById('membersCard');
+    
+    if (!data.myGuildId) {
+        container.classList.remove('has-guild');
+        container.innerHTML = `
+            <div class="no-guild">
+                <div class="no-guild-icon">🏰</div>
+                <div class="no-guild-title">Pas encore de guilde</div>
+                <div class="no-guild-text">Rejoins une communauté pour progresser ensemble et relever des défis !</div>
+                <button class="btn btn-primary" onclick="openModal('createModal')">✨ Créer ma guilde</button>
+            </div>
+        `;
+        membersCard.style.display = 'none';
+        return;
+    }
+    
+    const guild = data.guilds.find(g => g.id === data.myGuildId);
+    if (!guild) {
+        data.myGuildId = null;
+        saveData();
+        renderMyGuild();
+        return;
+    }
+    
+    const guildRank = getGuildRank(guild.id);
+    const nextLevelXP = getNextLevelXP(guild.xp);
+    const currentLevelXP = getCurrentLevelXP(guild.xp);
+    const progress = ((guild.xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
+    
+    container.classList.add('has-guild');
+    container.innerHTML = `
+        <div class="guild-banner">
+            <div class="guild-emblem" style="background:${guild.color}20;border-color:${guild.color};">${guild.emblem}</div>
+            <div class="guild-name">${guild.name}</div>
+            <div class="guild-motto">"${guild.motto || 'Ensemble, plus forts'}"</div>
+        </div>
+        
+        <div class="guild-stats-grid">
+            <div class="guild-stat">
+                <div class="guild-stat-value" style="color:var(--gold);">#${guildRank}</div>
+                <div class="guild-stat-label">Classement</div>
+            </div>
+            <div class="guild-stat">
+                <div class="guild-stat-value">${guild.members.length}</div>
+                <div class="guild-stat-label">Membres</div>
+            </div>
+            <div class="guild-stat">
+                <div class="guild-stat-value" style="color:${guild.color};">${formatXP(guild.xp)}</div>
+                <div class="guild-stat-label">XP Total</div>
+            </div>
+            <div class="guild-stat">
+                <div class="guild-stat-value">Niv.${getGuildLevel(guild.xp)}</div>
+                <div class="guild-stat-label">Niveau</div>
+            </div>
+        </div>
+        
+        <div class="guild-xp-bar">
+            <div class="guild-xp-fill" style="width:${progress}%;background:linear-gradient(90deg, ${guild.color}, var(--pink));"></div>
+        </div>
+        <div class="guild-xp-text">${formatXP(guild.xp)} / ${formatXP(nextLevelXP)} XP</div>
+        
+        <div class="guild-actions">
+            <button class="btn btn-secondary" onclick="openModal('inviteModal')">📨 Inviter</button>
+            <button class="btn btn-ghost btn-sm" onclick="leaveGuild()" style="color:var(--red);">Quitter la guilde</button>
+        </div>
+    `;
+    
+    // Render members
+    membersCard.style.display = 'block';
+    document.getElementById('membersList').innerHTML = guild.members
+        .sort((a, b) => b.xp - a.xp)
+        .slice(0, 8)
+        .map((m, i) => `
+            <div class="member-item">
+                <div class="member-avatar" style="background:${guild.color}30;color:${guild.color};">${m.avatar}</div>
+                <div class="member-info">
+                    <div class="member-name">${m.name}</div>
+                    <div class="member-role role-${m.role}">${getRoleLabel(m.role)}</div>
+                </div>
+                <div class="member-xp">${formatXP(m.xp)}</div>
+            </div>
+        `).join('');
+    
+    // Update invite code
+    document.getElementById('myInviteCode').textContent = guild.code;
+}
+
+function getRoleLabel(role) {
+    const labels = { leader: '👑 Chef', officer: '⭐ Officier', member: 'Membre' };
+    return labels[role] || 'Membre';
+}
+
+function getGuildRank(guildId) {
+    const sorted = [...data.guilds].sort((a, b) => b.xp - a.xp);
+    return sorted.findIndex(g => g.id === guildId) + 1;
+}
+
+function getGuildLevel(xp) {
+    if (xp >= 100000) return 10;
+    if (xp >= 75000) return 9;
+    if (xp >= 50000) return 8;
+    if (xp >= 35000) return 7;
+    if (xp >= 25000) return 6;
+    if (xp >= 15000) return 5;
+    if (xp >= 10000) return 4;
+    if (xp >= 5000) return 3;
+    if (xp >= 2000) return 2;
+    return 1;
+}
+
+function getNextLevelXP(xp) {
+    const thresholds = [2000, 5000, 10000, 15000, 25000, 35000, 50000, 75000, 100000, 150000];
+    return thresholds.find(t => t > xp) || 150000;
+}
+
+function getCurrentLevelXP(xp) {
+    const thresholds = [0, 2000, 5000, 10000, 15000, 25000, 35000, 50000, 75000, 100000];
+    return thresholds.filter(t => t <= xp).pop() || 0;
+}
+
+// === TABS ===
+function switchTab(tab, el) {
+    currentTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderTabContent();
+}
+
+function renderTabContent() {
+    const container = document.getElementById('tabContent');
+    
+    switch(currentTab) {
+        case 'leaderboard':
+            renderLeaderboard(container);
+            break;
+        case 'challenges':
+            renderChallenges(container);
+            break;
+        case 'browse':
+            renderBrowse(container);
+            break;
+        case 'wars':
+            renderWars(container);
+            break;
+    }
+}
+
+// === LEADERBOARD ===
+function renderLeaderboard(container) {
+    const sorted = [...data.guilds].sort((a, b) => b.xp - a.xp);
+    const filtered = currentFilter === 'all' ? sorted : sorted.filter(g => g.region === currentFilter);
+    
+    container.innerHTML = `
+        <div class="leaderboard">
+            <div class="leaderboard-header">
+                <div class="leaderboard-title">🏆 Classement des Guildes</div>
+                <div class="leaderboard-filters">
+                    <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">Toutes</button>
+                    <button class="filter-btn ${currentFilter === 'wallonie' ? 'active' : ''}" onclick="setFilter('wallonie')">Wallonie</button>
+                    <button class="filter-btn ${currentFilter === 'bruxelles' ? 'active' : ''}" onclick="setFilter('bruxelles')">Bruxelles</button>
+                    <button class="filter-btn ${currentFilter === 'flandre' ? 'active' : ''}" onclick="setFilter('flandre')">Flandre</button>
+                </div>
+            </div>
+            <div class="leaderboard-list">
+                ${filtered.map((g, i) => `
+                    <div class="guild-row ${i < 3 ? 'top-3' : ''}" onclick="showGuildDetail('${g.id}')">
+                        <div class="guild-rank rank-${i + 1}">${i < 3 ? ['🥇', '🥈', '🥉'][i] : i + 1}</div>
+                        <div class="guild-info-cell">
+                            <div class="guild-row-emblem" style="background:${g.color}20;border-color:${g.color};">${g.emblem}</div>
+                            <div class="guild-row-info">
+                                <h4>${g.name}</h4>
+                                <span>${getRegionLabel(g.region)}</span>
+                            </div>
+                        </div>
+                        <div class="guild-members-count">
+                            <span>${g.members.length}</span>
+                            <small>membres</small>
+                        </div>
+                        <div class="guild-xp-count">
+                            <span>${formatXP(g.xp)}</span>
+                            <small>XP</small>
+                        </div>
+                        <div class="guild-join-cell">
+                            ${data.myGuildId === g.id ? '<span style="color:var(--green);font-size:0.8rem;">✓ Ma guilde</span>' : 
+                              data.myGuildId ? '' : `<button class="btn btn-sm btn-primary" onclick="event.stopPropagation();joinGuild('${g.id}')">Rejoindre</button>`}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function setFilter(filter) {
+    currentFilter = filter;
+    renderTabContent();
+}
+
+function getRegionLabel(region) {
+    const labels = {
+        bruxelles: '🏙️ Bruxelles',
+        wallonie: '🌲 Wallonie',
+        flandre: '🦁 Flandre',
+        namur: '🏰 Namur',
+        liege: '🔥 Liège',
+        charleroi: '⚒️ Charleroi',
+        mons: '🏛️ Mons',
+        tournai: '⛪ Tournai',
+        verviers: '🌧️ Verviers',
+        arlon: '🌳 Arlon'
+    };
+    return labels[region] || region;
+}
+
+// === CHALLENGES ===
+function renderChallenges(container) {
+    container.innerHTML = `
+        <div class="challenges-grid">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                <h3 style="font-family:'Bebas Neue';font-size:1.3rem;letter-spacing:1px;">⚡ Défis de la semaine</h3>
+                <span style="font-size:0.8rem;color:var(--orange);">⏱️ Renouvellement dans 3j 14h</span>
+            </div>
+            ${data.challenges.map(c => {
+                const progress = Math.min((c.progress / c.target) * 100, 100);
+                const completed = c.progress >= c.target;
+                return `
+                    <div class="challenge-card ${completed ? 'completed' : c.progress > 0 ? 'active' : ''}">
+                        <div class="challenge-icon" style="background:${completed ? 'var(--green)' : 'var(--card)'}20;">${c.icon}</div>
+                        <div class="challenge-info">
+                            <h4>${c.title} ${completed ? '✅' : ''}</h4>
+                            <p>${c.description}</p>
+                            <div class="challenge-progress">
+                                <div class="challenge-progress-bar">
+                                    <div class="challenge-progress-fill" style="width:${progress}%;"></div>
+                                </div>
+                                <span class="challenge-progress-text">${c.progress}/${c.target}</span>
+                            </div>
+                        </div>
+                        <div class="challenge-reward">
+                            <div class="challenge-reward-xp">+${c.reward}</div>
+                            <div class="challenge-reward-label">XP Guilde</div>
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+}
+
+// === BROWSE ===
+function renderBrowse(container) {
+    const openGuilds = data.guilds.filter(g => g.type === 'open' && g.id !== data.myGuildId);
+    
+    container.innerHTML = `
+        <div style="margin-bottom:1.5rem;">
+            <input type="text" class="form-input" placeholder="🔍 Rechercher une guilde..." oninput="searchGuilds(this.value)" style="max-width:400px;">
+        </div>
+        
+        ${!data.myGuildId ? `
+            <div class="create-guild-section" onclick="openModal('createModal')">
+                <div class="create-guild-icon">✨</div>
+                <div class="create-guild-title">Crée ta propre guilde</div>
+                <div class="create-guild-text">Deviens leader et rassemble des citoyens autour de ta vision !</div>
+                <div class="create-guild-buttons">
+                    <button class="btn btn-primary btn-lg">✨ Créer maintenant</button>
+                </div>
+            </div>
+        ` : ''}
+        
+        <h3 style="font-family:'Bebas Neue';font-size:1.2rem;margin:1.5rem 0 1rem;">🔓 Guildes ouvertes</h3>
+        <div class="leaderboard">
+            <div class="leaderboard-list" id="browseList">
+                ${openGuilds.map((g, i) => `
+                    <div class="guild-row" onclick="showGuildDetail('${g.id}')">
+                        <div class="guild-rank">${i + 1}</div>
+                        <div class="guild-info-cell">
+                            <div class="guild-row-emblem" style="background:${g.color}20;border-color:${g.color};">${g.emblem}</div>
+                            <div class="guild-row-info">
+                                <h4>${g.name}</h4>
+                                <span>${getRegionLabel(g.region)} • ${g.members.length} membres</span>
+                            </div>
+                        </div>
+                        <div class="guild-xp-count">
+                            <span>${formatXP(g.xp)}</span>
+                            <small>XP</small>
+                        </div>
+                        <div class="guild-join-cell">
+                            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();joinGuild('${g.id}')">Rejoindre</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function searchGuilds(query) {
+    const list = document.getElementById('browseList');
+    if (!list) return;
+    
+    const filtered = data.guilds.filter(g => 
+        g.name.toLowerCase().includes(query.toLowerCase()) ||
+        g.region.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    list.innerHTML = filtered.map((g, i) => `
+        <div class="guild-row" onclick="showGuildDetail('${g.id}')">
+            <div class="guild-rank">${i + 1}</div>
+            <div class="guild-info-cell">
+                <div class="guild-row-emblem" style="background:${g.color}20;border-color:${g.color};">${g.emblem}</div>
+                <div class="guild-row-info">
+                    <h4>${g.name}</h4>
+                    <span>${getRegionLabel(g.region)} • ${g.members.length} membres</span>
+                </div>
+            </div>
+            <div class="guild-xp-count">
+                <span>${formatXP(g.xp)}</span>
+                <small>XP</small>
+            </div>
+            <div class="guild-join-cell">
+                ${data.myGuildId === g.id ? '<span style="color:var(--green);font-size:0.8rem;">✓ Ma guilde</span>' : 
+                  data.myGuildId ? '' : `<button class="btn btn-sm btn-primary" onclick="event.stopPropagation();joinGuild('${g.id}')">Rejoindre</button>`}
+            </div>
+        </div>
+    `).join('');
+}
+
+// === WARS ===
+function renderWars(container) {
+    container.innerHTML = `
+        <div style="text-align:center;padding:3rem;">
+            <div style="font-size:4rem;margin-bottom:1rem;">⚔️</div>
+            <h3 style="font-family:'Bebas Neue';font-size:1.8rem;margin-bottom:0.5rem;">GUERRES DE GUILDES</h3>
+            <p style="color:var(--muted);margin-bottom:2rem;">Affronte d'autres guildes dans des défis épiques !</p>
+            <div style="background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;max-width:400px;margin:0 auto;">
+                <p style="color:var(--orange);font-size:0.9rem;">🚧 Fonctionnalité en développement</p>
+                <p style="color:var(--muted);font-size:0.85rem;margin-top:0.5rem;">Les guerres de guildes arrivent bientôt ! Prépare ton équipe.</p>
+            </div>
+        </div>
+    `;
+}
+
+// === GUILD DETAIL ===
+function showGuildDetail(guildId) {
+    const guild = data.guilds.find(g => g.id === guildId);
+    if (!guild) return;
+    
+    document.getElementById('detailGuildTitle').innerHTML = `${guild.emblem} ${guild.name}`;
+    document.getElementById('guildDetailContent').innerHTML = `
+        <div style="text-align:center;margin-bottom:1.5rem;">
+            <div style="width:80px;height:80px;border-radius:50%;background:${guild.color}20;border:3px solid ${guild.color};display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1rem;">${guild.emblem}</div>
+            <div style="font-style:italic;color:var(--muted);">"${guild.motto || 'Ensemble, plus forts'}"</div>
+        </div>
+        
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+            <div style="background:var(--card);padding:1rem;border-radius:var(--radius-sm);text-align:center;">
+                <div style="font-family:'Bebas Neue';font-size:1.5rem;color:var(--gold);">#${getGuildRank(guild.id)}</div>
+                <div style="font-size:0.7rem;color:var(--muted);">CLASSEMENT</div>
+            </div>
+            <div style="background:var(--card);padding:1rem;border-radius:var(--radius-sm);text-align:center;">
+                <div style="font-family:'Bebas Neue';font-size:1.5rem;">${guild.members.length}</div>
+                <div style="font-size:0.7rem;color:var(--muted);">MEMBRES</div>
+            </div>
+            <div style="background:var(--card);padding:1rem;border-radius:var(--radius-sm);text-align:center;">
+                <div style="font-family:'Bebas Neue';font-size:1.5rem;color:${guild.color};">${formatXP(guild.xp)}</div>
+                <div style="font-size:0.7rem;color:var(--muted);">XP TOTAL</div>
+            </div>
+        </div>
+        
+        <div style="margin-bottom:1.5rem;">
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">📍 Région</div>
+            <div>${getRegionLabel(guild.region)}</div>
+        </div>
+        
+        <div style="margin-bottom:1.5rem;">
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">🔒 Type</div>
+            <div>${guild.type === 'open' ? '🔓 Guilde ouverte' : guild.type === 'approval' ? '🔒 Sur approbation' : '🔐 Sur invitation'}</div>
+        </div>
+        
+        <div style="margin-bottom:1.5rem;">
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;">👥 Top membres</div>
+            ${guild.members.slice(0, 5).map(m => `
+                <div style="display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--border);">
+                    <div style="width:32px;height:32px;border-radius:50%;background:${guild.color}30;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">${m.avatar}</div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.85rem;font-weight:600;">${m.name}</div>
+                        <div style="font-size:0.7rem;color:var(--muted);">${getRoleLabel(m.role)}</div>
+                    </div>
+                    <div style="font-size:0.8rem;color:var(--gold);">${formatXP(m.xp)} XP</div>
+                </div>
+            `).join('')}
+        </div>
+        
+        ${data.myGuildId !== guild.id && !data.myGuildId ? `
+            <button class="btn btn-primary btn-lg" style="width:100%;" onclick="joinGuild('${guild.id}');closeModal('guildDetailModal');">
+                🚀 Rejoindre cette guilde
+            </button>
+        ` : data.myGuildId === guild.id ? `
+            <div style="text-align:center;color:var(--green);padding:1rem;">✓ Tu es membre de cette guilde</div>
+        ` : ''}
+    `;
+    
+    openModal('guildDetailModal');
+}
+
+// === ACTIVITY FEED ===
+function renderActivityFeed() {
+    const activities = [
+        { icon: '🎉', text: '<strong>Brussels Warriors</strong> atteint le niveau 8 !', time: 'Il y a 5 min' },
+        { icon: '👥', text: '<strong>Emma L.</strong> a rejoint Les Insurgés de Namur', time: 'Il y a 23 min' },
+        { icon: '⚡', text: '<strong>Liège Debout</strong> complète le défi "Marathon Quiz"', time: 'Il y a 1h' },
+        { icon: '🏆', text: '<strong>Phoenix Carolorégien</strong> entre dans le top 5', time: 'Il y a 2h' },
+        { icon: '✨', text: 'Nouvelle guilde : <strong>Citadelle de Mons</strong>', time: 'Il y a 3h' },
+        { icon: '🔥', text: '<strong>Marc H.</strong> gagne 500 XP', time: 'Il y a 4h' }
+    ];
+    
+    document.getElementById('activityFeed').innerHTML = activities.map(a => `
+        <div class="activity-item">
+            <div class="activity-icon" style="background:var(--card);">${a.icon}</div>
+            <div class="activity-content">
+                <div class="activity-text">${a.text}</div>
+                <div class="activity-time">${a.time}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// === QUICK STATS ===
+function updateQuickStats() {
+    if (data.myGuildId) {
+        const guild = data.guilds.find(g => g.id === data.myGuildId);
+        if (guild) {
+            document.getElementById('myGuildRank').textContent = '#' + getGuildRank(guild.id);
+            document.getElementById('myRankInGuild').textContent = '#1'; // Simplified
+            document.getElementById('myContribution').textContent = formatXP(user.xp) + ' XP';
+        }
+    }
+    
+    const completed = data.challenges.filter(c => c.progress >= c.target).length;
+    document.getElementById('challengesCompleted').textContent = completed + '/' + data.challenges.length;
+}
+
+// === CREATE GUILD ===
+function renderEmblemPicker() {
+    document.getElementById('emblemPicker').innerHTML = EMBLEMS.map(e => `
+        <div class="emblem-option ${e === selectedEmblem ? 'selected' : ''}" onclick="selectEmblem('${e}')">${e}</div>
+    `).join('');
+}
+
+function selectEmblem(emblem) {
+    selectedEmblem = emblem;
+    renderEmblemPicker();
+}
+
+function renderColorPicker() {
+    document.getElementById('colorPicker').innerHTML = COLORS.map(c => `
+        <div class="color-option ${c === selectedColor ? 'selected' : ''}" style="background:${c};" onclick="selectColor('${c}')"></div>
+    `).join('');
+}
+
+function selectColor(color) {
+    selectedColor = color;
+    renderColorPicker();
+}
+
+function createGuild() {
+    const name = document.getElementById('guildName').value.trim();
+    if (!name) {
+        toast('❌', 'Donne un nom à ta guilde !');
+        return;
+    }
+    
+    if (data.myGuildId) {
+        toast('❌', 'Tu es déjà dans une guilde !');
+        return;
+    }
+    
+    const code = name.slice(0, 4).toUpperCase().replace(/[^A-Z]/g, '') + Math.floor(Math.random() * 100);
+    
+    const newGuild = {
+        id: 'guild_' + Date.now(),
+        name,
+        motto: document.getElementById('guildMotto').value || 'Ensemble, plus forts',
+        region: document.getElementById('guildRegion').value || 'wallonie',
+        emblem: selectedEmblem,
+        color: selectedColor,
+        type: document.getElementById('guildType').value || 'open',
+        description: document.getElementById('guildDescription').value,
+        xp: user.xp,
+        members: [{
+            id: user.id,
+            name: user.name,
+            role: 'leader',
+            xp: user.xp,
+            avatar: user.name.split(' ').map(n => n[0]).join('').toUpperCase()
+        }],
+        code,
+        created: new Date().toISOString().split('T')[0]
+    };
+    
+    data.guilds.push(newGuild);
+    data.myGuildId = newGuild.id;
+    saveData();
+    
+    closeModal('createModal');
+    updateHeaderStats();
+    renderMyGuild();
+    renderTabContent();
+    updateQuickStats();
+    
+    toast('🎉', `${name} a été créée ! Code: ${code}`);
+}
+
+// === JOIN GUILD ===
+function joinGuild(guildId) {
+    if (data.myGuildId) {
+        toast('❌', 'Tu es déjà dans une guilde !');
+        return;
+    }
+    
+    const guild = data.guilds.find(g => g.id === guildId);
+    if (!guild) return;
+    
+    guild.members.push({
+        id: user.id,
+        name: user.name,
+        role: 'member',
+        xp: user.xp,
+        avatar: user.name.split(' ').map(n => n[0]).join('').toUpperCase() || '👤'
+    });
+    
+    guild.xp += user.xp;
+    data.myGuildId = guildId;
+    saveData();
+    
+    updateHeaderStats();
+    renderMyGuild();
+    renderTabContent();
+    updateQuickStats();
+    
+    toast('🎉', `Tu as rejoint ${guild.name} !`);
+}
+
+function joinGuildByCode() {
+    const code = document.getElementById('inviteCode').value.trim().toUpperCase();
+    if (!code) {
+        toast('❌', 'Entre un code d\'invitation');
+        return;
+    }
+    
+    const guild = data.guilds.find(g => g.code === code);
+    if (!guild) {
+        toast('❌', 'Code invalide');
+        return;
+    }
+    
+    closeModal('joinModal');
+    joinGuild(guild.id);
+}
+
+function leaveGuild() {
+    if (!confirm('Vraiment quitter ta guilde ?')) return;
+    
+    const guild = data.guilds.find(g => g.id === data.myGuildId);
+    if (guild) {
+        guild.members = guild.members.filter(m => m.id !== user.id);
+        guild.xp -= user.xp;
+        if (guild.members.length === 0) {
+            data.guilds = data.guilds.filter(g => g.id !== data.myGuildId);
+        }
+    }
+    
+    data.myGuildId = null;
+    saveData();
+    
+    updateHeaderStats();
+    renderMyGuild();
+    renderTabContent();
+    updateQuickStats();
+    
+    toast('👋', 'Tu as quitté la guilde');
+}
+
+// === INVITE ===
+function copyInviteCode() {
+    const code = document.getElementById('myInviteCode').textContent;
+    navigator.clipboard.writeText(code);
+    toast('📋', 'Code copié !');
+}
+
+function shareInvite(platform) {
+    const guild = data.guilds.find(g => g.id === data.myGuildId);
+    if (!guild) return;
+    
+    const text = `Rejoins ma guilde "${guild.name}" sur POLiT!KA ! Code: ${guild.code}`;
+    const url = window.location.href;
+    
+    if (platform === 'whatsapp') {
+        window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`);
+    } else if (platform === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+    }
+}
+
+// === MODALS ===
+function openModal(id) {
+    document.getElementById(id).classList.add('open');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+}
+
+// === TOAST ===
+function toast(icon, msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastIcon').textContent = icon;
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// === KEYBOARD ===
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+    }
+});
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+        if (e.target === overlay) overlay.classList.remove('open');
+    });
+});
+</script>
+</body>
+</html>
