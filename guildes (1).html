@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ LES GUILDES — POLiT!KA</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --bg: #0a0a12; --bg-dark: #050508; --panel: #12121c; --card: #1a1a28;
+            --elevated: #252538; --text: #e8e8f0; --muted: #8888a0; --border: rgba(255,255,255,0.08);
+            --gold: #ffd700; --gold-dark: #b8860b; --silver: #c0c0c0; --bronze: #cd7f32; --legendary: #ff8c00;
+            --red: #dc2626; --blue: #3b82f6; --green: #22c55e; --purple: #a855f7; --cyan: #06b6d4; --pink: #ec4899; --orange: #f97316;
+            --radius: 12px; --glow: 0 0 30px;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        
+        .bg-animation { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .bg-animation::before { content: ''; position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(ellipse 600px 400px at 20% 30%, rgba(168,85,247,0.15) 0%, transparent 50%), radial-gradient(ellipse 500px 350px at 80% 70%, rgba(59,130,246,0.12) 0%, transparent 50%), radial-gradient(ellipse 400px 300px at 50% 50%, rgba(255,215,0,0.08) 0%, transparent 50%); animation: nebula 60s ease-in-out infinite; }
+        @keyframes nebula { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.1); } }
+        .particle { position: absolute; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; opacity: 0.3; animation: float 15s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(100vh); opacity: 0; } 10% { opacity: 0.5; } 90% { opacity: 0.5; } 100% { transform: translateY(-100vh); opacity: 0; } }
+        
+        .app { position: relative; z-index: 1; min-height: 100vh; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        .header { background: linear-gradient(180deg, rgba(10,10,18,0.98) 0%, rgba(10,10,18,0.9) 100%); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 1rem 0; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--gold), var(--orange)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: var(--glow) rgba(255,215,0,0.3); }
+        .logo-text { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--gold), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
+        .header-stats { display: flex; gap: 2rem; }
+        .header-stat { text-align: center; }
+        .header-stat-value { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); }
+        .header-stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+        
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-legendary { background: linear-gradient(135deg, var(--gold), var(--orange), var(--gold)); background-size: 200% 200%; animation: shimmer 3s ease infinite; color: #000; box-shadow: var(--glow) rgba(255,215,0,0.4); }
+        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .btn-legendary:hover { transform: translateY(-2px) scale(1.02); box-shadow: var(--glow) rgba(255,215,0,0.6); }
+        .btn-epic { background: linear-gradient(135deg, var(--purple), var(--pink)); color: white; box-shadow: var(--glow) rgba(168,85,247,0.3); }
+        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+        .btn-ghost:hover { color: var(--text); border-color: var(--gold); }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
+        
+        .hero { position: relative; padding: 4rem 0; text-align: center; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, var(--bg) 100%), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-emblem { width: 120px; height: 120px; margin: 0 auto 2rem; position: relative; }
+        .hero-emblem-inner { width: 100%; height: 100%; background: linear-gradient(135deg, var(--panel), var(--card)); border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: var(--glow) rgba(255,215,0,0.3), inset 0 0 30px rgba(255,215,0,0.1); animation: pulse 3s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .hero-emblem::before, .hero-emblem::after { content: ''; position: absolute; border: 2px solid var(--gold); border-radius: 50%; opacity: 0.3; }
+        .hero-emblem::before { inset: -15px; animation: rotate 20s linear infinite; }
+        .hero-emblem::after { inset: -30px; animation: rotate 30s linear infinite reverse; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hero-title { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; letter-spacing: 4px; margin-bottom: 1rem; text-shadow: 0 0 40px rgba(255,215,0,0.3); }
+        .hero-title span { background: linear-gradient(135deg, var(--gold), #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: 0 auto 2rem; }
+        
+        .no-guild-prompt { max-width: 800px; margin: 0 auto; background: linear-gradient(135deg, var(--panel), var(--card)); border: 2px solid var(--gold); border-radius: 20px; padding: 3rem; text-align: center; position: relative; overflow: hidden; }
+        .no-guild-prompt::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(255,215,0,0.1), transparent 70%); pointer-events: none; }
+        .prompt-title { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 1rem; color: var(--gold); position: relative; }
+        .prompt-text { color: var(--muted); margin-bottom: 2rem; font-size: 1.1rem; position: relative; }
+        .prompt-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+        
+        .main-grid { display: grid; grid-template-columns: 280px 1fr 320px; gap: 1.5rem; padding: 2rem 0; }
+        @media (max-width: 1200px) { .main-grid { grid-template-columns: 1fr; } }
+        
+        .sidebar { display: flex; flex-direction: column; gap: 1rem; }
+        
+        .guild-card { background: linear-gradient(180deg, var(--panel), var(--card)); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .guild-card-banner { height: 80px; position: relative; display: flex; align-items: center; justify-content: center; }
+        .guild-emblem { width: 70px; height: 70px; background: var(--panel); border: 4px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; position: absolute; bottom: -35px; box-shadow: var(--glow) rgba(0,0,0,0.5); }
+        .guild-card-body { padding: 2.5rem 1.25rem 1.25rem; text-align: center; }
+        .guild-name { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .guild-motto { font-style: italic; color: var(--muted); font-size: 0.8rem; margin-bottom: 1rem; }
+        .guild-level { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.8rem; background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; border-radius: 20px; font-weight: 700; font-size: 0.75rem; margin-bottom: 1rem; }
+        .guild-stats-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0.75rem; background: var(--bg); border-radius: var(--radius); margin-bottom: 1rem; }
+        .guild-stat-mini { text-align: center; }
+        .guild-stat-mini-value { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--gold); }
+        .guild-stat-mini-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; }
+        
+        .member-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+        .member-card-header { display: flex; align-items: center; gap: 0.75rem; }
+        .member-avatar { width: 45px; height: 45px; background: linear-gradient(135deg, var(--purple), var(--pink)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; border: 2px solid var(--gold); }
+        .member-info { flex: 1; }
+        .member-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.1rem; }
+        .member-rank { font-size: 0.75rem; color: var(--gold); }
+        .member-xp { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--cyan); }
+        .member-xp-label { font-size: 0.6rem; color: var(--muted); }
+        
+        .ranks-list { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+        .ranks-title { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold); margin-bottom: 0.75rem; text-align: center; }
+        .rank-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: var(--radius); margin-bottom: 0.25rem; font-size: 0.8rem; }
+        .rank-item:hover { background: var(--card); }
+        .rank-item.current { background: rgba(255,215,0,0.1); border: 1px solid var(--gold); }
+        .rank-icon { font-size: 1.2rem; }
+        .rank-info { flex: 1; }
+        .rank-name { font-weight: 600; font-size: 0.8rem; }
+        .rank-req { font-size: 0.65rem; color: var(--muted); }
+        
+        .main-content { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .section-box { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .section-header { padding: 1rem 1.25rem; background: linear-gradient(90deg, rgba(255,215,0,0.1), transparent); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+        .section-title { font-family: 'Cinzel', serif; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .territory-map { padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.6rem; }
+        .territory-cell { aspect-ratio: 1; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; position: relative; padding: 0.5rem; }
+        .territory-cell:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: var(--glow) rgba(255,215,0,0.2); }
+        .territory-cell.owned { background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.1)); border-color: var(--green); }
+        .territory-cell.contested { background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); border-color: var(--red); animation: contested 2s ease-in-out infinite; }
+        @keyframes contested { 0%, 100% { box-shadow: 0 0 10px rgba(239,68,68,0.3); } 50% { box-shadow: 0 0 20px rgba(239,68,68,0.6); } }
+        .territory-name { font-size: 0.65rem; font-weight: 600; text-align: center; margin-bottom: 0.2rem; line-height: 1.2; }
+        .territory-control { font-size: 1rem; }
+        .territory-points { font-size: 0.55rem; color: var(--muted); }
+        
+        .raids-grid { padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+        .raid-card { background: linear-gradient(135deg, var(--card), var(--elevated)); border: 2px solid var(--border); border-radius: var(--radius); padding: 1.25rem; position: relative; overflow: hidden; cursor: pointer; transition: all 0.3s; }
+        .raid-card:hover { transform: translateY(-3px); border-color: var(--purple); }
+        .raid-card.legendary { border-color: var(--legendary); box-shadow: var(--glow) rgba(255,140,0,0.3); }
+        .raid-card.legendary::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(255,140,0,0.2), transparent 60%); pointer-events: none; }
+        .raid-difficulty { position: absolute; top: 0.75rem; right: 0.75rem; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
+        .raid-difficulty.easy { background: var(--green); color: #000; }
+        .raid-difficulty.medium { background: var(--orange); color: #000; }
+        .raid-difficulty.hard { background: var(--red); color: #fff; }
+        .raid-difficulty.legendary { background: var(--legendary); color: #000; }
+        .raid-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .raid-name { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .raid-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }
+        .raid-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--border); font-size: 0.75rem; }
+        .raid-participants { color: var(--muted); }
+        .raid-reward { color: var(--gold); font-weight: 700; }
+        .raid-timer { font-size: 0.7rem; color: var(--cyan); margin-top: 0.4rem; }
+        
+        .right-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+        
+        .leaderboard { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .leaderboard-header { padding: 0.75rem 1rem; background: linear-gradient(90deg, rgba(255,215,0,0.15), transparent); border-bottom: 1px solid var(--border); }
+        .leaderboard-title { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem; }
+        .leaderboard-tabs { display: flex; padding: 0.4rem; gap: 0.2rem; border-bottom: 1px solid var(--border); }
+        .leaderboard-tab { flex: 1; padding: 0.4rem; background: none; border: none; color: var(--muted); font-size: 0.7rem; cursor: pointer; border-radius: 6px; transition: all 0.2s; }
+        .leaderboard-tab:hover { color: var(--text); }
+        .leaderboard-tab.active { background: var(--card); color: var(--gold); }
+        .leaderboard-list { max-height: 350px; overflow-y: auto; }
+        .leaderboard-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); transition: background 0.2s; font-size: 0.85rem; }
+        .leaderboard-item:hover { background: var(--card); }
+        .leaderboard-item.top-1 { background: rgba(255,215,0,0.1); }
+        .leaderboard-item.top-2 { background: rgba(192,192,192,0.08); }
+        .leaderboard-item.top-3 { background: rgba(205,127,50,0.08); }
+        .leaderboard-rank { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem; }
+        .leaderboard-rank.gold { background: var(--gold); color: #000; }
+        .leaderboard-rank.silver { background: var(--silver); color: #000; }
+        .leaderboard-rank.bronze { background: var(--bronze); color: #fff; }
+        .leaderboard-guild { flex: 1; min-width: 0; }
+        .leaderboard-guild-name { font-weight: 600; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .leaderboard-guild-region { font-size: 0.65rem; color: var(--muted); }
+        .leaderboard-xp { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold); }
+        
+        .challenges { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .challenges-header { padding: 0.75rem 1rem; background: linear-gradient(90deg, rgba(168,85,247,0.15), transparent); border-bottom: 1px solid var(--border); }
+        .challenges-title { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--purple); display: flex; align-items: center; gap: 0.5rem; }
+        .challenge-list { padding: 0.5rem; }
+        .challenge-item { padding: 0.75rem; background: var(--card); border-radius: var(--radius); margin-bottom: 0.4rem; position: relative; overflow: hidden; }
+        .challenge-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+        .challenge-item.active::before { background: var(--green); }
+        .challenge-item.completed::before { background: var(--gold); }
+        .challenge-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.4rem; }
+        .challenge-name { font-weight: 600; font-size: 0.85rem; }
+        .challenge-reward { font-size: 0.75rem; color: var(--gold); }
+        .challenge-progress-bar { height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-bottom: 0.3rem; }
+        .challenge-progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--pink)); border-radius: 3px; transition: width 0.3s; }
+        .challenge-meta { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); }
+        
+        .guild-chat { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; max-height: 280px; }
+        .chat-header { padding: 0.6rem 0.75rem; background: var(--card); border-bottom: 1px solid var(--border); font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 0.5rem; }
+        .chat-message { padding: 0.4rem; margin-bottom: 0.4rem; }
+        .chat-message-header { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.15rem; }
+        .chat-message-author { font-weight: 600; font-size: 0.75rem; color: var(--cyan); }
+        .chat-message-time { font-size: 0.6rem; color: var(--muted); }
+        .chat-message-text { font-size: 0.8rem; color: var(--text); line-height: 1.3; }
+        .chat-input-container { padding: 0.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.4rem; }
+        .chat-input { flex: 1; padding: 0.4rem 0.6rem; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; color: var(--text); font-size: 0.8rem; }
+        .chat-input:focus { outline: none; border-color: var(--purple); }
+        .chat-send { width: 32px; height: 32px; background: var(--purple); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.open { display: flex; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } }
+        .modal { background: var(--panel); border: 2px solid var(--gold); border-radius: var(--radius); max-width: 550px; width: 100%; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } }
+        .modal-header { padding: 1.25rem; background: linear-gradient(90deg, rgba(255,215,0,0.1), transparent); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; }
+        .modal-close { width: 36px; height: 36px; background: var(--card); border: none; border-radius: 50%; color: var(--text); font-size: 1.1rem; cursor: pointer; }
+        .modal-body { padding: 1.25rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 0.65rem 0.85rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+        .form-input:focus, .form-select:focus { outline: none; border-color: var(--gold); }
+        .emblem-picker { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.4rem; }
+        .emblem-option { aspect-ratio: 1; background: var(--card); border: 2px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; transition: all 0.2s; }
+        .emblem-option:hover { border-color: var(--gold); transform: scale(1.1); }
+        .emblem-option.selected { border-color: var(--gold); background: rgba(255,215,0,0.1); box-shadow: var(--glow) rgba(255,215,0,0.3); }
+        .color-picker { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .color-option { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; }
+        .color-option:hover, .color-option.selected { transform: scale(1.15); border-color: white; }
+        .modal-footer { padding: 1.25rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.75rem; }
+        
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--panel), var(--card)); border: 2px solid var(--gold); border-radius: var(--radius); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 2000; box-shadow: var(--glow) rgba(255,215,0,0.3); }
+        .toast.show { display: flex; animation: toastIn 0.5s; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } }
+        .toast-icon { font-size: 1.4rem; }
+        .toast-text { font-weight: 600; font-size: 0.9rem; }
+        
+        @media (max-width: 768px) { .header-stats { display: none; } .emblem-picker { grid-template-columns: repeat(6, 1fr); } }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"><div class="particles" id="particles"></div></div>
+    
+    <div class="app">
+        <header class="header">
+            <div class="container header-inner">
+                <a href="index.html" class="logo"><div class="logo-icon">⚔️</div><span class="logo-text">LES GUILDES</span></a>
+                <div class="header-stats">
+                    <div class="header-stat"><div class="header-stat-value" id="statGuilds">0</div><div class="header-stat-label">Guildes</div></div>
+                    <div class="header-stat"><div class="header-stat-value" id="statWarriors">0</div><div class="header-stat-label">Guerriers</div></div>
+                    <div class="header-stat"><div class="header-stat-value" id="statTerritories">0</div><div class="header-stat-label">Territoires</div></div>
+                </div>
+                <div style="display:flex;gap:0.5rem;">
+                    <button class="btn btn-ghost" onclick="openJoinGuild()">🛡️ Rejoindre</button>
+                    <button class="btn btn-legendary" onclick="openCreateGuild()">⚔️ FONDER</button>
+                </div>
+            </div>
+        </header>
+        
+        <section class="hero" id="heroSection">
+            <div class="container hero-content">
+                <div class="hero-emblem"><div class="hero-emblem-inner">⚔️</div></div>
+                <h1 class="hero-title"><span>CONQUÉRIR LE POUVOIR</span></h1>
+                <p class="hero-subtitle">Rejoins une guilde ou fonde la tienne. Conquiers des territoires. Domine les élections de 2030.</p>
+                <div class="no-guild-prompt" id="noGuildPrompt">
+                    <h2 class="prompt-title">🏰 Tu n'as pas encore de guilde</h2>
+                    <p class="prompt-text">Les loups solitaires ne survivent pas en politique. Rejoins une guilde ou crée la tienne !</p>
+                    <div class="prompt-actions">
+                        <button class="btn btn-legendary" onclick="openCreateGuild()">⚔️ FONDER MA GUILDE</button>
+                        <button class="btn btn-epic" onclick="openJoinGuild()">🛡️ REJOINDRE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <main class="container main-grid" id="mainContent" style="display: none;">
+            <aside class="sidebar">
+                <div class="guild-card">
+                    <div class="guild-card-banner" id="guildBanner" style="background:linear-gradient(135deg, var(--purple), var(--blue));">
+                        <div class="guild-emblem" id="guildEmblem">⚔️</div>
+                    </div>
+                    <div class="guild-card-body">
+                        <h2 class="guild-name" id="guildName">Ma Guilde</h2>
+                        <p class="guild-motto" id="guildMotto">"Notre devise"</p>
+                        <div class="guild-level">👑 Niveau <span id="guildLevel">1</span></div>
+                        <div class="guild-stats-mini">
+                            <div class="guild-stat-mini"><div class="guild-stat-mini-value" id="guildMembers">1</div><div class="guild-stat-mini-label">Membres</div></div>
+                            <div class="guild-stat-mini"><div class="guild-stat-mini-value" id="guildXP">0</div><div class="guild-stat-mini-label">XP</div></div>
+                            <div class="guild-stat-mini"><div class="guild-stat-mini-value" id="guildTerr">0</div><div class="guild-stat-mini-label">Territ.</div></div>
+                        </div>
+                        <button class="btn btn-epic btn-sm" style="width:100%;" onclick="addXP()">⚡ +100 XP (test)</button>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-card-header">
+                        <div class="member-avatar">👤</div>
+                        <div class="member-info"><div class="member-name" id="memberName">Toi</div><div class="member-rank" id="memberRank">⚔️ Recrue</div></div>
+                        <div style="text-align:right;"><div class="member-xp" id="memberXP">0</div><div class="member-xp-label">XP</div></div>
+                    </div>
+                </div>
+                <div class="ranks-list"><h3 class="ranks-title">🎖️ HIÉRARCHIE</h3><div id="ranksList"></div></div>
+            </aside>
+            
+            <section class="main-content">
+                <div class="section-box">
+                    <div class="section-header">
+                        <h2 class="section-title">🗺️ TERRITOIRES — <span id="regionName">Wallonie</span></h2>
+                        <select class="form-select" style="width:auto;padding:0.4rem 0.6rem;font-size:0.8rem;" onchange="changeRegion(this.value)">
+                            <option value="wallonie">Wallonie</option>
+                            <option value="bruxelles">Bruxelles</option>
+                            <option value="flandre">Flandre</option>
+                        </select>
+                    </div>
+                    <div class="territory-map" id="territoryMap"></div>
+                </div>
+                <div class="section-box">
+                    <div class="section-header"><h2 class="section-title">⚔️ RAIDS ACTIFS</h2></div>
+                    <div class="raids-grid" id="raidsGrid"></div>
+                </div>
+            </section>
+            
+            <aside class="right-sidebar">
+                <div class="leaderboard">
+                    <div class="leaderboard-header"><h3 class="leaderboard-title">🏆 CLASSEMENT</h3></div>
+                    <div class="leaderboard-tabs">
+                        <button class="leaderboard-tab active" onclick="setLeaderboardTab('global',this)">Global</button>
+                        <button class="leaderboard-tab" onclick="setLeaderboardTab('region',this)">Région</button>
+                        <button class="leaderboard-tab" onclick="setLeaderboardTab('weekly',this)">Semaine</button>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboardList"></div>
+                </div>
+                <div class="challenges">
+                    <div class="challenges-header"><h3 class="challenges-title">🎯 DÉFIS HEBDO</h3></div>
+                    <div class="challenge-list" id="challengeList"></div>
+                </div>
+                <div class="guild-chat">
+                    <div class="chat-header">💬 Chat guilde <span style="color:var(--green);margin-left:auto;font-size:0.7rem;">● 3 en ligne</span></div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" placeholder="Message..." id="chatInput" onkeypress="if(event.key==='Enter')sendMessage()">
+                        <button class="chat-send" onclick="sendMessage()">➤</button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+    
+    <!-- MODALS -->
+    <div class="modal-overlay" id="createGuildModal">
+        <div class="modal">
+            <div class="modal-header"><h2 class="modal-title">⚔️ Fonder une guilde</h2><button class="modal-close" onclick="closeModal('createGuildModal')">×</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label class="form-label">Nom *</label><input type="text" class="form-input" id="newGuildName" placeholder="Ex: Les Résistants de Namur"></div>
+                <div class="form-group"><label class="form-label">Devise</label><input type="text" class="form-input" id="newGuildMotto" placeholder="Ex: Ensemble, nous vaincrons !"></div>
+                <div class="form-group"><label class="form-label">Région</label><select class="form-select" id="newGuildRegion"><option value="namur">Namur</option><option value="liege">Liège</option><option value="hainaut">Hainaut</option><option value="luxembourg">Luxembourg</option><option value="brabant">Brabant wallon</option><option value="bruxelles">Bruxelles</option></select></div>
+                <div class="form-group"><label class="form-label">Emblème</label><div class="emblem-picker" id="emblemPicker"></div></div>
+                <div class="form-group"><label class="form-label">Couleur</label><div class="color-picker" id="colorPicker"></div></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('createGuildModal')">Annuler</button><button class="btn btn-legendary" onclick="createGuild()">⚔️ FONDER</button></div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="joinGuildModal">
+        <div class="modal">
+            <div class="modal-header"><h2 class="modal-title">🛡️ Rejoindre</h2><button class="modal-close" onclick="closeModal('joinGuildModal')">×</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label class="form-label">Filtrer par région</label><select class="form-select" id="searchRegion" onchange="searchGuilds()"><option value="">Toutes</option><option value="namur">Namur</option><option value="liege">Liège</option><option value="hainaut">Hainaut</option><option value="bruxelles">Bruxelles</option></select></div>
+                <div id="guildSearchResults"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="territoryModal">
+        <div class="modal">
+            <div class="modal-header"><h2 class="modal-title" id="territoryModalTitle">🏰 Territoire</h2><button class="modal-close" onclick="closeModal('territoryModal')">×</button></div>
+            <div class="modal-body" id="territoryModalBody"></div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"><span class="toast-icon" id="toastIcon">⚔️</span><span class="toast-text" id="toastText">Message</span></div>
+
+<script>
+const STORAGE_KEY = 'politika_guilds_v2';
+const RANKS = [
+    { id: 'recruit', name: 'Recrue', icon: '🗡️', minXP: 0 },
+    { id: 'member', name: 'Membre', icon: '⚔️', minXP: 100 },
+    { id: 'veteran', name: 'Vétéran', icon: '🛡️', minXP: 500 },
+    { id: 'elite', name: 'Élite', icon: '⭐', minXP: 1500 },
+    { id: 'officer', name: 'Officier', icon: '🎖️', minXP: 3000 },
+    { id: 'champion', name: 'Champion', icon: '🏆', minXP: 6000 },
+    { id: 'warlord', name: 'Seigneur', icon: '👑', minXP: 10000 },
+    { id: 'master', name: 'Maître', icon: '🔱', minXP: 0, special: true }
+];
+const EMBLEMS = ['⚔️','🛡️','🦁','🦅','🐺','🔥','⚡','🌟','👑','🏰','🗡️','🎯','💎','🔮','🌙','☀️','🐉','🦊','🐻','🦌','🌲','🏔️','⚓','🎭'];
+const COLORS = ['#dc2626','#ea580c','#d97706','#65a30d','#16a34a','#0d9488','#0891b2','#0284c7','#2563eb','#7c3aed','#a21caf','#db2777'];
+const TERRITORIES = {
+    wallonie: [{id:'namur',name:'Namur',points:500,owner:null},{id:'liege',name:'Liège',points:800,owner:'g1'},{id:'charleroi',name:'Charleroi',points:700,owner:null},{id:'mons',name:'Mons',points:400,owner:null},{id:'tournai',name:'Tournai',points:300,owner:null},{id:'arlon',name:'Arlon',points:200,owner:null},{id:'wavre',name:'Wavre',points:250,owner:null},{id:'verviers',name:'Verviers',points:350,owner:null},{id:'la_louviere',name:'La Louvière',points:300,owner:null},{id:'mouscron',name:'Mouscron',points:250,owner:null}],
+    bruxelles: [{id:'bxl_ville',name:'Bruxelles-Ville',points:1000,owner:null},{id:'schaerbeek',name:'Schaerbeek',points:600,owner:'g4'},{id:'anderlecht',name:'Anderlecht',points:550,owner:null},{id:'ixelles',name:'Ixelles',points:450,owner:null},{id:'molenbeek',name:'Molenbeek',points:500,owner:null},{id:'uccle',name:'Uccle',points:400,owner:null},{id:'forest',name:'Forest',points:300,owner:null},{id:'st_gilles',name:'Saint-Gilles',points:280,owner:null}],
+    flandre: [{id:'antwerpen',name:'Anvers',points:1000,owner:null},{id:'gent',name:'Gand',points:700,owner:null},{id:'brugge',name:'Bruges',points:500,owner:null},{id:'leuven',name:'Louvain',points:450,owner:null},{id:'mechelen',name:'Malines',points:400,owner:null},{id:'hasselt',name:'Hasselt',points:350,owner:null}]
+};
+const DEMO_GUILDS = [
+    {id:'g1',name:'Rebelles de Liège',emblem:'🦁',color:'#dc2626',region:'liege',members:47,xp:15200,level:8,motto:'Liège ne recule jamais !',territories:3},
+    {id:'g2',name:'Namur en Action',emblem:'⚡',color:'#2563eb',region:'namur',members:32,xp:8500,level:5,motto:'L\'action plutôt que les mots',territories:1},
+    {id:'g3',name:'Charleroi Unis',emblem:'🛡️',color:'#16a34a',region:'hainaut',members:28,xp:6200,level:4,motto:'Ensemble pour Charleroi',territories:1},
+    {id:'g4',name:'Citoyens de Bruxelles',emblem:'🌟',color:'#7c3aed',region:'bruxelles',members:65,xp:22000,level:10,motto:'Pour une capitale citoyenne',territories:5},
+    {id:'g5',name:'Mons Avenir',emblem:'🔥',color:'#ea580c',region:'hainaut',members:19,xp:3800,level:3,motto:'Construisons demain',territories:0}
+];
+const RAIDS = [
+    {id:'r1',name:'Conseil Communal',desc:'Mobilisez 20 citoyens pour assister au conseil.',icon:'🏛️',difficulty:'easy',reward:500,participants:8,max:20},
+    {id:'r2',name:'Distribution Tracts',desc:'Distribuez 1000 tracts dans votre commune.',icon:'📜',difficulty:'medium',reward:800,participants:15,max:50},
+    {id:'r3',name:'Pétition Citoyenne',desc:'Collectez 500 signatures sur un enjeu local.',icon:'📝',difficulty:'hard',reward:1500,participants:23,max:100},
+    {id:'r4',name:'🔥 PRISE DU CONSEIL',desc:'Objectif ultime: faire élire un membre au conseil 2030!',icon:'👑',difficulty:'legendary',reward:10000,participants:67,max:500}
+];
+const CHALLENGES = [
+    {id:'c1',name:'Recruteur',desc:'Recruter 5 membres',reward:300,progress:2,target:5},
+    {id:'c2',name:'XP Collectif',desc:'1000 XP cette semaine',reward:500,progress:650,target:1000},
+    {id:'c3',name:'Raid Réussi',desc:'Terminer un raid',reward:750,progress:0,target:1}
+];
+
+let data = {player:{name:'Citoyen',xp:0,rank:'recruit',guildId:null},myGuild:null,guilds:[...DEMO_GUILDS],territories:JSON.parse(JSON.stringify(TERRITORIES)),chat:[{author:'Système',text:'Bienvenue!',time:'14:00'},{author:'Marie',text:'Qui vient samedi?',time:'14:32'},{author:'Ahmed',text:'Moi!',time:'14:35'}]};
+let selectedEmblem = '⚔️', selectedColor = '#dc2626', currentRegion = 'wallonie';
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadData(); generateParticles(); renderEmblemPicker(); renderColorPicker(); renderRanksList();
+    if (data.myGuild) showGuildView();
+    updateGlobalStats();
+});
+
+function loadData() { try { const s = localStorage.getItem(STORAGE_KEY); if (s) data = {...data, ...JSON.parse(s)}; } catch(e) {} }
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+function generateParticles() { const c = document.getElementById('particles'); for (let i = 0; i < 25; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.left = Math.random()*100+'%'; p.style.animationDelay = Math.random()*15+'s'; p.style.animationDuration = (10+Math.random()*10)+'s'; c.appendChild(p); } }
+
+function renderEmblemPicker() { document.getElementById('emblemPicker').innerHTML = EMBLEMS.map(e => `<div class="emblem-option ${e===selectedEmblem?'selected':''}" onclick="selectEmblem('${e}')">${e}</div>`).join(''); }
+function selectEmblem(e) { selectedEmblem = e; renderEmblemPicker(); }
+function renderColorPicker() { document.getElementById('colorPicker').innerHTML = COLORS.map(c => `<div class="color-option ${c===selectedColor?'selected':''}" style="background:${c}" onclick="selectColor('${c}')"></div>`).join(''); }
+function selectColor(c) { selectedColor = c; renderColorPicker(); }
+
+function openCreateGuild() { document.getElementById('createGuildModal').classList.add('open'); }
+function openJoinGuild() { document.getElementById('joinGuildModal').classList.add('open'); searchGuilds(); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function createGuild() {
+    const name = document.getElementById('newGuildName').value.trim();
+    if (!name) { toast('❌','Donne un nom!'); return; }
+    const guild = {id:'g_'+Date.now(),name,motto:document.getElementById('newGuildMotto').value||'Pour la victoire!',region:document.getElementById('newGuildRegion').value,emblem:selectedEmblem,color:selectedColor,members:1,xp:0,level:1,territories:0};
+    data.myGuild = guild; data.player.guildId = guild.id; data.player.rank = 'master'; data.guilds.push(guild);
+    saveData(); closeModal('createGuildModal'); showGuildView(); toast('⚔️',`"${name}" est fondée! Tu es Maître de Guilde.`);
+}
+
+function searchGuilds() {
+    const region = document.getElementById('searchRegion').value;
+    let filtered = data.guilds.filter(g => g.id !== data.myGuild?.id);
+    if (region) filtered = filtered.filter(g => g.region === region);
+    document.getElementById('guildSearchResults').innerHTML = filtered.length ? filtered.map(g => `
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem;">
+            <div style="width:40px;height:40px;background:${g.color};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">${g.emblem}</div>
+            <div style="flex:1;"><div style="font-weight:700;font-size:0.9rem;">${g.name}</div><div style="font-size:0.7rem;color:var(--muted);">${g.members} membres • Niv.${g.level}</div></div>
+            <button class="btn btn-epic btn-sm" onclick="joinGuild('${g.id}')">Rejoindre</button>
+        </div>
+    `).join('') : '<p style="text-align:center;color:var(--muted);padding:1rem;">Aucune guilde.</p>';
+}
+
+function joinGuild(guildId) {
+    const guild = data.guilds.find(g => g.id === guildId);
+    if (!guild) return;
+    data.myGuild = {...guild}; data.myGuild.members++; data.player.guildId = guildId; data.player.rank = 'recruit';
+    saveData(); closeModal('joinGuildModal'); showGuildView(); toast('🛡️',`Tu as rejoint "${guild.name}"!`);
+}
+
+function showGuildView() {
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'grid';
+    updateGuildCard(); updateMemberCard(); renderTerritoryMap(); renderRaids(); renderLeaderboard(); renderChallenges(); renderChat();
+}
+
+function updateGuildCard() {
+    const g = data.myGuild; if (!g) return;
+    document.getElementById('guildBanner').style.background = `linear-gradient(135deg, ${g.color}, ${adjustColor(g.color,-30)})`;
+    document.getElementById('guildEmblem').textContent = g.emblem;
+    document.getElementById('guildName').textContent = g.name;
+    document.getElementById('guildMotto').textContent = `"${g.motto}"`;
+    document.getElementById('guildLevel').textContent = g.level;
+    document.getElementById('guildMembers').textContent = g.members;
+    document.getElementById('guildXP').textContent = formatNumber(g.xp);
+    document.getElementById('guildTerr').textContent = g.territories;
+}
+
+function updateMemberCard() {
+    const rank = RANKS.find(r => r.id === data.player.rank) || RANKS[0];
+    document.getElementById('memberName').textContent = data.player.name;
+    document.getElementById('memberRank').textContent = `${rank.icon} ${rank.name}`;
+    document.getElementById('memberXP').textContent = formatNumber(data.player.xp);
+}
+
+function renderRanksList() {
+    document.getElementById('ranksList').innerHTML = RANKS.filter(r => !r.special || r.id === 'master').map(r => `
+        <div class="rank-item ${data.player.rank === r.id ? 'current' : ''}">
+            <span class="rank-icon">${r.icon}</span>
+            <div class="rank-info"><div class="rank-name">${r.name}</div><div class="rank-req">${r.special ? 'Fondateur' : r.minXP+' XP'}</div></div>
+        </div>
+    `).join('');
+}
+
+function renderTerritoryMap() {
+    const territories = data.territories[currentRegion] || [];
+    document.getElementById('territoryMap').innerHTML = territories.map(t => {
+        let cls = '', icon = '⚪';
+        if (t.owner === data.myGuild?.id) { cls = 'owned'; icon = '🟢'; }
+        else if (t.owner) { cls = 'contested'; icon = '🔴'; }
+        return `<div class="territory-cell ${cls}" onclick="openTerritory('${t.id}')"><span class="territory-name">${t.name}</span><span class="territory-control">${icon}</span><span class="territory-points">${t.points} pts</span></div>`;
+    }).join('');
+    document.getElementById('regionName').textContent = currentRegion.charAt(0).toUpperCase() + currentRegion.slice(1);
+}
+
+function changeRegion(r) { currentRegion = r; renderTerritoryMap(); }
+
+function openTerritory(tid) {
+    const t = data.territories[currentRegion].find(x => x.id === tid); if (!t) return;
+    const owner = t.owner ? data.guilds.find(g => g.id === t.owner) : null;
+    const isOwned = t.owner === data.myGuild?.id;
+    document.getElementById('territoryModalTitle').textContent = `🏰 ${t.name}`;
+    document.getElementById('territoryModalBody').innerHTML = `
+        <div style="text-align:center;margin-bottom:1.5rem;"><div style="font-size:3rem;margin-bottom:0.5rem;">${isOwned ? '🟢' : t.owner ? '🔴' : '⚪'}</div><div style="font-size:1.3rem;font-weight:700;">${t.name}</div></div>
+        <div style="background:var(--card);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;"><span style="color:var(--muted);">Points</span><span style="color:var(--gold);font-weight:700;">${t.points} pts</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Contrôle</span><span style="font-weight:700;">${owner ? owner.name : 'Aucun'}</span></div>
+        </div>
+        ${!isOwned ? `<button class="btn btn-legendary" style="width:100%;" onclick="claimTerritory('${t.id}')">🚩 CONQUÉRIR (500 XP)</button>` : '<div style="text-align:center;color:var(--green);font-weight:700;">✅ Contrôlé par ta guilde!</div>'}
+    `;
+    document.getElementById('territoryModal').classList.add('open');
+}
+
+function claimTerritory(tid) {
+    if (!data.myGuild || data.myGuild.xp < 500) { toast('❌','Pas assez d\'XP!'); return; }
+    const t = data.territories[currentRegion].find(x => x.id === tid); if (!t) return;
+    if (t.owner) { const prev = data.guilds.find(g => g.id === t.owner); if (prev) prev.territories--; }
+    t.owner = data.myGuild.id; data.myGuild.xp -= 500; data.myGuild.territories++;
+    saveData(); closeModal('territoryModal'); updateGuildCard(); renderTerritoryMap(); updateGlobalStats(); toast('🏰',`${t.name} conquis!`);
+}
+
+function renderRaids() {
+    document.getElementById('raidsGrid').innerHTML = RAIDS.map(r => `
+        <div class="raid-card ${r.difficulty === 'legendary' ? 'legendary' : ''}">
+            <span class="raid-difficulty ${r.difficulty}">${r.difficulty.toUpperCase()}</span>
+            <div class="raid-icon">${r.icon}</div>
+            <h3 class="raid-name">${r.name}</h3>
+            <p class="raid-desc">${r.desc}</p>
+            <div class="raid-meta"><span class="raid-participants">👥 ${r.participants}/${r.max}</span><span class="raid-reward">🏆 +${formatNumber(r.reward)}</span></div>
+        </div>
+    `).join('');
+}
+
+function renderLeaderboard(tab = 'global') {
+    let guilds = [...data.guilds].sort((a,b) => b.xp - a.xp);
+    if (tab === 'region' && data.myGuild) guilds = guilds.filter(g => g.region === data.myGuild.region);
+    document.getElementById('leaderboardList').innerHTML = guilds.slice(0,10).map((g,i) => {
+        const rc = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+        const tc = i < 3 ? `top-${i+1}` : '';
+        return `<div class="leaderboard-item ${tc}"><div class="leaderboard-rank ${rc}">${i+1}</div><div style="font-size:1rem;">${g.emblem}</div><div class="leaderboard-guild"><div class="leaderboard-guild-name">${g.name}</div><div class="leaderboard-guild-region">${g.members} mbr</div></div><div class="leaderboard-xp">${formatNumber(g.xp)}</div></div>`;
+    }).join('');
+}
+
+function setLeaderboardTab(tab, btn) {
+    document.querySelectorAll('.leaderboard-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active'); renderLeaderboard(tab);
+}
+
+function renderChallenges() {
+    document.getElementById('challengeList').innerHTML = CHALLENGES.map(c => {
+        const pct = Math.min(100, (c.progress/c.target)*100);
+        return `<div class="challenge-item active"><div class="challenge-header"><span class="challenge-name">${c.name}</span><span class="challenge-reward">+${c.reward}</span></div><div class="challenge-progress-bar"><div class="challenge-progress-fill" style="width:${pct}%"></div></div><div class="challenge-meta"><span>${c.desc}</span><span>${c.progress}/${c.target}</span></div></div>`;
+    }).join('');
+}
+
+function renderChat() {
+    const c = document.getElementById('chatMessages');
+    c.innerHTML = data.chat.map(m => `<div class="chat-message"><div class="chat-message-header"><span class="chat-message-author">${m.author}</span><span class="chat-message-time">${m.time}</span></div><div class="chat-message-text">${m.text}</div></div>`).join('');
+    c.scrollTop = c.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput'), text = input.value.trim(); if (!text) return;
+    data.chat.push({author:data.player.name,text,time:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})});
+    input.value = ''; saveData(); renderChat();
+}
+
+function addXP() {
+    if (!data.myGuild) return;
+    data.myGuild.xp += 100; data.player.xp += 100;
+    // Check level up
+    const newLevel = Math.floor(data.myGuild.xp / 2000) + 1;
+    if (newLevel > data.myGuild.level) { data.myGuild.level = newLevel; toast('🎉',`Guilde niveau ${newLevel}!`); }
+    // Check rank
+    for (let i = RANKS.length - 1; i >= 0; i--) {
+        if (!RANKS[i].special && data.player.xp >= RANKS[i].minXP) { data.player.rank = RANKS[i].id; break; }
+    }
+    saveData(); updateGuildCard(); updateMemberCard(); renderRanksList(); renderLeaderboard();
+}
+
+function updateGlobalStats() {
+    document.getElementById('statGuilds').textContent = data.guilds.length;
+    document.getElementById('statWarriors').textContent = formatNumber(data.guilds.reduce((a,g) => a+g.members, 0));
+    document.getElementById('statTerritories').textContent = Object.values(data.territories).flat().filter(t => t.owner).length;
+}
+
+function formatNumber(n) { return n >= 1000 ? (n/1000).toFixed(1)+'K' : n.toString(); }
+function adjustColor(color, amount) { const num = parseInt(color.replace('#',''),16); const r = Math.min(255,Math.max(0,(num>>16)+amount)); const g = Math.min(255,Math.max(0,((num>>8)&0xFF)+amount)); const b = Math.min(255,Math.max(0,(num&0xFF)+amount)); return '#'+(1<<24|r<<16|g<<8|b).toString(16).slice(1); }
+function toast(icon, text) { const t = document.getElementById('toast'); document.getElementById('toastIcon').textContent = icon; document.getElementById('toastText').textContent = text; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 4000); }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open')); });
+</script>
+</body>
+</html>
