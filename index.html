@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POLiT!KA — Hub Central</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-hover: #1a1a25;
+      --bg-accent: #1e1e2e;
+      --text-primary: #e8e8ed;
+      --text-secondary: #8888a0;
+      --text-muted: #55556a;
+      --accent-purple: #a78bfa;
+      --accent-blue: #60a5fa;
+      --accent-green: #34d399;
+      --accent-orange: #fb923c;
+      --accent-red: #f87171;
+      --accent-pink: #f472b6;
+      --accent-cyan: #22d3ee;
+      --border: #2a2a3a;
+      --glow-purple: rgba(167, 139, 250, 0.15);
+      --glow-blue: rgba(96, 165, 250, 0.15);
+      --font-main: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(180deg, var(--bg-accent) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      gap: 0.5rem;
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      width: 200px;
+      outline: none;
+    }
+
+    .search-box input::placeholder { color: var(--text-muted); }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--glow-purple);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    /* HERO STATS */
+    .hero-stats {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .stats-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+
+    .sidebar-section {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+
+    .nav-list {
+      list-style: none;
+    }
+
+    .nav-item {
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: var(--glow-purple);
+      color: var(--accent-purple);
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      background: var(--bg-accent);
+      color: var(--text-muted);
+    }
+
+    /* CONTENT AREA */
+    .content-area {
+      min-height: 100vh;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    /* MODULE CARDS */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .module-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--card-accent, var(--accent-purple)), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .module-card:hover {
+      border-color: var(--card-accent, var(--accent-purple));
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .module-card:hover::before {
+      opacity: 1;
+    }
+
+    .module-card.purple { --card-accent: var(--accent-purple); }
+    .module-card.blue { --card-accent: var(--accent-blue); }
+    .module-card.green { --card-accent: var(--accent-green); }
+    .module-card.orange { --card-accent: var(--accent-orange); }
+    .module-card.pink { --card-accent: var(--accent-pink); }
+    .module-card.cyan { --card-accent: var(--accent-cyan); }
+
+    .module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .module-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--bg-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .module-status {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .status-active { background: rgba(52, 211, 153, 0.2); color: var(--accent-green); }
+    .status-beta { background: rgba(251, 146, 60, 0.2); color: var(--accent-orange); }
+    .status-concept { background: rgba(136, 136, 160, 0.2); color: var(--text-secondary); }
+    .status-new { background: rgba(167, 139, 250, 0.2); color: var(--accent-purple); }
+
+    .module-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .module-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .module-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .module-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .module-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .module-btn {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .module-btn-primary {
+      background: var(--card-accent, var(--accent-purple));
+      color: white;
+      border: none;
+    }
+
+    .module-btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .module-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* TUTORIAL SECTION */
+    .tutorial-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .tutorial-header {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .tutorial-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tutorial-header p {
+      opacity: 0.9;
+    }
+
+    .tutorial-progress {
+      padding: 1rem 2rem;
+      background: var(--bg-accent);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+      width: 0%;
+      transition: width 0.5s;
+    }
+
+    .progress-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tutorial-steps {
+      padding: 2rem;
+    }
+
+    .tutorial-step {
+      display: none;
+    }
+
+    .tutorial-step.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: var(--glow-purple);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--accent-purple);
+    }
+
+    .step-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .step-content {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .step-content h4 {
+      color: var(--text-primary);
+      margin: 1.5rem 0 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .step-content ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .step-content code {
+      background: var(--bg-accent);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      color: var(--accent-cyan);
+    }
+
+    .step-highlight {
+      background: var(--bg-accent);
+      border-left: 3px solid var(--accent-purple);
+      padding: 1rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .step-highlight strong {
+      color: var(--accent-purple);
+    }
+
+    .tutorial-nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* DOCUMENTS SECTION */
+    .docs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .doc-item:hover {
+      background: var(--bg-hover);
+      border-color: var(--accent-purple);
+    }
+
+    .doc-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .doc-icon.md { background: rgba(96, 165, 250, 0.2); }
+    .doc-icon.docx { background: rgba(96, 165, 250, 0.2); }
+    .doc-icon.pdf { background: rgba(248, 113, 113, 0.2); }
+    .doc-icon.json { background: rgba(52, 211, 153, 0.2); }
+
+    .doc-info { flex: 1; }
+    .doc-name { font-weight: 500; margin-bottom: 0.2rem; }
+    .doc-meta { font-size: 0.8rem; color: var(--text-muted); }
+
+    .doc-size {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ARCHITECTURE VIEW */
+    .arch-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .arch-layer {
+      margin-bottom: 2rem;
+    }
+
+    .arch-layer-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .arch-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .arch-item {
+      background: var(--bg-accent);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .arch-item:hover {
+      background: var(--bg-hover);
+      transform: translateY(-2px);
+    }
+
+    .arch-item .emoji { font-size: 1.1rem; }
+
+    .arch-connector {
+      text-align: center;
+      padding: 1rem;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: relative;
+        top: 0;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .search-box input { width: 150px; }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--accent-green);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 1001;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">🏛️</div>
+        <div>
+          <div class="logo-text">POLiT!KA</div>
+          <div class="logo-subtitle">Hub Central • v2.0</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" placeholder="Rechercher un module..." id="searchInput" onkeyup="filterModules()">
+        </div>
+        <button class="btn btn-ghost" onclick="showSection('tutorial')">📚 Didacticiel</button>
+        <button class="btn btn-primary" onclick="showSection('all-modules')">🚀 Tous les modules</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO STATS -->
+  <div class="hero-stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">47</div>
+        <div class="stat-label">Modules créés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Jeux narratifs</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">20+</div>
+        <div class="stat-label">Outils KERN</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Documents stratégiques</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Projets actifs</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Navigation</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" onclick="showSection('overview')">
+              <span class="nav-icon">🏠</span>
+              Vue d'ensemble
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('tutorial')">
+              <span class="nav-icon">📚</span>
+              Didacticiel
+              <span class="nav-badge">Start</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">POLiT!KA • Jeux</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('games')">
+              <span class="nav-icon">🎮</span>
+              Modules de jeu
+              <span class="nav-badge">8</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('narratif')">
+              <span class="nav-icon">📖</span>
+              Jeux narratifs
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">KERN • Outils</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('kern-tools')">
+              <span class="nav-icon">🔧</span>
+              Outils opérationnels
+              <span class="nav-badge">20</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('synergy')">
+              <span class="nav-icon">🎯</span>
+              SYNERGY GAME
+              <span class="nav-badge">12</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">VIVIER 329</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('vivier')">
+              <span class="nav-icon">🏛️</span>
+              Réserve sectorielle
+              <span class="nav-badge">New</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Ressources</div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('documents')">
+              <span class="nav-icon">📄</span>
+              Documents
+              <span class="nav-badge">15</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('architecture')">
+              <span class="nav-icon">🗺️</span>
+              Architecture
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="showSection('all-modules')">
+              <span class="nav-icon">📦</span>
+              Tous les modules
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+      
+      <!-- OVERVIEW SECTION -->
+      <section id="overview" class="section active">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🏠 Vue d'ensemble</h2>
+            <p class="section-subtitle">Bienvenue dans le hub central de tous les modules POLiT!KA, KERN et VIVIER 329</p>
+          </div>
+        </div>
+
+        <div class="modules-grid">
+          <!-- POLiT!KA -->
+          <div class="module-card purple" onclick="showSection('games')">
+            <div class="module-header">
+              <div class="module-icon">🎮</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">POLiT!KA</h3>
+            <p class="module-desc">Plateforme d'éducation civique gamifiée. Jeux narratifs, quiz, diagnostic démocratique.</p>
+            <div class="module-meta">
+              <span>📦 8 modules</span>
+              <span>🎯 Grand public</span>
+            </div>
+          </div>
+
+          <!-- KERN -->
+          <div class="module-card blue" onclick="showSection('kern-tools')">
+            <div class="module-header">
+              <div class="module-icon">🔧</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">KERN Suite</h3>
+            <p class="module-desc">Suite d'outils opérationnels pour la gestion de projet politique et associatif.</p>
+            <div class="module-meta">
+              <span>📦 20+ outils</span>
+              <span>🎯 Militants</span>
+            </div>
+          </div>
+
+          <!-- SYNERGY -->
+          <div class="module-card green" onclick="showSection('synergy')">
+            <div class="module-header">
+              <div class="module-icon">🎯</div>
+              <span class="module-status status-beta">Beta</span>
+            </div>
+            <h3 class="module-title">SYNERGY GAME</h3>
+            <p class="module-desc">Jeu de mobilisation citoyenne. Recrutement gamifié, leaderboards, équipes.</p>
+            <div class="module-meta">
+              <span>📦 12 fichiers</span>
+              <span>🎯 Associations</span>
+            </div>
+          </div>
+
+          <!-- VIVIER 329 -->
+          <div class="module-card orange" onclick="showSection('vivier')">
+            <div class="module-header">
+              <div class="module-icon">🏛️</div>
+              <span class="module-status status-new">Nouveau</span>
+            </div>
+            <h3 class="module-title">VIVIER 329</h3>
+            <p class="module-desc">Réserve sectorielle de compétences pour la sous-commission paritaire 329.02.</p>
+            <div class="module-meta">
+              <span>📦 5 fichiers</span>
+              <span>🎯 FESEFA</span>
+            </div>
+          </div>
+
+          <!-- Documents -->
+          <div class="module-card cyan" onclick="showSection('documents')">
+            <div class="module-header">
+              <div class="module-icon">📄</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Documents stratégiques</h3>
+            <p class="module-desc">Dossiers, stratégies de lancement, kits réseaux sociaux, analyses.</p>
+            <div class="module-meta">
+              <span>📦 15 docs</span>
+              <span>📊 .md .docx .pdf</span>
+            </div>
+          </div>
+
+          <!-- Tutorial -->
+          <div class="module-card pink" onclick="showSection('tutorial')">
+            <div class="module-header">
+              <div class="module-icon">📚</div>
+              <span class="module-status status-new">Start</span>
+            </div>
+            <h3 class="module-title">Didacticiel</h3>
+            <p class="module-desc">Guide complet pour comprendre et utiliser tous les modules de l'écosystème.</p>
+            <div class="module-meta">
+              <span>⏱️ 15 min</span>
+              <span>🎓 Formation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TUTORIAL SECTION -->
+      <section id="tutorial" class="section">
+        <div class="tutorial-container">
+          <div class="tutorial-header">
+            <h2>📚 Didacticiel complet</h2>
+            <p>Maîtrisez l'écosystème POLiT!KA en 10 étapes</p>
+          </div>
+          
+          <div class="tutorial-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="progress-text" id="progressText">Étape 1/10</span>
+          </div>
+
+          <div class="tutorial-steps" id="tutorialSteps">
+            <!-- Step 1 -->
+            <div class="tutorial-step active" data-step="1">
+              <div class="step-header">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Comprendre l'écosystème</h3>
+              </div>
+              <div class="step-content">
+                <p>L'écosystème POLiT!KA se compose de <strong>trois piliers</strong> interconnectés :</p>
+                
+                <h4>🎮 POLiT!KA — Éducation civique gamifiée</h4>
+                <ul>
+                  <li><strong>SYSTÈME</strong> : Jeu narratif en 7 chapitres sur le fonctionnement de la Belgique</li>
+                  <li><strong>Diagnostic Démocratique</strong> : Évaluation de la santé démocratique</li>
+                  <li><strong>Guildes</strong> : Communautés territoriales de joueurs</li>
+                  <li><strong>Ascension</strong> : Progression et récompenses</li>
+                </ul>
+
+                <h4>🔧 KERN — Outils opérationnels</h4>
+                <ul>
+                  <li>Suite de 20+ outils pour militants et associations</li>
+                  <li>Gestion de projet, finances, contacts, documents</li>
+                  <li>Intégration avec POLiT!KA pour la gamification</li>
+                </ul>
+
+                <h4>🏛️ VIVIER 329 — Réserve sectorielle</h4>
+                <ul>
+                  <li>Nouveau projet de recrutement pour le secteur socioculturel</li>
+                  <li>Partenariat ciblé avec la FESEFA</li>
+                  <li>Intègre POLiT!KA comme outil de formation</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>💡 Concept clé :</strong> Tous les modules partagent une philosophie commune — la gamification au service de l'engagement citoyen.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="tutorial-step" data-step="2">
+              <div class="step-header">
+                <div class="step-number">2</div>
+                <h3 class="step-title">POLiT!KA — Les jeux narratifs</h3>
+              </div>
+              <div class="step-content">
+                <p>Les jeux narratifs sont le cœur de POLiT!KA. Ils transforment l'apprentissage civique en aventure interactive.</p>
+
+                <h4>📖 SYSTÈME — 7 chapitres</h4>
+                <p>Le module principal. Fichier : <code>systeme-jeu-narratif.html</code></p>
+                <ul>
+                  <li><strong>Chapitre 1</strong> : Introduction à la Belgique fédérale</li>
+                  <li><strong>Chapitre 2</strong> : Le Parlement et le gouvernement</li>
+                  <li><strong>Chapitre 3</strong> : Les Régions et Communautés</li>
+                  <li><strong>Chapitre 4</strong> : Les communes et provinces</li>
+                  <li><strong>Chapitre 5</strong> : La sécurité sociale</li>
+                  <li><strong>Chapitre 6</strong> : L'Union européenne</li>
+                  <li><strong>Chapitre 7</strong> : Agir en citoyen</li>
+                </ul>
+
+                <h4>🩺 Diagnostic Démocratique</h4>
+                <p>Fichier : <code>diagnostic-democratique.html</code></p>
+                <p>Évalue la santé démocratique de la Belgique selon 8 critères.</p>
+
+                <h4>🏰 Autres modules narratifs</h4>
+                <ul>
+                  <li><code>intro.html</code> — Introduction immersive</li>
+                  <li><code>guildes.html</code> — Système de guildes territoriales</li>
+                  <li><code>ascension.html</code> — Progression et niveaux</li>
+                  <li><code>etoile-noire.html</code> — Module spécial (contenu avancé)</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>🎯 Pour tester :</strong> Ouvrez <code>systeme-jeu-narratif.html</code> dans votre navigateur pour jouer au chapitre 1.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="tutorial-step" data-step="3">
+              <div class="step-header">
+                <div class="step-number">3</div>
+                <h3 class="step-title">POLiT!KA — Modules interactifs</h3>
+              </div>
+              <div class="step-content">
+                <p>Au-delà des jeux narratifs, POLiT!KA propose des outils d'apprentissage interactifs.</p>
+
+                <h4>🃏 Flashcards</h4>
+                <p>Fichier : <code>14-flashcards.html</code></p>
+                <ul>
+                  <li>Cartes mémo pour réviser les concepts clés</li>
+                  <li>Système de répétition espacée</li>
+                  <li>Statistiques de progression</li>
+                </ul>
+
+                <h4>📋 Kanban civique</h4>
+                <p>Fichier : <code>15-kanban.html</code></p>
+                <ul>
+                  <li>Tableau de bord pour suivre ses actions citoyennes</li>
+                  <li>Colonnes : À faire, En cours, Fait</li>
+                  <li>Intégration avec le système de points</li>
+                </ul>
+
+                <h4>🔭 Panopticon</h4>
+                <p>Fichier : <code>12-panopticon.html</code></p>
+                <ul>
+                  <li>Visualisation des données politiques belges</li>
+                  <li>Cartographie des acteurs et institutions</li>
+                  <li>Mise à jour temps réel</li>
+                </ul>
+
+                <h4>📚 Répertoire EP</h4>
+                <p>Fichier : <code>13-repertoire-ep.html</code></p>
+                <ul>
+                  <li>Annuaire des associations d'éducation permanente</li>
+                  <li>Filtres par secteur, région, taille</li>
+                  <li>Fiches détaillées avec contacts</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>💡 Architecture :</strong> Tous ces modules partagent le même système de données (<code>belgique-2025-data.json</code>) pour garantir la cohérence.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="tutorial-step" data-step="4">
+              <div class="step-header">
+                <div class="step-number">4</div>
+                <h3 class="step-title">KERN — La suite d'outils</h3>
+              </div>
+              <div class="step-content">
+                <p>KERN est une suite de 20+ outils pour les militants et associations. Tous les fichiers sont dans le dossier <code>/outils/</code>.</p>
+
+                <h4>🎯 Outils de base</h4>
+                <ul>
+                  <li><code>00-kern-nexus.html</code> — Dashboard central (point d'entrée)</li>
+                  <li><code>01-finance-tracker.html</code> — Suivi des finances</li>
+                  <li><code>02-mission-creator.html</code> — Création de missions</li>
+                  <li><code>03-journal.html</code> — Journal de bord</li>
+                  <li><code>05-agenda-politique.html</code> — Calendrier des événements</li>
+                </ul>
+
+                <h4>📊 Outils de données</h4>
+                <ul>
+                  <li><code>09-beldata-complet.html</code> — Base de données politique belge</li>
+                  <li><code>10-beldata-citoyen-v2.html</code> — Version citoyenne</li>
+                  <li><code>16-knowledge-graph.html</code> — Graphe de connaissances</li>
+                  <li><code>17-contact-network.html</code> — Réseau de contacts</li>
+                </ul>
+
+                <h4>🔧 Outils avancés</h4>
+                <ul>
+                  <li><code>06-generateur-documents.html</code> — Génération de documents</li>
+                  <li><code>08-forge-studio.html</code> — Création de contenu</li>
+                  <li><code>13-nexus-prime.html</code> — Hub central avancé</li>
+                  <li><code>15-wargames.html</code> — Simulations stratégiques</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>🚀 Point d'entrée :</strong> Commencez par <code>outils/index.html</code> ou <code>00-kern-nexus.html</code> pour accéder à tous les outils.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="tutorial-step" data-step="5">
+              <div class="step-header">
+                <div class="step-number">5</div>
+                <h3 class="step-title">SYNERGY GAME — Mobilisation gamifiée</h3>
+              </div>
+              <div class="step-content">
+                <p>SYNERGY GAME est un système de mobilisation citoyenne gamifiée. Il permet aux associations de recruter et engager leurs membres via le jeu.</p>
+
+                <h4>🎮 Fichiers principaux</h4>
+                <ul>
+                  <li><code>outils/synergy-game.html</code> — Interface de jeu principale</li>
+                  <li><code>outils/synergy-setup.html</code> — Configuration initiale</li>
+                  <li><code>outils/synergy-team.html</code> — Gestion des équipes</li>
+                  <li><code>outils/synergy-leaderboard.html</code> — Classements</li>
+                  <li><code>outils/synergy-register.html</code> — Inscription</li>
+                </ul>
+
+                <h4>📧 Templates de communication</h4>
+                <ul>
+                  <li><code>outils/synergy-email-template.html</code> — Template email</li>
+                  <li><code>outils/synergy-email-vip.html</code> — Email VIP</li>
+                  <li><code>outils/synergy-contacts-vip.csv</code> — Liste contacts</li>
+                </ul>
+
+                <h4>📄 Documents associés</h4>
+                <ul>
+                  <li><code>SYNERGY-GAME-2026-OnePager.pdf</code> — Présentation 1 page</li>
+                  <li><code>SYNERGY-GAME-2026-Citoyens.pdf</code> — Version citoyens</li>
+                  <li><code>SYNERGY-GAME-2026-Emails-Templates.md</code> — Tous les templates</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>💡 Cas d'usage :</strong> Une association lance un SYNERGY GAME pour recruter 100 nouveaux membres en 30 jours. Chaque action (partage, inscription, événement) rapporte des points.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="tutorial-step" data-step="6">
+              <div class="step-header">
+                <div class="step-number">6</div>
+                <h3 class="step-title">VIVIER 329 — Le nouveau projet</h3>
+              </div>
+              <div class="step-content">
+                <p>VIVIER 329 est le projet le plus récent : une réserve sectorielle de compétences pour la CP 329.02 (secteur socioculturel).</p>
+
+                <h4>🎯 Objectif</h4>
+                <p>Proposer à la FESEFA (Fédération des Employeurs Secteur Éducation Permanente) un service mutualisé de recrutement intégrant POLiT!KA comme outil de formation.</p>
+
+                <h4>📁 Fichiers disponibles</h4>
+                <ul>
+                  <li><code>vivier329-demo-privee.html</code> — Site de démo complet</li>
+                  <li><code>VIVIER329-KIT-RESEAUX-SOCIAUX.md</code> — Posts pour tous les réseaux</li>
+                  <li><code>VIVIER329-DOSSIER-STRATEGIQUE-FESEFA.md</code> — Dossier stratégique</li>
+                  <li><code>FESEFA-PROPOSITION-RESERVE-RECRUTEMENT.docx</code> — Proposition officielle</li>
+                </ul>
+
+                <h4>🏛️ Données clés (vérifiées)</h4>
+                <ul>
+                  <li>417 associations membres FESEFA</li>
+                  <li>7 000+ ETP représentés</li>
+                  <li>78% des Wallons ne font plus confiance aux politiques (IWEPS 2023)</li>
+                  <li>Contact principal : Farah Ismaïli (directrice FESEFA)</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>⚠️ Statut :</strong> Phase de cadrage. Le site est en "démo privée" — ne pas diffuser publiquement avant validation FESEFA.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="tutorial-step" data-step="7">
+              <div class="step-header">
+                <div class="step-number">7</div>
+                <h3 class="step-title">Documents stratégiques</h3>
+              </div>
+              <div class="step-content">
+                <p>L'écosystème inclut 15+ documents stratégiques pour le déploiement et la communication.</p>
+
+                <h4>📊 Stratégies de lancement</h4>
+                <ul>
+                  <li><code>POLITIKA-STRATEGIE-LANCEMENT.md</code> — Plan complet avec grilles tarifaires</li>
+                  <li><code>POLITIKA-KIT-RESEAUX-SOCIAUX.md</code> — Posts pour tous les réseaux</li>
+                  <li><code>STRATEGIE-EXPLOSION.md</code> — Stratégie de croissance virale</li>
+                </ul>
+
+                <h4>📝 Dossiers sectoriels</h4>
+                <ul>
+                  <li><code>DOSSIER-RESERVE-RECRUTEMENT-329.02.md</code> — Dossier FESEFA</li>
+                  <li><code>RAPPORT-STRATEGIQUE-Action-Commune-Socialiste.md</code> — Analyse politique</li>
+                  <li><code>BELGIQUE-CRISE-DEMOCRATIQUE-2025.md</code> — État des lieux</li>
+                </ul>
+
+                <h4>📄 Documents officiels</h4>
+                <ul>
+                  <li><code>FESEFA-PROPOSITION-RESERVE-RECRUTEMENT.docx</code> — Proposition Word</li>
+                  <li><code>LETTRE-PROPOSITION-FESEFA.docx</code> — Lettre d'accompagnement</li>
+                  <li><code>lettre-roi-philippe-synergy-game.docx</code> — Lettre symbolique</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>💡 Astuce :</strong> Les fichiers <code>.md</code> sont en Markdown et peuvent être convertis en PDF/Word facilement. Les fichiers <code>.docx</code> sont prêts à envoyer.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="tutorial-step" data-step="8">
+              <div class="step-header">
+                <div class="step-number">8</div>
+                <h3 class="step-title">Architecture technique</h3>
+              </div>
+              <div class="step-content">
+                <p>Tous les modules sont des fichiers HTML autonomes qui fonctionnent en local (pas besoin de serveur).</p>
+
+                <h4>🏗️ Structure des fichiers</h4>
+                <pre style="background: var(--bg-accent); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan);">
+/outputs/
+├── index.html              # Landing page POLiT!KA
+├── intro.html              # Introduction narrative
+├── systeme-jeu-narratif.html   # Jeu principal
+├── diagnostic-democratique.html
+├── guildes.html
+├── ascension.html
+├── 12-panopticon.html
+├── 13-repertoire-ep.html
+├── 14-flashcards.html
+├── 15-kanban.html
+├── vivier329-demo-privee.html
+├── belgique-2025-data.json # Données partagées
+│
+├── /outils/                # Suite KERN
+│   ├── index.html          # Hub outils
+│   ├── 00-kern-nexus.html
+│   ├── 01-finance-tracker.html
+│   ├── ...
+│   ├── synergy-*.html      # SYNERGY GAME
+│   └── kern-data-*.json    # Données KERN
+│
+└── /*.md, *.docx, *.pdf    # Documents stratégiques
+                </pre>
+
+                <h4>🔗 Fichiers de données partagés</h4>
+                <ul>
+                  <li><code>belgique-2025-data.json</code> — Données politiques belges</li>
+                  <li><code>kern-data-fixed.json</code> — Données KERN</li>
+                  <li><code>panopticon-belgique-2026.json</code> — Données Panopticon</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>🔧 Technique :</strong> Les modules utilisent localStorage pour la persistance. Pas de backend requis pour la démo. Pour la production, prévoir Firebase ou équivalent.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 9 -->
+            <div class="tutorial-step" data-step="9">
+              <div class="step-header">
+                <div class="step-number">9</div>
+                <h3 class="step-title">Déploiement et hébergement</h3>
+              </div>
+              <div class="step-content">
+                <p>Options pour déployer l'écosystème :</p>
+
+                <h4>🌐 Option 1 : GitHub Pages (gratuit)</h4>
+                <ul>
+                  <li>Créer un repo GitHub</li>
+                  <li>Upload tous les fichiers</li>
+                  <li>Activer GitHub Pages dans Settings</li>
+                  <li>URL : <code>https://username.github.io/politika/</code></li>
+                </ul>
+
+                <h4>☁️ Option 2 : Netlify/Vercel (gratuit)</h4>
+                <ul>
+                  <li>Drag & drop du dossier</li>
+                  <li>Déploiement automatique</li>
+                  <li>HTTPS inclus</li>
+                  <li>Domaine personnalisé possible</li>
+                </ul>
+
+                <h4>🎮 Option 3 : itch.io (pour les jeux)</h4>
+                <ul>
+                  <li>Créer un projet "HTML5 Game"</li>
+                  <li>Upload en ZIP</li>
+                  <li>Parfait pour POLiT!KA SYSTÈME</li>
+                  <li>Communauté de joueurs intégrée</li>
+                </ul>
+
+                <h4>🏢 Option 4 : Serveur propre</h4>
+                <ul>
+                  <li>VPS ou hébergement mutualisé</li>
+                  <li>Permet d'ajouter un backend (Firebase, Supabase)</li>
+                  <li>Nécessaire pour la persistance multi-utilisateurs</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>📦 Fichier prêt :</strong> <code>politika-github.zip</code> contient une version packagée pour GitHub.
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 10 -->
+            <div class="tutorial-step" data-step="10">
+              <div class="step-header">
+                <div class="step-number">10</div>
+                <h3 class="step-title">Prochaines étapes</h3>
+              </div>
+              <div class="step-content">
+                <p>Félicitations ! Vous avez complété le didacticiel. Voici les prochaines étapes recommandées :</p>
+
+                <h4>🎯 Actions immédiates</h4>
+                <ul>
+                  <li>✅ Tester <code>systeme-jeu-narratif.html</code> — jouez au chapitre 1</li>
+                  <li>✅ Explorer <code>outils/00-kern-nexus.html</code> — le dashboard KERN</li>
+                  <li>✅ Lire <code>POLITIKA-STRATEGIE-LANCEMENT.md</code> — le plan complet</li>
+                </ul>
+
+                <h4>📧 Pour VIVIER 329</h4>
+                <ul>
+                  <li>Relire <code>vivier329-demo-privee.html</code></li>
+                  <li>Personnaliser l'email de contact (dans le kit réseaux sociaux)</li>
+                  <li>Vérifier les contacts FESEFA sur leur site officiel</li>
+                  <li>Envoyer l'email à Thomas Héricks ou directement à Farah Ismaïli</li>
+                </ul>
+
+                <h4>🚀 Pour POLiT!KA</h4>
+                <ul>
+                  <li>Déployer sur itch.io ou GitHub Pages</li>
+                  <li>Utiliser le kit réseaux sociaux pour le lancement</li>
+                  <li>Contacter des associations EP pour partenariats pilotes</li>
+                </ul>
+
+                <h4>📊 Pour SYNERGY GAME</h4>
+                <ul>
+                  <li>Identifier une association pilote</li>
+                  <li>Adapter <code>synergy-setup.html</code> à leurs besoins</li>
+                  <li>Lancer une campagne test de 30 jours</li>
+                </ul>
+
+                <div class="step-highlight">
+                  <strong>🎉 Bravo !</strong> Vous êtes maintenant prêt à déployer l'écosystème POLiT!KA. Bonne chance !
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tutorial-nav">
+            <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()" disabled>← Précédent</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">Suivant →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- GAMES SECTION -->
+      <section id="games" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🎮 POLiT!KA — Modules de jeu</h2>
+            <p class="section-subtitle">Jeux narratifs et outils d'apprentissage civique</p>
+          </div>
+        </div>
+
+        <div class="modules-grid" id="gamesGrid">
+          <div class="module-card purple">
+            <div class="module-header">
+              <div class="module-icon">📖</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">SYSTÈME — Jeu narratif</h3>
+            <p class="module-desc">Le jeu principal en 7 chapitres. Découvrez comment fonctionne vraiment la Belgique.</p>
+            <div class="module-meta">
+              <span>⏱️ 15-20 min/chapitre</span>
+              <span>📖 7 chapitres</span>
+            </div>
+            <div class="module-actions">
+              <a href="systeme-jeu-narratif.html" class="module-btn module-btn-primary">▶️ Jouer</a>
+              <button class="module-btn module-btn-secondary" onclick="showInfo('systeme')">ℹ️ Info</button>
+            </div>
+          </div>
+
+          <div class="module-card purple">
+            <div class="module-header">
+              <div class="module-icon">🚀</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Introduction</h3>
+            <p class="module-desc">L'introduction immersive à l'univers POLiT!KA. Point d'entrée recommandé.</p>
+            <div class="module-meta">
+              <span>⏱️ 5 min</span>
+              <span>🎯 Onboarding</span>
+            </div>
+            <div class="module-actions">
+              <a href="intro.html" class="module-btn module-btn-primary">▶️ Commencer</a>
+            </div>
+          </div>
+
+          <div class="module-card blue">
+            <div class="module-header">
+              <div class="module-icon">🩺</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Diagnostic Démocratique</h3>
+            <p class="module-desc">Évaluez la santé démocratique de la Belgique selon 8 critères objectifs.</p>
+            <div class="module-meta">
+              <span>⏱️ 10 min</span>
+              <span>📊 Évaluation</span>
+            </div>
+            <div class="module-actions">
+              <a href="diagnostic-democratique.html" class="module-btn module-btn-primary">▶️ Diagnostiquer</a>
+            </div>
+          </div>
+
+          <div class="module-card green">
+            <div class="module-header">
+              <div class="module-icon">🏰</div>
+              <span class="module-status status-beta">Beta</span>
+            </div>
+            <h3 class="module-title">Guildes territoriales</h3>
+            <p class="module-desc">Rejoignez une guilde basée sur votre province. Collaborez et compétitionnez.</p>
+            <div class="module-meta">
+              <span>👥 Multijoueur</span>
+              <span>🗺️ 10 provinces</span>
+            </div>
+            <div class="module-actions">
+              <a href="guildes.html" class="module-btn module-btn-primary">▶️ Rejoindre</a>
+            </div>
+          </div>
+
+          <div class="module-card orange">
+            <div class="module-header">
+              <div class="module-icon">⬆️</div>
+              <span class="module-status status-beta">Beta</span>
+            </div>
+            <h3 class="module-title">Ascension</h3>
+            <p class="module-desc">Système de progression. Gagnez des niveaux, débloquez des récompenses.</p>
+            <div class="module-meta">
+              <span>🏆 Récompenses</span>
+              <span>📈 10 niveaux</span>
+            </div>
+            <div class="module-actions">
+              <a href="ascension.html" class="module-btn module-btn-primary">▶️ Progresser</a>
+            </div>
+          </div>
+
+          <div class="module-card pink">
+            <div class="module-header">
+              <div class="module-icon">⭐</div>
+              <span class="module-status status-concept">Avancé</span>
+            </div>
+            <h3 class="module-title">Étoile Noire</h3>
+            <p class="module-desc">Module spécial pour joueurs avancés. Contenu exclusif et défis complexes.</p>
+            <div class="module-meta">
+              <span>🔒 Niveau 5+</span>
+              <span>⚡ Hardcore</span>
+            </div>
+            <div class="module-actions">
+              <a href="etoile-noire.html" class="module-btn module-btn-primary">▶️ Explorer</a>
+            </div>
+          </div>
+
+          <div class="module-card cyan">
+            <div class="module-header">
+              <div class="module-icon">🃏</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Flashcards</h3>
+            <p class="module-desc">Cartes mémo pour réviser les concepts clés. Répétition espacée intelligente.</p>
+            <div class="module-meta">
+              <span>📚 200+ cartes</span>
+              <span>🧠 Mémorisation</span>
+            </div>
+            <div class="module-actions">
+              <a href="14-flashcards.html" class="module-btn module-btn-primary">▶️ Réviser</a>
+            </div>
+          </div>
+
+          <div class="module-card blue">
+            <div class="module-header">
+              <div class="module-icon">📋</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Kanban civique</h3>
+            <p class="module-desc">Tableau de bord pour planifier et suivre vos actions citoyennes.</p>
+            <div class="module-meta">
+              <span>✅ To-do</span>
+              <span>🎯 Actions</span>
+            </div>
+            <div class="module-actions">
+              <a href="15-kanban.html" class="module-btn module-btn-primary">▶️ Planifier</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NARRATIF SECTION -->
+      <section id="narratif" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📖 Jeux narratifs détaillés</h2>
+            <p class="section-subtitle">Structure complète des chapitres et contenus</p>
+          </div>
+        </div>
+
+        <div class="arch-container">
+          <div class="arch-layer">
+            <div class="arch-layer-title">📖 SYSTÈME — Les 7 chapitres</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">1️⃣</span> La Belgique fédérale</div>
+              <div class="arch-item"><span class="emoji">2️⃣</span> Parlement & Gouvernement</div>
+              <div class="arch-item"><span class="emoji">3️⃣</span> Régions & Communautés</div>
+              <div class="arch-item"><span class="emoji">4️⃣</span> Communes & Provinces</div>
+              <div class="arch-item"><span class="emoji">5️⃣</span> Sécurité sociale</div>
+              <div class="arch-item"><span class="emoji">6️⃣</span> Union européenne</div>
+              <div class="arch-item"><span class="emoji">7️⃣</span> Agir en citoyen</div>
+            </div>
+          </div>
+
+          <div class="arch-connector">↓</div>
+
+          <div class="arch-layer">
+            <div class="arch-layer-title">🩺 Diagnostic Démocratique — 8 critères</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">📊</span> Participation électorale</div>
+              <div class="arch-item"><span class="emoji">🏛️</span> Confiance institutions</div>
+              <div class="arch-item"><span class="emoji">📰</span> Liberté de presse</div>
+              <div class="arch-item"><span class="emoji">⚖️</span> État de droit</div>
+              <div class="arch-item"><span class="emoji">🗳️</span> Pluralisme politique</div>
+              <div class="arch-item"><span class="emoji">🔍</span> Transparence</div>
+              <div class="arch-item"><span class="emoji">👥</span> Participation citoyenne</div>
+              <div class="arch-item"><span class="emoji">🛡️</span> Droits fondamentaux</div>
+            </div>
+          </div>
+
+          <div class="arch-connector">↓</div>
+
+          <div class="arch-layer">
+            <div class="arch-layer-title">🏰 Guildes — 10 provinces + Bruxelles</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">🏙️</span> Bruxelles</div>
+              <div class="arch-item"><span class="emoji">🌊</span> Anvers</div>
+              <div class="arch-item"><span class="emoji">🏔️</span> Limbourg</div>
+              <div class="arch-item"><span class="emoji">🌳</span> Brabant flamand</div>
+              <div class="arch-item"><span class="emoji">🌿</span> Brabant wallon</div>
+              <div class="arch-item"><span class="emoji">⛏️</span> Hainaut</div>
+              <div class="arch-item"><span class="emoji">🏭</span> Liège</div>
+              <div class="arch-item"><span class="emoji">🌲</span> Luxembourg</div>
+              <div class="arch-item"><span class="emoji">🏰</span> Namur</div>
+              <div class="arch-item"><span class="emoji">🌾</span> Flandre occidentale</div>
+              <div class="arch-item"><span class="emoji">🎨</span> Flandre orientale</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KERN TOOLS SECTION -->
+      <section id="kern-tools" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🔧 KERN — Outils opérationnels</h2>
+            <p class="section-subtitle">Suite de 20+ outils pour militants et associations</p>
+          </div>
+        </div>
+
+        <div class="modules-grid">
+          <div class="module-card blue">
+            <div class="module-header">
+              <div class="module-icon">🎯</div>
+              <span class="module-status status-active">Hub</span>
+            </div>
+            <h3 class="module-title">KERN Nexus</h3>
+            <p class="module-desc">Dashboard central. Point d'entrée vers tous les outils KERN.</p>
+            <div class="module-actions">
+              <a href="outils/00-kern-nexus.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card green">
+            <div class="module-header">
+              <div class="module-icon">💰</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Finance Tracker</h3>
+            <p class="module-desc">Suivi des finances. Budget, dépenses, projections.</p>
+            <div class="module-actions">
+              <a href="outils/01-finance-tracker.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card orange">
+            <div class="module-header">
+              <div class="module-icon">🎯</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Mission Creator</h3>
+            <p class="module-desc">Création et gestion de missions. Objectifs, deadlines, équipes.</p>
+            <div class="module-actions">
+              <a href="outils/02-mission-creator.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card purple">
+            <div class="module-header">
+              <div class="module-icon">📓</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Journal</h3>
+            <p class="module-desc">Journal de bord. Notes, réflexions, historique.</p>
+            <div class="module-actions">
+              <a href="outils/03-journal.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card cyan">
+            <div class="module-header">
+              <div class="module-icon">📅</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Agenda politique</h3>
+            <p class="module-desc">Calendrier des événements politiques. Élections, conseils, débats.</p>
+            <div class="module-actions">
+              <a href="outils/05-agenda-politique.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card pink">
+            <div class="module-header">
+              <div class="module-icon">📚</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Bibliothèque</h3>
+            <p class="module-desc">Ressources documentaires. Articles, rapports, analyses.</p>
+            <div class="module-actions">
+              <a href="outils/06-bibliotheque.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card blue">
+            <div class="module-header">
+              <div class="module-icon">📝</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Générateur documents</h3>
+            <p class="module-desc">Templates de documents. Lettres, communiqués, rapports.</p>
+            <div class="module-actions">
+              <a href="outils/06-generateur-documents.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card orange">
+            <div class="module-header">
+              <div class="module-icon">🔨</div>
+              <span class="module-status status-beta">Beta</span>
+            </div>
+            <h3 class="module-title">Forge Studio</h3>
+            <p class="module-desc">Création de contenu. Visuels, posts, campagnes.</p>
+            <div class="module-actions">
+              <a href="outils/08-forge-studio.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card green">
+            <div class="module-header">
+              <div class="module-icon">📊</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">BelData</h3>
+            <p class="module-desc">Base de données politique belge complète.</p>
+            <div class="module-actions">
+              <a href="outils/09-beldata-complet.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card purple">
+            <div class="module-header">
+              <div class="module-icon">🔭</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Panopticon</h3>
+            <p class="module-desc">Visualisation cartographique des données politiques.</p>
+            <div class="module-actions">
+              <a href="outils/12-panopticon.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card cyan">
+            <div class="module-header">
+              <div class="module-icon">🌐</div>
+              <span class="module-status status-beta">Beta</span>
+            </div>
+            <h3 class="module-title">Knowledge Graph</h3>
+            <p class="module-desc">Graphe de connaissances. Liens entre concepts, personnes, institutions.</p>
+            <div class="module-actions">
+              <a href="outils/16-knowledge-graph.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card pink">
+            <div class="module-header">
+              <div class="module-icon">👥</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Contact Network</h3>
+            <p class="module-desc">Gestion des contacts. CRM associatif.</p>
+            <div class="module-actions">
+              <a href="outils/17-contact-network.html" class="module-btn module-btn-primary">▶️ Ouvrir</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SYNERGY SECTION -->
+      <section id="synergy" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🎯 SYNERGY GAME</h2>
+            <p class="section-subtitle">Système de mobilisation citoyenne gamifiée</p>
+          </div>
+        </div>
+
+        <div class="modules-grid">
+          <div class="module-card green">
+            <div class="module-header">
+              <div class="module-icon">🎮</div>
+              <span class="module-status status-beta">Beta</span>
+            </div>
+            <h3 class="module-title">SYNERGY Game</h3>
+            <p class="module-desc">Interface de jeu principale. Points, missions, classements.</p>
+            <div class="module-actions">
+              <a href="outils/synergy-game.html" class="module-btn module-btn-primary">▶️ Jouer</a>
+            </div>
+          </div>
+
+          <div class="module-card blue">
+            <div class="module-header">
+              <div class="module-icon">⚙️</div>
+              <span class="module-status status-active">Setup</span>
+            </div>
+            <h3 class="module-title">Configuration</h3>
+            <p class="module-desc">Setup initial. Personnalisation pour votre association.</p>
+            <div class="module-actions">
+              <a href="outils/synergy-setup.html" class="module-btn module-btn-primary">▶️ Configurer</a>
+            </div>
+          </div>
+
+          <div class="module-card orange">
+            <div class="module-header">
+              <div class="module-icon">👥</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Équipes</h3>
+            <p class="module-desc">Gestion des équipes. Membres, rôles, scores.</p>
+            <div class="module-actions">
+              <a href="outils/synergy-team.html" class="module-btn module-btn-primary">▶️ Gérer</a>
+            </div>
+          </div>
+
+          <div class="module-card purple">
+            <div class="module-header">
+              <div class="module-icon">🏆</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Leaderboard</h3>
+            <p class="module-desc">Classements en temps réel. Top joueurs, équipes, régions.</p>
+            <div class="module-actions">
+              <a href="outils/synergy-leaderboard.html" class="module-btn module-btn-primary">▶️ Voir</a>
+            </div>
+          </div>
+
+          <div class="module-card cyan">
+            <div class="module-header">
+              <div class="module-icon">✍️</div>
+              <span class="module-status status-active">Actif</span>
+            </div>
+            <h3 class="module-title">Inscription</h3>
+            <p class="module-desc">Formulaire d'inscription pour nouveaux participants.</p>
+            <div class="module-actions">
+              <a href="outils/synergy-register.html" class="module-btn module-btn-primary">▶️ S'inscrire</a>
+            </div>
+          </div>
+
+          <div class="module-card pink">
+            <div class="module-header">
+              <div class="module-icon">📧</div>
+              <span class="module-status status-active">Template</span>
+            </div>
+            <h3 class="module-title">Email Templates</h3>
+            <p class="module-desc">Templates d'emails. Invitation, relance, félicitations.</p>
+            <div class="module-actions">
+              <a href="outils/synergy-email-template.html" class="module-btn module-btn-primary">▶️ Voir</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIVIER SECTION -->
+      <section id="vivier" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🏛️ VIVIER 329</h2>
+            <p class="section-subtitle">Réserve sectorielle de compétences — CP 329.02</p>
+          </div>
+        </div>
+
+        <div class="modules-grid">
+          <div class="module-card orange">
+            <div class="module-header">
+              <div class="module-icon">🌐</div>
+              <span class="module-status status-new">Démo</span>
+            </div>
+            <h3 class="module-title">Site de démo</h3>
+            <p class="module-desc">Site complet avec plan stratégique, gouvernance, auto-critique.</p>
+            <div class="module-actions">
+              <a href="vivier329-demo-privee.html" class="module-btn module-btn-primary">▶️ Voir</a>
+            </div>
+          </div>
+
+          <div class="module-card blue">
+            <div class="module-header">
+              <div class="module-icon">📱</div>
+              <span class="module-status status-active">Kit</span>
+            </div>
+            <h3 class="module-title">Kit réseaux sociaux</h3>
+            <p class="module-desc">Posts prêts pour LinkedIn, Facebook, Twitter, itch.io.</p>
+            <div class="module-actions">
+              <a href="VIVIER329-KIT-RESEAUX-SOCIAUX.md" class="module-btn module-btn-primary">📄 Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card green">
+            <div class="module-header">
+              <div class="module-icon">📋</div>
+              <span class="module-status status-active">Docs</span>
+            </div>
+            <h3 class="module-title">Dossier stratégique</h3>
+            <p class="module-desc">Cartographie FESEFA, analyse besoins, modèle économique.</p>
+            <div class="module-actions">
+              <a href="VIVIER329-DOSSIER-STRATEGIQUE-FESEFA.md" class="module-btn module-btn-primary">📄 Ouvrir</a>
+            </div>
+          </div>
+
+          <div class="module-card purple">
+            <div class="module-header">
+              <div class="module-icon">📝</div>
+              <span class="module-status status-active">Word</span>
+            </div>
+            <h3 class="module-title">Proposition officielle</h3>
+            <p class="module-desc">Document Word prêt à envoyer à la FESEFA.</p>
+            <div class="module-actions">
+              <a href="FESEFA-PROPOSITION-RESERVE-RECRUTEMENT.docx" class="module-btn module-btn-primary">📄 Télécharger</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-container" style="margin-top: 2rem;">
+          <h3 style="margin-bottom: 1.5rem;">📊 Données clés VIVIER 329</h3>
+          <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem;">417</div>
+              <div class="stat-label">Associations FESEFA</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem;">7 000</div>
+              <div class="stat-label">ETP représentés</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem;">78%</div>
+              <div class="stat-label">Défiance politique</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem;">30+</div>
+              <div class="stat-label">Adhésions 2024</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOCUMENTS SECTION -->
+      <section id="documents" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📄 Documents stratégiques</h2>
+            <p class="section-subtitle">Dossiers, stratégies et kits de communication</p>
+          </div>
+        </div>
+
+        <div class="docs-list">
+          <a href="POLITIKA-STRATEGIE-LANCEMENT.md" class="doc-item">
+            <div class="doc-icon md">📊</div>
+            <div class="doc-info">
+              <div class="doc-name">POLITIKA-STRATEGIE-LANCEMENT.md</div>
+              <div class="doc-meta">Stratégie de lancement complète avec grilles tarifaires</div>
+            </div>
+            <div class="doc-size">36K</div>
+          </a>
+
+          <a href="POLITIKA-KIT-RESEAUX-SOCIAUX.md" class="doc-item">
+            <div class="doc-icon md">📱</div>
+            <div class="doc-info">
+              <div class="doc-name">POLITIKA-KIT-RESEAUX-SOCIAUX.md</div>
+              <div class="doc-meta">Posts pour tous les réseaux sociaux</div>
+            </div>
+            <div class="doc-size">18K</div>
+          </a>
+
+          <a href="VIVIER329-DOSSIER-STRATEGIQUE-FESEFA.md" class="doc-item">
+            <div class="doc-icon md">🏛️</div>
+            <div class="doc-info">
+              <div class="doc-name">VIVIER329-DOSSIER-STRATEGIQUE-FESEFA.md</div>
+              <div class="doc-meta">Dossier complet pour la FESEFA</div>
+            </div>
+            <div class="doc-size">30K</div>
+          </a>
+
+          <a href="VIVIER329-KIT-RESEAUX-SOCIAUX.md" class="doc-item">
+            <div class="doc-icon md">📱</div>
+            <div class="doc-info">
+              <div class="doc-name">VIVIER329-KIT-RESEAUX-SOCIAUX.md</div>
+              <div class="doc-meta">Kit communication VIVIER 329</div>
+            </div>
+            <div class="doc-size">16K</div>
+          </a>
+
+          <a href="FESEFA-PROPOSITION-RESERVE-RECRUTEMENT.docx" class="doc-item">
+            <div class="doc-icon docx">📝</div>
+            <div class="doc-info">
+              <div class="doc-name">FESEFA-PROPOSITION-RESERVE-RECRUTEMENT.docx</div>
+              <div class="doc-meta">Proposition officielle Word</div>
+            </div>
+            <div class="doc-size">17K</div>
+          </a>
+
+          <a href="SYNERGY-GAME-2026-Emails-Templates.md" class="doc-item">
+            <div class="doc-icon md">📧</div>
+            <div class="doc-info">
+              <div class="doc-name">SYNERGY-GAME-2026-Emails-Templates.md</div>
+              <div class="doc-meta">Templates emails SYNERGY</div>
+            </div>
+            <div class="doc-size">13K</div>
+          </a>
+
+          <a href="BELGIQUE-CRISE-DEMOCRATIQUE-2025.md" class="doc-item">
+            <div class="doc-icon md">📊</div>
+            <div class="doc-info">
+              <div class="doc-name">BELGIQUE-CRISE-DEMOCRATIQUE-2025.md</div>
+              <div class="doc-meta">Analyse de la crise démocratique</div>
+            </div>
+            <div class="doc-size">12K</div>
+          </a>
+
+          <a href="RAPPORT-STRATEGIQUE-Action-Commune-Socialiste.md" class="doc-item">
+            <div class="doc-icon md">📋</div>
+            <div class="doc-info">
+              <div class="doc-name">RAPPORT-STRATEGIQUE-Action-Commune-Socialiste.md</div>
+              <div class="doc-meta">Analyse politique</div>
+            </div>
+            <div class="doc-size">13K</div>
+          </a>
+
+          <a href="belgique-2025-data.json" class="doc-item">
+            <div class="doc-icon json">📦</div>
+            <div class="doc-info">
+              <div class="doc-name">belgique-2025-data.json</div>
+              <div class="doc-meta">Données politiques belges (JSON)</div>
+            </div>
+            <div class="doc-size">26K</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE SECTION -->
+      <section id="architecture" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🗺️ Architecture de l'écosystème</h2>
+            <p class="section-subtitle">Vue d'ensemble des composants et relations</p>
+          </div>
+        </div>
+
+        <div class="arch-container">
+          <div class="arch-layer">
+            <div class="arch-layer-title">🎮 Couche Jeux — Grand public</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">📖</span> SYSTÈME (7 chapitres)</div>
+              <div class="arch-item"><span class="emoji">🩺</span> Diagnostic Démocratique</div>
+              <div class="arch-item"><span class="emoji">🏰</span> Guildes</div>
+              <div class="arch-item"><span class="emoji">⬆️</span> Ascension</div>
+              <div class="arch-item"><span class="emoji">🃏</span> Flashcards</div>
+              <div class="arch-item"><span class="emoji">📋</span> Kanban</div>
+            </div>
+          </div>
+
+          <div class="arch-connector">↕️ Données partagées</div>
+
+          <div class="arch-layer">
+            <div class="arch-layer-title">🔧 Couche Outils — Militants & Associations</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">🎯</span> KERN Nexus</div>
+              <div class="arch-item"><span class="emoji">💰</span> Finance</div>
+              <div class="arch-item"><span class="emoji">📅</span> Agenda</div>
+              <div class="arch-item"><span class="emoji">📊</span> BelData</div>
+              <div class="arch-item"><span class="emoji">🔭</span> Panopticon</div>
+              <div class="arch-item"><span class="emoji">👥</span> Contacts</div>
+              <div class="arch-item"><span class="emoji">📝</span> Documents</div>
+            </div>
+          </div>
+
+          <div class="arch-connector">↕️ API & Intégrations</div>
+
+          <div class="arch-layer">
+            <div class="arch-layer-title">🎯 Couche Gamification — Engagement</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">🎮</span> SYNERGY Game</div>
+              <div class="arch-item"><span class="emoji">🏆</span> Leaderboards</div>
+              <div class="arch-item"><span class="emoji">🏅</span> Badges</div>
+              <div class="arch-item"><span class="emoji">📈</span> Progression</div>
+              <div class="arch-item"><span class="emoji">👥</span> Équipes</div>
+            </div>
+          </div>
+
+          <div class="arch-connector">↕️ Partenariats</div>
+
+          <div class="arch-layer">
+            <div class="arch-layer-title">🏛️ Couche Sectorielle — Institutions</div>
+            <div class="arch-items">
+              <div class="arch-item"><span class="emoji">🏛️</span> VIVIER 329</div>
+              <div class="arch-item"><span class="emoji">🎓</span> Formation EP</div>
+              <div class="arch-item"><span class="emoji">📋</span> Recrutement</div>
+              <div class="arch-item"><span class="emoji">🤝</span> FESEFA</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ALL MODULES SECTION -->
+      <section id="all-modules" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📦 Tous les modules</h2>
+            <p class="section-subtitle">Liste complète des 47 fichiers de l'écosystème</p>
+          </div>
+        </div>
+
+        <div class="docs-list" id="allModulesList">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span>✅</span>
+    <span id="toastMessage">Action réussie</span>
+  </div>
+
+  <script>
+    // Current tutorial step
+    let currentStep = 1;
+    const totalSteps = 10;
+
+    // Show section
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      
+      // Show target section
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.classList.add('active');
+      }
+
+      // Update nav
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      event.target.closest('.nav-link')?.classList.add('active');
+
+      // Populate all modules if needed
+      if (sectionId === 'all-modules') {
+        populateAllModules();
+      }
+    }
+
+    // Tutorial navigation
+    function nextStep() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        updateTutorial();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateTutorial();
+      }
+    }
+
+    function updateTutorial() {
+      // Hide all steps
+      document.querySelectorAll('.tutorial-step').forEach(s => s.classList.remove('active'));
+      
+      // Show current step
+      document.querySelector(`.tutorial-step[data-step="${currentStep}"]`)?.classList.add('active');
+      
+      // Update progress
+      const progress = (currentStep / totalSteps) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').textContent = `Étape ${currentStep}/${totalSteps}`;
+      
+      // Update buttons
+      document.getElementById('prevBtn').disabled = currentStep === 1;
+      document.getElementById('nextBtn').textContent = currentStep === totalSteps ? '✓ Terminé' : 'Suivant →';
+      
+      if (currentStep === totalSteps) {
+        document.getElementById('nextBtn').onclick = () => showSection('overview');
+      } else {
+        document.getElementById('nextBtn').onclick = nextStep;
+      }
+    }
+
+    // Filter modules
+    function filterModules() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.module-card');
+      
+      cards.forEach(card => {
+        const title = card.querySelector('.module-title')?.textContent.toLowerCase() || '';
+        const desc = card.querySelector('.module-desc')?.textContent.toLowerCase() || '';
+        
+        if (title.includes(query) || desc.includes(query)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Populate all modules list
+    function populateAllModules() {
+      const modules = [
+        { name: 'index.html', desc: 'Landing page POLiT!KA', size: '49K', type: 'html' },
+        { name: 'intro.html', desc: 'Introduction immersive', size: '75K', type: 'html' },
+        { name: 'systeme-jeu-narratif.html', desc: 'Jeu narratif principal (7 chapitres)', size: '67K', type: 'html' },
+        { name: 'diagnostic-democratique.html', desc: 'Diagnostic Démocratique', size: '57K', type: 'html' },
+        { name: 'guildes.html', desc: 'Guildes territoriales', size: '51K', type: 'html' },
+        { name: 'ascension.html', desc: 'Système de progression', size: '62K', type: 'html' },
+        { name: 'etoile-noire.html', desc: 'Module avancé', size: '60K', type: 'html' },
+        { name: '12-panopticon.html', desc: 'Visualisation données', size: '36K', type: 'html' },
+        { name: '13-repertoire-ep.html', desc: 'Répertoire EP', size: '61K', type: 'html' },
+        { name: '14-flashcards.html', desc: 'Flashcards', size: '55K', type: 'html' },
+        { name: '15-kanban.html', desc: 'Kanban civique', size: '48K', type: 'html' },
+        { name: 'vivier329-demo-privee.html', desc: 'Site démo VIVIER 329', size: '50K', type: 'html' },
+        { name: 'politika-landing-page.html', desc: 'Landing page alternative', size: '38K', type: 'html' },
+        { name: 'site-grand-public.html', desc: 'Site grand public', size: '32K', type: 'html' },
+        { name: 'collectif-site.html', desc: 'Site collectif', size: '35K', type: 'html' },
+        { name: 'outils/index.html', desc: 'Hub outils KERN', size: '16K', type: 'html' },
+        { name: 'outils/00-kern-nexus.html', desc: 'Dashboard KERN', size: '57K', type: 'html' },
+        { name: 'outils/01-finance-tracker.html', desc: 'Suivi finances', size: '34K', type: 'html' },
+        { name: 'outils/02-mission-creator.html', desc: 'Création missions', size: '42K', type: 'html' },
+        { name: 'outils/03-journal.html', desc: 'Journal de bord', size: '32K', type: 'html' },
+        { name: 'outils/05-agenda-politique.html', desc: 'Agenda politique', size: '37K', type: 'html' },
+        { name: 'outils/06-bibliotheque.html', desc: 'Bibliothèque', size: '42K', type: 'html' },
+        { name: 'outils/06-generateur-documents.html', desc: 'Générateur docs', size: '51K', type: 'html' },
+        { name: 'outils/08-forge-studio.html', desc: 'Forge Studio', size: '73K', type: 'html' },
+        { name: 'outils/09-beldata-complet.html', desc: 'BelData complet', size: '42K', type: 'html' },
+        { name: 'outils/10-beldata-citoyen-v2.html', desc: 'BelData citoyen', size: '52K', type: 'html' },
+        { name: 'outils/11-kern-dossiers.html', desc: 'Gestion dossiers', size: '43K', type: 'html' },
+        { name: 'outils/12-panopticon.html', desc: 'Panopticon KERN', size: '77K', type: 'html' },
+        { name: 'outils/13-nexus-prime.html', desc: 'Nexus Prime', size: '102K', type: 'html' },
+        { name: 'outils/14-nexus-arg.html', desc: 'Nexus ARG', size: '83K', type: 'html' },
+        { name: 'outils/15-wargames.html', desc: 'Simulations', size: '43K', type: 'html' },
+        { name: 'outils/16-knowledge-graph.html', desc: 'Knowledge Graph', size: '40K', type: 'html' },
+        { name: 'outils/17-contact-network.html', desc: 'Réseau contacts', size: '52K', type: 'html' },
+        { name: 'outils/18-kern-partners.html', desc: 'Partenaires KERN', size: '62K', type: 'html' },
+        { name: 'outils/19-kern-partner-dashboard.html', desc: 'Dashboard partenaires', size: '48K', type: 'html' },
+        { name: 'outils/20-protocole-insurrection.html', desc: 'Protocole Insurrection', size: '75K', type: 'html' },
+        { name: 'outils/synergy-game.html', desc: 'SYNERGY Game', size: '31K', type: 'html' },
+        { name: 'outils/synergy-setup.html', desc: 'Config SYNERGY', size: '38K', type: 'html' },
+        { name: 'outils/synergy-team.html', desc: 'Équipes SYNERGY', size: '32K', type: 'html' },
+        { name: 'outils/synergy-leaderboard.html', desc: 'Classements', size: '20K', type: 'html' },
+        { name: 'outils/synergy-register.html', desc: 'Inscription', size: '18K', type: 'html' },
+        { name: 'POLITIKA-STRATEGIE-LANCEMENT.md', desc: 'Stratégie lancement', size: '36K', type: 'md' },
+        { name: 'POLITIKA-KIT-RESEAUX-SOCIAUX.md', desc: 'Kit réseaux sociaux', size: '18K', type: 'md' },
+        { name: 'VIVIER329-KIT-RESEAUX-SOCIAUX.md', desc: 'Kit VIVIER 329', size: '16K', type: 'md' },
+        { name: 'FESEFA-PROPOSITION-RESERVE-RECRUTEMENT.docx', desc: 'Proposition FESEFA', size: '17K', type: 'docx' },
+        { name: 'belgique-2025-data.json', desc: 'Données politiques', size: '26K', type: 'json' },
+      ];
+
+      const list = document.getElementById('allModulesList');
+      list.innerHTML = modules.map(m => `
+        <a href="${m.name}" class="doc-item">
+          <div class="doc-icon ${m.type}">${m.type === 'html' ? '🌐' : m.type === 'md' ? '📝' : m.type === 'docx' ? '📄' : '📦'}</div>
+          <div class="doc-info">
+            <div class="doc-name">${m.name}</div>
+            <div class="doc-meta">${m.desc}</div>
+          </div>
+          <div class="doc-size">${m.size}</div>
+        </a>
+      `).join('');
+    }
+
+    // Show toast
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateTutorial();
+    });
+  </script>
+</body>
+</html>
